@@ -1,0 +1,148 @@
+---
+import KpiTile from '../ui/KpiTile.astro';
+import VisualCard from '../ui/VisualCard.astro';
+---
+
+<section id="page-exec" class="pbi-page space-y-5">
+  <!-- 6-Tile Power BI KPI Ribbon -->
+  <div class="pbi-card grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 divide-y md:divide-y-0 md:divide-x divide-[var(--color-line)] overflow-hidden">
+    <KpiTile
+      label="Giá Hobby Box (VAT)"
+      valueId="kpi-srp-vat"
+      initialValue="1.980.000"
+      subId="kpi-srp-sub"
+      initialSub="1.800.000đ trước VAT · 24.750đ/thẻ"
+      metaId="kpi-badge-scen"
+      initialMeta="S3"
+      metaVariant="stamp-gold"
+      tileTone="accent"
+    />
+    <KpiTile
+      label="Doanh thu thực (Net)"
+      valueId="kpi-net-rev"
+      initialValue="1.368.000"
+      subId="kpi-net-rev-sub"
+      initialSub="Tổng 3Đ: 1.805,76 tr (1.320b)"
+      metaId="kpi-net-srp-pct"
+      initialMeta="76,0% SRP"
+    />
+    <KpiTile
+      label="Giá vốn nhập kho"
+      valueId="kpi-cogs"
+      initialValue="655.870"
+      subId="kpi-cogs-sub"
+      initialSub="▼ 17,5% vs Đợt 1 (794,7k)"
+      metaId="kpi-cogs-pct"
+      initialMeta="47,9% Net"
+      subToneClass="text-[var(--color-money)]"
+    />
+    <KpiTile
+      label="Lợi nhuận gộp chuẩn"
+      valueId="kpi-gp"
+      initialValue="712.130"
+      subId="kpi-gp-sub"
+      initialSub="Tổng 3Đ: 940,01 tr"
+      metaId="kpi-gp-pct"
+      initialMeta="52,1%"
+      metaToneClass="text-[var(--color-money)] font-medium"
+    />
+    <KpiTile
+      label="Lãi ròng An toàn FX"
+      valueId="kpi-net-profit"
+      initialValue="375.241"
+      subId="kpi-net-profit-sub"
+      initialSub="Tổng 3Đ: 495,32 tr (Max 567,55 tr)"
+      metaId="kpi-net-pct"
+      initialMeta="27,4%"
+      metaVariant="stamp-green"
+      tileTone="money"
+      valueToneClass="text-[var(--color-money)]"
+      subToneClass="text-[var(--color-ink-2)]"
+    />
+    <KpiTile
+      label="Sản lượng hòa vốn"
+      valueId="kpi-be-boxes"
+      initialValue="787,5 Box"
+      subId="kpi-be-sub"
+      initialSub="Trên 1.320 Box (Đ1: 329,9b)"
+      metaId="kpi-be-pct"
+      initialMeta="59,7%"
+      metaToneClass="text-[var(--color-accent)] font-medium"
+    />
+  </div>
+
+  <!-- Row 2: Waterfall Bridge (7 cols) + 6-Scenario Grouped Column Chart (5 cols) -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <VisualCard
+      cardId="card-exec-waterfall"
+      className="xl:col-span-7"
+      title="Thác chuyển hóa Doanh thu – Lợi nhuận (Stepped Waterfall Bridge)"
+      subtitle="Đồng bộ trực tiếp với Scale, Đơn vị & What-If · Rê chuột xem chi tiết"
+      subtitleId="wf-subtitle"
+      badgeText="TB 3 Đợt · 1 Box"
+      badgeId="wf-batch-label"
+      focusTarget="waterfall-svg-wrap"
+      focusTitle="Thác chuyển hóa Doanh thu – Lợi nhuận"
+    >
+      <div id="waterfall-svg-wrap" class="w-full py-1"></div>
+      <div slot="footer" class="flex flex-wrap items-center justify-between gap-2 text-[11.5px] text-[var(--color-muted)]">
+        <span>■ Mốc ròng · ▤ Khấu trừ & Chi phí · ■ Lãi ròng FX (+Nét đứt Hoàn nhập 80% DP)</span>
+        <span class="font-mono-num" id="wf-max-note">Hoàn nhập 100% DP: 429.961đ/Box</span>
+      </div>
+    </VisualCard>
+
+    <VisualCard
+      cardId="card-exec-scenarios"
+      className="xl:col-span-5"
+      title="So sánh 6 Kịch bản (FX · GAM · Đợt 1)"
+      subtitle="Click vào nhóm cột để nạp kịch bản vào toàn bộ báo cáo"
+      focusTarget="scenario-bars-chart"
+      focusTitle="So sánh 6 Kịch bản Chiến lược"
+    >
+      <div id="scenario-bars-chart" class="w-full py-1"></div>
+      <div slot="footer" class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[var(--color-muted)]">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#047857]"></span>Lãi FX</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#1d4ed8]/85"></span>Trả GAM</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#0284c7]/80"></span>Lãi Đ1</span>
+        </div>
+        <span class="font-mono-num">Mốc 500tr = 100% ROI</span>
+      </div>
+    </VisualCard>
+  </div>
+
+  <!-- Row 3: Channel Donut & Profit (5 cols) + Interactive Break-Even CVP (7 cols) -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <VisualCard
+      className="xl:col-span-5"
+      title="Tỷ trọng & Đóng góp Lãi ròng 3 Kênh"
+      subtitle="Click vào lát cắt hoặc thanh kênh để Cross-Filter"
+      focusTarget="exec-channel-visuals"
+      focusTitle="Tỷ trọng & Đóng góp Lãi ròng 3 Kênh"
+    >
+      <div id="exec-channel-visuals" class="grid grid-cols-1 sm:grid-cols-12 gap-3 py-2 items-center">
+        <div class="sm:col-span-5 flex justify-center" id="channel-donut-wrap"></div>
+        <div class="sm:col-span-7" id="channel-profit-bars-wrap"></div>
+      </div>
+      <div slot="footer" class="flex items-center justify-between text-[11.5px]">
+        <span class="text-[var(--color-muted)]">
+          Doanh thu thực BQ: <strong class="font-mono-num text-[var(--color-ink)]" id="exec-ch-net">1.368.000đ/Box</strong>
+        </span>
+        <span class="text-[var(--color-money)] font-medium font-mono-num" id="exec-ch-profit">Lãi FX: 495,32 tr</span>
+      </div>
+    </VisualCard>
+
+    <VisualCard
+      className="xl:col-span-7"
+      title="Đồ thị Hòa vốn CVP (Cost–Volume–Profit)"
+      subtitle="Rê chuột ngang biểu đồ để xem chính xác điểm hòa vốn, thu thuần và lãi/lỗ theo sản lượng"
+      badgeText="3 Đợt (1.320 Box)"
+      badgeId="cvp-scale-badge"
+      badgeTone="green"
+      focusTarget="cvp-chart-wrap"
+      focusTitle="Đồ thị Hòa vốn CVP"
+    >
+      <div id="cvp-chart-wrap" class="w-full py-1"></div>
+    </VisualCard>
+  </div>
+</section>

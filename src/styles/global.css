@@ -1,0 +1,376 @@
+@import "tailwindcss";
+
+:root {
+  --color-page: #f1f5f9;
+  --color-card: #ffffff;
+  --color-soft: #edf2f7;
+  --color-side: #f8fafc;
+  --color-ink: #0f172a;
+  --color-ink-2: #334155;
+  --color-muted: #64748b;
+  --color-line: rgba(15, 23, 42, 0.085);
+  --color-line-strong: rgba(15, 23, 42, 0.16);
+  --color-accent: #1d4ed8;        /* Corporate Cobalt Navy */
+  --color-accent-bg: rgba(29, 78, 216, 0.065);
+  --color-accent-ring: rgba(29, 78, 216, 0.24);
+  --color-money: #047857;         /* Institutional Emerald */
+  --color-money-bg: rgba(4, 120, 87, 0.07);
+  --color-blue: #0284c7;
+  --color-warn: #b45309;
+  --color-down: #be123c;
+  --color-tip: #0f172a;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.02);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13.5px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-ring);
+  outline-offset: 2px;
+}
+
+.font-mono-num,
+.tabular-nums {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.svg-chart text {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.serial-stamp {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--color-soft);
+  color: var(--color-ink-2);
+  border: 1px solid var(--color-line-strong);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.serial-stamp-gold {
+  background-color: var(--color-accent-bg);
+  color: var(--color-accent);
+  border-color: var(--color-accent-ring);
+  font-weight: 500;
+}
+
+.serial-stamp-green {
+  background-color: var(--color-money-bg);
+  color: var(--color-money);
+  border-color: rgba(4, 120, 87, 0.25);
+  font-weight: 500;
+}
+
+/* Visual Card (outer radius 8px, inner controls 6px, nested stamps 4px) */
+.pbi-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 150ms var(--ease-out);
+}
+
+.pbi-card:hover {
+  border-color: var(--color-line-strong);
+}
+
+.soft-shell {
+  background-color: var(--color-soft);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.inner-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* Sidebar & Sheet Tabs */
+.pbi-nav-item {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-ink-2);
+  font-size: 13px;
+  font-weight: 400;
+  border: 1px solid transparent;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out), border-color 140ms var(--ease-out);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.pbi-nav-item:hover {
+  background-color: rgba(15, 23, 42, 0.045);
+  color: var(--color-ink);
+}
+
+.pbi-nav-item.active {
+  background-color: var(--color-card);
+  color: var(--color-ink);
+  font-weight: 500;
+  border-color: var(--color-line);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+.pbi-nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background-color: var(--color-accent);
+}
+
+.pbi-sheet-tab {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-ink-2);
+  border-right: 1px solid var(--color-line);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+}
+
+.pbi-sheet-tab:hover {
+  background-color: rgba(15, 23, 42, 0.045);
+  color: var(--color-ink);
+}
+
+.pbi-sheet-tab.active {
+  background-color: var(--color-card);
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.pbi-sheet-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+/* Segmented Slicer */
+.seg-group {
+  background-color: var(--color-soft);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid var(--color-line);
+  display: inline-flex;
+  gap: 2px;
+}
+
+.seg-btn {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-ink-2);
+  border: 1px solid transparent;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out), border-color 140ms var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.seg-btn:hover {
+  color: var(--color-ink);
+}
+
+.seg-btn.active {
+  background-color: var(--color-card);
+  color: var(--color-ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-color: var(--color-line);
+}
+
+/* Range Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--color-soft);
+  border-radius: 4px;
+  border: 1px solid var(--color-line);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--color-ink);
+  cursor: pointer;
+  border: 2px solid var(--color-card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--color-accent);
+  transform: scale(1.06);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--color-ink);
+  cursor: pointer;
+  border: 2px solid var(--color-card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+}
+
+/* Heatmap Cell */
+.heatmap-cell {
+  transition: transform 120ms var(--ease-out), box-shadow 120ms var(--ease-out);
+  cursor: pointer;
+}
+
+.heatmap-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.09);
+}
+
+/* Power BI Data Grid */
+.data-table th {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--color-muted);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-line-strong);
+  background-color: var(--color-side);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 12.5px;
+  color: var(--color-ink-2);
+  vertical-align: middle;
+}
+
+.data-table tr:hover td {
+  background-color: rgba(241, 245, 249, 0.7);
+}
+
+.data-table tr.row-highlight td {
+  background-color: var(--color-accent-bg);
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.data-table tr.row-profit td {
+  background-color: var(--color-money-bg);
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+/* Focus Mode Button */
+.focus-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out), border-color 140ms var(--ease-out);
+  cursor: pointer;
+}
+
+.focus-btn:hover {
+  background-color: var(--color-soft);
+  color: var(--color-ink);
+  border-color: var(--color-line);
+}
+
+/* Floating Tooltip */
+#global-tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 200;
+  background-color: var(--color-tip);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  transition: opacity 100ms var(--ease-out);
+  max-width: 310px;
+}
+
+.pbi-page.hidden-page {
+  display: none;
+}
+
+/* Right What-If Drawer responsive behavior */
+.whatif-drawer {
+  width: 296px;
+  background-color: var(--color-side);
+  border-left: 1px solid var(--color-line);
+}
+
+@media (max-width: 1279px) {
+  .whatif-drawer {
+    position: fixed;
+    top: 48px;
+    right: 0;
+    bottom: 36px;
+    z-index: 45;
+    box-shadow: -8px 0 28px rgba(0, 0, 0, 0.14);
+  }
+}

@@ -1,0 +1,27 @@
+---
+---
+
+<div
+  id="focus-modal"
+  class="fixed inset-0 z-50 hidden bg-black/35 backdrop-blur-[2px] flex items-center justify-center p-6"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="focus-modal-title"
+>
+  <div class="bg-[var(--color-card)] border border-[var(--color-line-strong)] rounded-[10px] shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
+    <div class="px-5 py-3 border-b border-[var(--color-line)] flex items-center justify-between bg-[var(--color-side)]">
+      <div class="flex items-center gap-2.5">
+        <span class="serial-stamp serial-stamp-gold">Chế độ Tập trung (Focus Mode)</span>
+        <span id="focus-modal-title" class="text-[15px] font-medium text-[var(--color-ink)]"></span>
+      </div>
+      <button
+        type="button"
+        data-action="close-focus"
+        class="h-7 px-3 rounded-[6px] text-[12px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)] text-[var(--color-ink)] transition-colors cursor-pointer"
+      >
+        Đóng (Esc)
+      </button>
+    </div>
+    <div id="focus-modal-body" class="p-6 overflow-y-auto flex-1"></div>
+  </div>
+</div>

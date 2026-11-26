@@ -1,0 +1,2500 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FramigosX × GAM Esports — Power BI Financial & Unit Economics Workspace</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --color-page: #f4f4f1;
+      --color-card: #ffffff;
+      --color-soft: #f0f0ec;
+      --color-side: #f8f8f6;
+      --color-ink: #171717;
+      --color-ink-2: #4a4a4f;
+      --color-muted: #6e6e75;
+      --color-line: rgba(23, 23, 23, 0.085);
+      --color-line-strong: rgba(23, 23, 23, 0.16);
+      --color-accent: #b45309;        /* GAM Championship Amber */
+      --color-accent-bg: rgba(180, 83, 9, 0.075);
+      --color-accent-ring: rgba(180, 83, 9, 0.26);
+      --color-money: #0f7f57;         /* Safe Net Profit Green */
+      --color-money-bg: rgba(15, 127, 87, 0.075);
+      --color-blue: #2563eb;
+      --color-warn: #c98a00;
+      --color-down: #d23f45;
+      --color-tip: #18181b;
+      --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.02);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-page);
+      color: var(--color-ink);
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13.5px;
+      line-height: 19px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-mono-num, .tabular-nums {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .svg-chart text {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .serial-stamp {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-variant-numeric: tabular-nums;
+      font-size: 11px;
+      line-height: 15px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: var(--color-soft);
+      color: var(--color-ink-2);
+      border: 1px solid var(--color-line-strong);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .serial-stamp-gold {
+      background-color: var(--color-accent-bg);
+      color: var(--color-accent);
+      border-color: var(--color-accent-ring);
+      font-weight: 500;
+    }
+
+    .serial-stamp-green {
+      background-color: var(--color-money-bg);
+      color: var(--color-money);
+      border-color: rgba(15, 127, 87, 0.25);
+      font-weight: 500;
+    }
+
+    /* Power BI Visual Card */
+    .pbi-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-line);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      transition: border-color 150ms var(--ease-out);
+    }
+
+    .pbi-card:hover {
+      border-color: var(--color-line-strong);
+    }
+
+    .soft-shell {
+      background-color: var(--color-soft);
+      border: 1px solid var(--color-line);
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .inner-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-line);
+      border-radius: 6px;
+      padding: 14px;
+    }
+
+    /* Sidebar & Sheet Tabs */
+    .pbi-nav-item {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-ink-2);
+      font-size: 13px;
+      font-weight: 400;
+      transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .pbi-nav-item:hover {
+      background-color: rgba(23, 23, 23, 0.045);
+      color: var(--color-ink);
+    }
+
+    .pbi-nav-item.active {
+      background-color: var(--color-card);
+      color: var(--color-ink);
+      font-weight: 500;
+      border: 1px solid var(--color-line);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .pbi-nav-item.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background-color: var(--color-accent);
+    }
+
+    .pbi-sheet-tab {
+      height: 34px;
+      padding: 0 14px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-ink-2);
+      border-right: 1px solid var(--color-line);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+    }
+
+    .pbi-sheet-tab:hover {
+      background-color: rgba(23, 23, 23, 0.04);
+      color: var(--color-ink);
+    }
+
+    .pbi-sheet-tab.active {
+      background-color: var(--color-card);
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    .pbi-sheet-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2.5px;
+      background-color: var(--color-accent);
+    }
+
+    /* Segmented Slicer */
+    .seg-group {
+      background-color: var(--color-soft);
+      padding: 2px;
+      border-radius: 6px;
+      border: 1px solid var(--color-line);
+      display: inline-flex;
+      gap: 2px;
+    }
+
+    .seg-btn {
+      height: 26px;
+      padding: 0 9px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-ink-2);
+      transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .seg-btn:hover { color: var(--color-ink); }
+
+    .seg-btn.active {
+      background-color: var(--color-card);
+      color: var(--color-ink);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--color-line);
+    }
+
+    /* Sliders */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      background: var(--color-soft);
+      border-radius: 4px;
+      border: 1px solid var(--color-line);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: var(--color-ink);
+      cursor: pointer;
+      border: 2px solid var(--color-card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.28);
+      transition: transform 100ms var(--ease-out), background-color 100ms var(--ease-out);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: var(--color-accent);
+      transform: scale(1.08);
+    }
+
+    /* Movement diagonal hatch */
+    .hatch-amber {
+      background-image: repeating-linear-gradient(45deg, rgba(180, 83, 9, 0.24) 0px, rgba(180, 83, 9, 0.24) 2px, transparent 2px, transparent 6px);
+      background-color: rgba(180, 83, 9, 0.06);
+    }
+
+    .heatmap-cell {
+      transition: transform 110ms var(--ease-out), box-shadow 110ms var(--ease-out);
+      cursor: pointer;
+    }
+    .heatmap-cell:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.09);
+    }
+
+    /* Power BI Data Grid */
+    .data-table th {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--color-muted);
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--color-line-strong);
+      background-color: var(--color-side);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--color-line);
+      font-size: 12.5px;
+      color: var(--color-ink-2);
+      vertical-align: middle;
+    }
+
+    .data-table tr:hover td { background-color: rgba(240, 240, 236, 0.55); }
+    .data-table tr.row-highlight td { background-color: var(--color-accent-bg); color: var(--color-ink); font-weight: 500; }
+    .data-table tr.row-profit td { background-color: var(--color-money-bg); color: var(--color-ink); font-weight: 500; }
+
+    /* Focus Mode Button */
+    .focus-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-muted);
+      transition: background-color 120ms, color 120ms;
+      cursor: pointer;
+    }
+    .focus-btn:hover {
+      background-color: var(--color-soft);
+      color: var(--color-ink);
+    }
+
+    /* Floating Tooltip */
+    #global-tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      background-color: var(--color-tip);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 16px;
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.28);
+      opacity: 0;
+      transition: opacity 100ms var(--ease-out);
+      max-width: 310px;
+    }
+
+    .pbi-page.hidden-page { display: none; }
+  </style>
+</head>
+<body class="h-screen overflow-hidden flex flex-col bg-[var(--color-page)] text-[var(--color-ink)]">
+
+  <!-- Global Dark Tooltip -->
+  <div id="global-tooltip"></div>
+
+  <!-- Focus Mode Modal -->
+  <div id="focus-modal" class="fixed inset-0 z-50 hidden bg-black/35 backdrop-blur-[2px] flex items-center justify-center p-6" onclick="if(event.target===this) closeFocusMode()">
+    <div class="bg-[var(--color-card)] border border-[var(--color-line-strong)] rounded-[10px] shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="px-5 py-3 border-b border-[var(--color-line)] flex items-center justify-between bg-[var(--color-side)]">
+        <div class="flex items-center gap-2.5">
+          <span class="serial-stamp serial-stamp-gold">Chế độ Tập trung (Focus Mode)</span>
+          <span id="focus-modal-title" class="text-[15px] font-medium text-[var(--color-ink)]"></span>
+        </div>
+        <button onclick="closeFocusMode()" class="h-7 px-3 rounded-[6px] text-[12px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)] text-[var(--color-ink)]">
+          Đóng (Esc)
+        </button>
+      </div>
+      <div id="focus-modal-body" class="p-6 overflow-y-auto flex-1"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- TOP POWER BI COMMAND RIBBON                                             -->
+  <!-- ======================================================================= -->
+  <header class="h-12 shrink-0 bg-[var(--color-card)] border-b border-[var(--color-line-strong)] px-4 flex items-center justify-between gap-3 z-30 select-none">
+    <!-- Left: Report Title & Live Data Badge -->
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-7 h-7 rounded-[6px] bg-[var(--color-ink)] text-white flex items-center justify-center font-mono-num text-[11px] font-medium shrink-0">
+        FX
+      </div>
+      <div class="min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="text-[14px] font-medium text-[var(--color-ink)] truncate">FramigosX × GAM · Pricing & Unit Economics</span>
+          <span class="hidden sm:inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)] bg-[var(--color-soft)] px-2 py-0.5 rounded-[4px] border border-[var(--color-line)]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#12a150]"></span>
+            MSRP gốc · Shenzou · 25/11/2026
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Global Slicers -->
+    <div class="hidden md:flex items-center gap-2.5">
+      <!-- Scale Slicer -->
+      <div class="seg-group" role="group" aria-label="Phạm vi hạch toán">
+        <button onclick="setBatchMode('3batch')" id="ribbon-scale-3batch" class="seg-btn active">3 Đợt (1.320 Box)</button>
+        <button onclick="setBatchMode('batch1')" id="ribbon-scale-batch1" class="seg-btn">Đợt 1 (445 Box)</button>
+      </div>
+
+      <!-- Unit Slicer -->
+      <div class="seg-group" role="group" aria-label="Đơn vị hiển thị">
+        <button onclick="setUnitView('box')" id="unit-btn-box" class="seg-btn active">Box</button>
+        <button onclick="setUnitView('pack')" id="unit-btn-pack" class="seg-btn">Pack</button>
+        <button onclick="setUnitView('card')" id="unit-btn-card" class="seg-btn">Thẻ</button>
+        <button onclick="setUnitView('total')" id="unit-btn-total" class="seg-btn">Tổng</button>
+      </div>
+
+      <!-- Scenario Slicer Dropdown -->
+      <div class="flex items-center gap-1.5 bg-[var(--color-soft)] border border-[var(--color-line)] rounded-[6px] px-2 h-[30px]">
+        <span class="text-[11px] text-[var(--color-muted)]">Kịch bản:</span>
+        <select id="ribbon-scenario-select" onchange="if(this.value!=='Custom') selectScenario(this.value)" class="bg-transparent text-[12px] font-medium text-[var(--color-ink)] outline-none cursor-pointer">
+          <option value="S1">S1 · Giá thấp (−20%)</option>
+          <option value="S2">S2 · Áp lực Kép</option>
+          <option value="S3" selected>S3 · Cơ sở Chuẩn (Khuyến nghị)</option>
+          <option value="S4">S4 · Tối ưu (+5%)</option>
+          <option value="S5">S5 · Cao cấp (+20%)</option>
+          <option value="S6">S6 · Stress Tồn 25%</option>
+          <option value="Custom">★ Tùy chỉnh (What-If)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right: Cross-Filter Pill, Reset, Export CSV, Toggle Right Drawer -->
+    <div class="flex items-center gap-2 shrink-0">
+      <span id="active-filter-badge" class="hidden lg:inline-flex serial-stamp serial-stamp-gold">S3 Chuẩn · 55/30/15</span>
+      <button onclick="resetAllFilters()" class="h-7 px-2.5 rounded-[5px] text-[12px] font-medium bg-[var(--color-soft)] hover:bg-[var(--color-line-strong)] text-[var(--color-ink-2)] transition-colors" title="Đặt lại toàn bộ bộ lọc & thông số What-If">
+        Đặt lại
+      </button>
+      <button onclick="exportUnitEconCSV()" class="h-7 px-2.5 rounded-[5px] text-[12px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)] text-[var(--color-ink)] transition-colors flex items-center gap-1.5" title="Tải xuống Bảng 3.1 (22 dòng Unit Economics) dạng CSV">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="hidden sm:inline">Xuất CSV</span>
+      </button>
+      <button onclick="toggleRightDrawer()" id="toggle-drawer-btn" class="h-7 px-2.5 rounded-[5px] text-[12px] font-medium bg-[var(--color-ink)] text-white hover:opacity-90 transition-opacity flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/></svg>
+        <span>What-If</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================================================================= -->
+  <!-- MIDDLE WORKSPACE SHELL (Left Pages + Center Canvas + Right What-If)     -->
+  <!-- ======================================================================= -->
+  <div class="flex-1 flex min-h-0 overflow-hidden">
+
+    <!-- LEFT SIDEBAR: Power BI Pages Pane -->
+    <aside class="w-[228px] shrink-0 bg-[var(--color-side)] border-r border-[var(--color-line)] hidden lg:flex flex-col justify-between p-3 overflow-y-auto select-none">
+      <div class="space-y-4">
+        <div>
+          <div class="px-2 pb-2 text-[11px] font-medium text-[var(--color-muted)]">Trang báo cáo (Report Pages)</div>
+          <nav class="space-y-1" id="left-page-nav">
+            <button onclick="switchPage('page-exec')" data-page="page-exec" class="pbi-nav-item active">
+              <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+              <span>Tổng quan điều hành</span>
+            </button>
+            <button onclick="switchPage('page-benchmark')" data-page="page-benchmark" class="pbi-nav-item">
+              <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-6"/></svg>
+              <span>1. Đối chuẩn 16 SKU</span>
+              <span class="ml-auto text-[11px] font-mono-num text-[var(--color-muted)]">16</span>
+            </button>
+            <button onclick="switchPage('page-pricing')" data-page="page-pricing" class="pbi-nav-item">
+              <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>2. Giá đa tầng & Kênh sỉ</span>
+            </button>
+            <button onclick="switchPage('page-unitecon')" data-page="page-unitecon" class="pbi-nav-item">
+              <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span>3. Unit Economics</span>
+              <span class="ml-auto text-[11px] font-mono-num text-[var(--color-muted)]">22</span>
+            </button>
+            <button onclick="switchPage('page-whatif')" data-page="page-whatif" class="pbi-nav-item">
+              <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>4. Giả lập & Stress Test</span>
+            </button>
+            <div class="pt-1.5 mt-1.5 border-t border-[var(--color-line)]">
+              <button onclick="switchPage('page-all')" data-page="page-all" class="pbi-nav-item">
+                <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <span>Xem toàn bộ (All)</span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        <!-- Fixed Reference Box -->
+        <div class="p-3 rounded-[8px] bg-[var(--color-card)] border border-[var(--color-line)] space-y-1.5 text-[11.5px]">
+          <div class="font-medium text-[var(--color-ink)] pb-1 border-b border-[var(--color-line)]">Thông số hạch toán gốc</div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Nhà máy in</span><span class="font-medium">Shenzou Printing</span></div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Tỷ giá USD/EUR</span><span class="font-mono-num">25.500 / 27.500</span></div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Thuế VAT</span><span class="font-mono-num">10,0%</span></div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Cấu hình Box</span><span class="font-mono-num">10 Pack (80 thẻ)</span></div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Sản lượng 3 đợt</span><span class="font-mono-num">1.320 Box (105,6k)</span></div>
+          <div class="flex justify-between"><span class="text-[var(--color-muted)]">Thiết kế & Kho</span><span class="font-mono-num text-[var(--color-money)]">0 VNĐ</span></div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[var(--color-line)] px-1 flex items-center justify-between text-[11px] text-[var(--color-muted)]">
+        <span>GAM 10th Anniversary</span>
+        <span class="serial-stamp serial-stamp-gold">/50</span>
+      </div>
+    </aside>
+
+    <!-- CENTER REPORT CANVAS -->
+    <main class="flex-1 min-w-0 overflow-y-auto p-5 space-y-6" id="pbi-canvas">
+
+      <!-- =================================================================== -->
+      <!-- PAGE 1: EXECUTIVE SUMMARY (Tổng quan điều hành)                     -->
+      <!-- =================================================================== -->
+      <section id="page-exec" class="pbi-page space-y-5">
+        <!-- 6-Tile Power BI KPI Ribbon -->
+        <div class="pbi-card grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 divide-y md:divide-y-0 md:divide-x divide-[var(--color-line)]">
+          <div class="p-3.5 bg-[var(--color-accent-bg)]">
+            <div class="flex items-center justify-between text-[12px] font-medium text-[var(--color-ink)]">
+              <span>Giá Hobby Box (VAT)</span>
+              <span class="serial-stamp serial-stamp-gold" id="kpi-badge-scen">S3</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-ink)] mt-1.5" id="kpi-srp-vat">1.980.000</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)] mt-0.5" id="kpi-srp-sub">1.800.000đ trước VAT · 24.750đ/thẻ</div>
+          </div>
+
+          <div class="p-3.5">
+            <div class="flex items-center justify-between text-[12px] text-[var(--color-ink-2)]">
+              <span>Doanh thu thực (Net)</span>
+              <span class="font-mono-num text-[11px] text-[var(--color-muted)]" id="kpi-net-srp-pct">76,0% SRP</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-ink)] mt-1.5" id="kpi-net-rev">1.368.000</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)] mt-0.5" id="kpi-net-rev-sub">Tổng 3 đợt: 1.805,76 tr</div>
+          </div>
+
+          <div class="p-3.5">
+            <div class="flex items-center justify-between text-[12px] text-[var(--color-ink-2)]">
+              <span>Giá vốn nhập kho</span>
+              <span class="font-mono-num text-[11px] text-[var(--color-muted)]" id="kpi-cogs-pct">47,9% Net</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-ink)] mt-1.5" id="kpi-cogs">655.870</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-money)] mt-0.5" id="kpi-cogs-sub">▼ 17,5% vs Đợt 1 (794,7k)</div>
+          </div>
+
+          <div class="p-3.5">
+            <div class="flex items-center justify-between text-[12px] text-[var(--color-ink-2)]">
+              <span>Lợi nhuận gộp chuẩn</span>
+              <span class="font-mono-num text-[11px] text-[var(--color-money)] font-medium" id="kpi-gp-pct">52,1%</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-ink)] mt-1.5" id="kpi-gp">712.130</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)] mt-0.5" id="kpi-gp-sub">Tổng 3 đợt: 940,01 tr</div>
+          </div>
+
+          <div class="p-3.5 bg-[var(--color-money-bg)]">
+            <div class="flex items-center justify-between text-[12px] font-medium text-[var(--color-ink)]">
+              <span>Lãi ròng An toàn FX</span>
+              <span class="serial-stamp serial-stamp-green" id="kpi-net-pct">27,4%</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-money)] mt-1.5" id="kpi-net-profit">375.241</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-ink-2)] mt-0.5" id="kpi-net-profit-sub">Tổng 3 đợt: 495,32 tr (Max 567,5 tr)</div>
+          </div>
+
+          <div class="p-3.5">
+            <div class="flex items-center justify-between text-[12px] text-[var(--color-ink-2)]">
+              <span>Sản lượng hòa vốn</span>
+              <span class="font-mono-num text-[11px] text-[var(--color-accent)] font-medium" id="kpi-be-pct">59,7%</span>
+            </div>
+            <div class="text-[24px] font-medium font-mono-num tracking-[-0.02em] text-[var(--color-ink)] mt-1.5" id="kpi-be-boxes">787,5 Box</div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)] mt-0.5" id="kpi-be-sub">Đợt 1: 329,9 / 445 Box (74,1%)</div>
+          </div>
+        </div>
+
+        <!-- Row 2: Waterfall Bridge (7 cols) + 6-Scenario Grouped Column Chart (5 cols) -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-7 pbi-card p-4 flex flex-col justify-between" id="card-exec-waterfall">
+            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+              <div>
+                <div class="text-[14px] font-medium text-[var(--color-ink)]">Thác chuyển hóa Doanh thu – Lợi nhuận (Stepped Waterfall Bridge)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]" id="wf-subtitle">Đồng bộ trực tiếp với Scale, Đơn vị & What-If · Rê chuột xem chi tiết</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="serial-stamp" id="wf-batch-label">TB 3 Đợt · 1 Box</span>
+                <button onclick="openFocusMode('waterfall-svg-wrap', 'Thác chuyển hóa Doanh thu – Lợi nhuận')" class="focus-btn" title="Phóng to (Focus Mode)">⤢</button>
+              </div>
+            </div>
+            <div id="waterfall-svg-wrap" class="w-full py-2"></div>
+            <div class="pt-2 border-t border-[var(--color-line)] flex flex-wrap items-center justify-between text-[11.5px] text-[var(--color-muted)]">
+              <span>■ Mốc ròng · ▤ Khấu trừ & Chi phí · ■ Lãi ròng FX (+Nét đứt Hoàn nhập 80% DP)</span>
+              <span class="font-mono-num" id="wf-max-note">Hoàn nhập 100% DP: 429.961đ/Box</span>
+            </div>
+          </div>
+
+          <div class="xl:col-span-5 pbi-card p-4 flex flex-col justify-between" id="card-exec-scenarios">
+            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+              <div>
+                <div class="text-[14px] font-medium text-[var(--color-ink)]">So sánh 6 Kịch bản (FX · GAM · Đợt 1)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Click vào nhóm cột để nạp kịch bản vào toàn bộ báo cáo</div>
+              </div>
+              <button onclick="openFocusMode('scenario-bars-chart', 'So sánh 6 Kịch bản Chiến lược')" class="focus-btn" title="Phóng to (Focus Mode)">⤢</button>
+            </div>
+            <div id="scenario-bars-chart" class="w-full py-2"></div>
+            <div class="pt-2 border-t border-[var(--color-line)] flex flex-wrap items-center justify-between text-[11px] text-[var(--color-muted)]">
+              <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#0f7f57]"></span>Lãi FX</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#b45309]/80"></span>Trả GAM</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-[2px] bg-[#2563eb]/80"></span>Lãi Đ1</span>
+              </div>
+              <span class="font-mono-num">Mốc 500tr = 100% ROI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Channel Donut & Profit (5 cols) + Interactive Break-Even CVP (7 cols) -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-5 pbi-card p-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+              <div>
+                <div class="text-[14px] font-medium text-[var(--color-ink)]">Tỷ trọng & Đóng góp Lãi ròng 3 Kênh</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Click vào lát cắt hoặc thanh kênh để Cross-Filter</div>
+              </div>
+              <button onclick="openFocusMode('exec-channel-visuals', 'Tỷ trọng & Đóng góp Lãi ròng 3 Kênh')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="exec-channel-visuals" class="grid grid-cols-1 sm:grid-cols-12 gap-3 py-3 items-center">
+              <div class="sm:col-span-5 flex justify-center" id="channel-donut-wrap"></div>
+              <div class="sm:col-span-7" id="channel-profit-bars-wrap"></div>
+            </div>
+            <div class="pt-2 border-t border-[var(--color-line)] flex items-center justify-between text-[11.5px]">
+              <span class="text-[var(--color-muted)]">Doanh thu thực BQ: <strong class="font-mono-num text-[var(--color-ink)]" id="exec-ch-net">1.368.000đ/Box</strong></span>
+              <span class="text-[var(--color-money)] font-medium font-mono-num" id="exec-ch-profit">Lãi FX: 495,32 tr</span>
+            </div>
+          </div>
+
+          <div class="xl:col-span-7 pbi-card p-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+              <div>
+                <div class="text-[14px] font-medium text-[var(--color-ink)]">Đồ thị Hòa vốn CVP (Cost–Volume–Profit)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Rê chuột ngang biểu đồ để xem chính xác điểm hòa vốn, thu thuần và lãi/lỗ theo sản lượng</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="serial-stamp serial-stamp-green" id="cvp-scale-badge">3 Đợt (1.320 Box)</span>
+                <button onclick="openFocusMode('cvp-chart-wrap', 'Đồ thị Hòa vốn CVP')" class="focus-btn" title="Phóng to">⤢</button>
+              </div>
+            </div>
+            <div id="cvp-chart-wrap" class="w-full py-1"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- PAGE 2: MARKET BENCHMARKING (1. Đối chuẩn 16 SKU)                   -->
+      <!-- =================================================================== -->
+      <section id="page-benchmark" class="pbi-page hidden-page space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)]">Trang 1 · Release price benchmarking (2025–2026)</div>
+            <h2 class="text-[18px] font-medium text-[var(--color-ink)]">Đối chuẩn 16 SKU tương đồng & Bản đồ Định vị Điểm rơi 1.980.000đ</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="seg-group" id="bm-seg-filter">
+              <button onclick="filterBenchmark('all')" data-seg="all" class="seg-btn active">Tất cả (16)</button>
+              <button onclick="filterBenchmark('seg1')" data-seg="seg1" class="seg-btn">Phổ thông VN (4)</button>
+              <button onclick="filterBenchmark('seg2')" data-seg="seg2" class="seg-btn">Trung cấp & Esports (8)</button>
+              <button onclick="filterBenchmark('seg3')" data-seg="seg3" class="seg-btn">Cao cấp & Hit (4)</button>
+            </div>
+            <div class="seg-group" id="bm-metric-switch">
+              <button onclick="setBenchmarkMetric('card')" data-metric="card" class="seg-btn active">Giá / Thẻ</button>
+              <button onclick="setBenchmarkMetric('box')" data-metric="box" class="seg-btn">Giá / Hộp</button>
+              <button onclick="setBenchmarkMetric('pack')" data-metric="pack" class="seg-btn">Giá / Pack</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2D Scatter Plot Card -->
+        <div class="pbi-card p-4 space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+            <div>
+              <div class="text-[14px] font-medium text-[var(--color-ink)]">Bản đồ Định vị Thị trường 2D (Giá phát hành / Hộp vs Đơn giá / Thẻ)</div>
+              <div class="text-[11.5px] text-[var(--color-muted)]">Hành lang tối ưu 1,50–2,04 triệu VNĐ & trung bình 13 SKU thuần thẻ (25.483đ/thẻ)</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="seg-group" id="scatter-zoom-group">
+                <button onclick="setScatterZoom('target')" data-zoom="target" class="seg-btn active">Zoom ≤ 3,6 tr</button>
+                <button onclick="setScatterZoom('all')" data-zoom="all" class="seg-btn">Toàn thị trường ≤ 7,5 tr</button>
+              </div>
+              <button onclick="openFocusMode('scatter-chart-wrap', 'Bản đồ Định vị Thị trường 2D')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+          </div>
+          <div id="scatter-chart-wrap" class="w-full"></div>
+          <div class="pt-2 border-t border-[var(--color-line)] flex flex-wrap justify-between text-[11.5px] text-[var(--color-muted)]">
+            <span>* Tách riêng 2 Bundle phụ kiện Riot (T1 70 USD & Worlds 80 USD) khỏi trục đơn giá/thẻ để tránh nhiễu tỷ lệ</span>
+            <span>● Xanh: Có Auto/Seri · ● Xám: Phổ thông · ● Hổ phách: FramigosX × GAM (1,98tr · 24.750đ/thẻ)</span>
+          </div>
+        </div>
+
+        <!-- Ranked Bars + Segment Whiskers -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-8 pbi-card p-4 flex flex-col justify-between">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+              <div>
+                <div class="text-[12px] text-[var(--color-muted)]" id="bm-chart-subtitle">So sánh đơn giá phát hành gốc trên mỗi thẻ</div>
+                <div class="flex items-baseline gap-3">
+                  <span class="text-[18px] font-medium font-mono-num text-[var(--color-accent)]" id="bm-chart-headline">FramigosX: 24.750 VNĐ / thẻ</span>
+                  <span class="text-[12px] text-[var(--color-muted)] font-mono-num" id="bm-chart-avg">TB 13 SKU thuần thẻ: 25.483 VNĐ</span>
+                </div>
+              </div>
+              <button onclick="openFocusMode('bm-bars-container', 'Xếp hạng Giá phát hành 16 SKU')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="bm-bars-container" class="py-2.5 space-y-1.5 max-h-[420px] overflow-y-auto pr-1"></div>
+          </div>
+
+          <div class="xl:col-span-4 flex flex-col gap-4">
+            <div class="pbi-card p-4 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[14px] font-medium text-[var(--color-ink)]">Phân bố Phân khúc (Bảng 1.2)</span>
+                <span class="serial-stamp">Min · Med · Mean · Max</span>
+              </div>
+              <div id="segment-whiskers-wrap" class="space-y-2"></div>
+            </div>
+
+            <div class="pbi-card p-4 space-y-2.5 text-[12.5px] text-[var(--color-ink-2)]">
+              <div class="text-[14px] font-medium text-[var(--color-ink)]">3 Định đề chiến lược giá</div>
+              <div><strong class="text-[var(--color-ink)]">1. Trần LMHT 1,78–2,04 tr:</strong> Riot neo T1 & Worlds ở 70–80 USD; giữ dưới 2,00 tr đảm bảo quay vòng đại lý.</div>
+              <div><strong class="text-[var(--color-ink)]">2. Sàn vật lý &gt; 1,50 tr:</strong> VBA (18–19,8k/thẻ) không chữ ký; GAM có PRISM 0,6mm, Relic 130pt & cam kết 1–2 Hit lớn.</div>
+              <div><strong class="text-[var(--color-accent)]">3. Sweet Spot 1.980.000đ:</strong> 24.750đ/thẻ khớp TB thị trường (25.483đ) và rẻ hơn Kolex EWC Hobby −22,3%.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Power BI Data Grid: Table 1.1 with Search & Sort -->
+        <div class="pbi-card overflow-hidden">
+          <div class="px-4 py-3 border-b border-[var(--color-line)] flex flex-wrap items-center justify-between gap-2 bg-[var(--color-side)]">
+            <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 1.1 · Dữ liệu Giá phát hành gốc 16 SKU Tham chiếu (MSRP)</div>
+            <input type="text" id="search-16-skus" oninput="renderTable16SKUs()" placeholder="Tìm kiếm sản phẩm, hãng, Hit..." class="h-7 px-2.5 rounded-[5px] bg-[var(--color-card)] border border-[var(--color-line-strong)] text-[12px] outline-none focus:border-[var(--color-accent)] w-64" />
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full data-table">
+              <thead>
+                <tr>
+                  <th>Phân khúc</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Quy cách</th>
+                  <th class="text-right">Giá gốc</th>
+                  <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" onclick="sortTable16('vndBox')">Quy đổi (VNĐ) ↕</th>
+                  <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" onclick="sortTable16('vndPack')">Giá / Pack ↕</th>
+                  <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" onclick="sortTable16('vndCard')">Giá / Thẻ ↕</th>
+                  <th>Cam kết Hit & Kỹ thuật</th>
+                </tr>
+              </thead>
+              <tbody id="table-16-skus-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- PAGE 3: MULTI-TIER PRICING & CHANNELS (2. Giá đa tầng & Kênh sỉ)    -->
+      <!-- =================================================================== -->
+      <section id="page-pricing" class="pbi-page hidden-page space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)]">Trang 2 · Multi-tier pricing & B2B channel architecture</div>
+            <h2 class="text-[18px] font-medium text-[var(--color-ink)]">Bậc thang 4 SKU, Chiết khấu sỉ đứt đoạn & Cơ cấu 3 Kênh phân phối</h2>
+          </div>
+          <span class="serial-stamp serial-stamp-gold">Blended Net Realized: 1.368.000đ / Box (76,0% SRP)</span>
+        </div>
+
+        <!-- 4 SKU Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="pbi-card p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between mb-1.5"><span class="serial-stamp">SKU 1 · Retail</span><span class="text-[11.5px] font-mono-num text-[var(--color-accent)] font-medium">+5,6% / thẻ</span></div>
+              <div class="text-[15px] font-medium">Single Booster Pack</div>
+              <div class="text-[11.5px] text-[var(--color-muted)]">1 Pack (8 thẻ) · Quầy kệ & Sự kiện</div>
+              <div class="mt-3 pt-2.5 border-t border-[var(--color-line)] flex justify-between items-baseline">
+                <div><div class="text-[22px] font-medium font-mono-num">209.000đ</div><div class="text-[11px] font-mono-num text-[var(--color-muted)]">190.000đ trước VAT</div></div>
+                <div class="text-right font-mono-num text-[12px]">26.125đ/thẻ</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-[var(--color-line)] text-[11.5px] text-[var(--color-ink-2)]">Hạ rào cản mua thử xuống ~200k; kích thích nâng cấp lên Box để tiết kiệm 110k.</div>
+          </div>
+
+          <div class="pbi-card p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between mb-1.5"><span class="serial-stamp">SKU 2 · Pre-order</span><span class="text-[11.5px] font-mono-num text-[var(--color-money)] font-medium">−10,0%</span></div>
+              <div class="text-[15px] font-medium">Early-Bird Pre-order Box</div>
+              <div class="text-[11.5px] text-[var(--color-muted)]">10 Pack (80 thẻ) · Web/GAM mở sớm</div>
+              <div class="mt-3 pt-2.5 border-t border-[var(--color-line)] flex justify-between items-baseline">
+                <div><div class="text-[22px] font-medium font-mono-num">1.782.000đ</div><div class="text-[11px] font-mono-num text-[var(--color-muted)]">1.620.000đ trước VAT</div></div>
+                <div class="text-right font-mono-num text-[12px]">22.275đ/thẻ</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-[var(--color-line)] text-[11.5px] text-[var(--color-ink-2)]">Đo sức mua thực & thu tiền mặt sớm trước ra mắt, khóa sàn MAP tối thiểu.</div>
+          </div>
+
+          <div class="pbi-card p-4 flex flex-col justify-between ring-1 ring-inset ring-[var(--color-accent-ring)] bg-[var(--color-accent-bg)]">
+            <div>
+              <div class="flex justify-between mb-1.5"><span class="serial-stamp serial-stamp-gold">SKU 3 · Mốc chuẩn</span><span class="text-[11.5px] font-mono-num text-[var(--color-accent)] font-medium">0,0%</span></div>
+              <div class="text-[15px] font-medium">Standard Hobby Box</div>
+              <div class="text-[11.5px] text-[var(--color-ink-2)]">10 Pack (80 thẻ) · Đơn vị hạch toán</div>
+              <div class="mt-3 pt-2.5 border-t border-[var(--color-line)] flex justify-between items-baseline">
+                <div><div class="text-[22px] font-medium font-mono-num text-[var(--color-accent)]">1.980.000đ</div><div class="text-[11px] font-mono-num text-[var(--color-ink-2)]">1.800.000đ trước VAT</div></div>
+                <div class="text-right font-mono-num text-[12px] font-medium">24.750đ/thẻ</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-[var(--color-line)] text-[11.5px] text-[var(--color-ink)] font-medium">60 Base + 10 Silver + 7–8 Gold /50 + 1–2 Hit lớn (Auto/Relic).</div>
+          </div>
+
+          <div class="pbi-card p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between mb-1.5"><span class="serial-stamp">SKU 4 · VIP/Breaker</span><span class="text-[11.5px] font-mono-num text-[var(--color-money)] font-medium">−5,0%</span></div>
+              <div class="text-[15px] font-medium">Sealed Master Case</div>
+              <div class="text-[11.5px] text-[var(--color-muted)]">10 Box (800 thẻ) · Thùng seal 5 lớp</div>
+              <div class="mt-3 pt-2.5 border-t border-[var(--color-line)] flex justify-between items-baseline">
+                <div><div class="text-[22px] font-medium font-mono-num">18.810.000đ</div><div class="text-[11px] font-mono-num text-[var(--color-muted)]">17.100.000đ trước VAT</div></div>
+                <div class="text-right font-mono-num text-[12px]">23.513đ/thẻ</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-[var(--color-line)] text-[11.5px] text-[var(--color-ink-2)]">Đẩy sản lượng lớn; cam kết TB 3 thẻ Grail tranh ghép / Case.</div>
+          </div>
+        </div>
+
+        <!-- 4-SKU Ladder SVG -->
+        <div class="pbi-card p-4 space-y-2">
+          <div class="flex items-center justify-between pb-2 border-b border-[var(--color-line)]">
+            <div class="text-[14px] font-medium">Thang Đơn giá / Thẻ qua 4 bậc SKU (So với Mốc chuẩn 24.750đ/thẻ)</div>
+            <button onclick="openFocusMode('sku-ladder-wrap', 'Thang Đơn giá 4 bậc SKU')" class="focus-btn" title="Phóng to">⤢</button>
+          </div>
+          <div id="sku-ladder-wrap" class="w-full"></div>
+        </div>
+
+        <!-- B2B Wholesale + 100% Stacked Channel Chart -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-6 pbi-card p-4 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Khung Chiết khấu Bán sỉ Đứt đoạn (Bảng 2.2)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Không ký gửi trả hàng · Bảo hành lỗi QC sản xuất</div>
+              </div>
+              <span class="serial-stamp">CK BQ: 30,0%</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full data-table">
+                <thead>
+                  <tr><th>Cấp đại lý (MOQ)</th><th class="text-right">Tỷ trọng</th><th class="text-right">Chiết khấu</th><th class="text-right">Giá sỉ (Chưa VAT)</th><th class="text-right">Lãi Đại lý/Box</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Tier 3 — Silver</strong> <span class="text-[11px] text-[var(--color-muted)]">(10–29 Box · TT 100%)</span></td><td class="text-right font-mono-num">25%</td><td class="text-right font-mono-num">26,0%</td><td class="text-right font-mono-num">1.332.000đ</td><td class="text-right font-mono-num text-[var(--color-money)]">+468.000đ</td></tr>
+                  <tr><td><strong>Tier 2 — Gold</strong> <span class="text-[11px] text-[var(--color-muted)]">(30–79 Box · Cọc 50%)</span></td><td class="text-right font-mono-num">50%</td><td class="text-right font-mono-num">30,0%</td><td class="text-right font-mono-num">1.260.000đ</td><td class="text-right font-mono-num text-[var(--color-money)]">+540.000đ</td></tr>
+                  <tr><td><strong>Tier 1 — Platinum</strong> <span class="text-[11px] text-[var(--color-muted)]">(≥80 Box · Cọc 50%)</span></td><td class="text-right font-mono-num">25%</td><td class="text-right font-mono-num">34,0%</td><td class="text-right font-mono-num">1.188.000đ</td><td class="text-right font-mono-num text-[var(--color-money)]">+612.000đ</td></tr>
+                  <tr class="row-highlight"><td>Bình quân gia quyền kênh sỉ</td><td class="text-right font-mono-num">100%</td><td class="text-right font-mono-num">30,0%</td><td class="text-right font-mono-num">1.260.000đ</td><td class="text-right font-mono-num text-[var(--color-money)]">+540.000đ</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="xl:col-span-6 pbi-card p-4 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Cơ cấu 100% Doanh thu Thực qua 3 Kênh (Bảng 3.2)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Click vào tên kênh để bật/tắt Cross-Filter · Rê chuột xem số tiền</div>
+              </div>
+              <button onclick="openFocusMode('channel-stacked-chart-wrap', 'Cơ cấu 100% Doanh thu Thực qua 3 Kênh')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="channel-stacked-chart-wrap" class="w-full"></div>
+          </div>
+        </div>
+
+        <!-- Table 3.2 Full Channel Matrix -->
+        <div class="pbi-card overflow-hidden">
+          <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex justify-between items-center">
+            <span class="text-[13.5px] font-medium">Bảng 3.2 · Đối chiếu Unit Economics Ròng trên mỗi Hobby Box giữa 3 Kênh</span>
+            <span class="serial-stamp">COGS TB 3 Đợt + Mkt = 693.749đ / Box</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full data-table">
+              <thead>
+                <tr>
+                  <th>Kênh phân phối</th><th class="text-right">Doanh thu thực</th><th class="text-right">COGS + Mkt</th><th class="text-right">Royalty GAM (10%)</th><th class="text-right">Quỹ DP (5%)</th><th class="text-right">Chia lãi T2 (20%)</th><th class="text-right">Lãi FX (Đợt 1)</th><th class="text-right">Lãi FX (TB 3 Đợt)</th><th class="text-right">Biên ròng</th>
+                </tr>
+              </thead>
+              <tbody id="table-32-channels-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- PAGE 4: UNIT ECONOMICS 22 LINES, TREEMAP & CONTINGENCY              -->
+      <!-- =================================================================== -->
+      <section id="page-unitecon" class="pbi-page hidden-page space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)]">Trang 3 · 22-line Unit Economics, COGS Treemap & Risk buffer</div>
+            <h2 class="text-[18px] font-medium text-[var(--color-ink)]">Bóc tách Chi phí Xưởng Shenzou (Treemap), Quỹ Dự phòng 5% & Bảng 22 Dòng</h2>
+          </div>
+          <span class="serial-stamp serial-stamp-gold" id="ue-active-unit-badge">1 Hobby Box (80 thẻ) · Bình quân 3 Đợt</span>
+        </div>
+
+        <!-- COGS Treemap (7 cols) + Scale Savings (5 cols) -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-7 pbi-card p-4 flex flex-col justify-between space-y-2.5">
+            <div class="flex items-center justify-between border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Bản đồ Tỷ trọng Giá vốn Nhập kho (COGS Treemap · A1–A11)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Diện tích tỷ lệ thuận với chi phí từng hạng mục · Phân nhóm Xưởng, Bao bì & Logistics</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="serial-stamp serial-stamp-green" id="cogs-header-total">655.870đ / Box</span>
+                <button onclick="openFocusMode('cogs-treemap-wrap', 'COGS Treemap — 11 Hạng mục A1–A11')" class="focus-btn" title="Phóng to">⤢</button>
+              </div>
+            </div>
+            <div id="cogs-treemap-wrap" class="w-full"></div>
+            <div class="flex flex-wrap justify-between text-[11px] text-[var(--color-muted)] pt-1 border-t border-[var(--color-line)]">
+              <span>■ Xưởng Shenzou (A1–A8) · ■ Bao bì & Vật tư (A9–A10) · ■ Logistics & Hải quan (A11)</span>
+              <span class="font-mono-num">Rê chuột lên từng ô để xem tiết kiệm khi gộp 3 đợt</span>
+            </div>
+          </div>
+
+          <div class="xl:col-span-5 pbi-card p-4 flex flex-col justify-between space-y-2.5">
+            <div class="flex items-center justify-between border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Hiệu quả Quy mô (Đợt 1 vs TB 3 Đợt)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Tiết kiệm −138.824đ/Box (−17,5%) khi đặt 3 đợt</div>
+              </div>
+              <button onclick="openFocusMode('cogs-scale-chart-wrap', 'Hiệu quả Quy mô Giá vốn')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="cogs-scale-chart-wrap" class="p-2.5 rounded-[6px] bg-[var(--color-soft)] border border-[var(--color-line)]"></div>
+            <div id="cogs-breakdown-list" class="space-y-1 max-h-[165px] overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+
+        <!-- Contingency Risk Tiles -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="soft-shell">
+            <div class="px-3 py-1.5 flex justify-between text-[11.5px] text-[var(--color-ink-2)]"><span class="font-medium">Tiểu quỹ D1 · Lỗi QC & móp hộp</span><span class="font-mono-num">2,0% Net</span></div>
+            <div class="inner-card space-y-2.5">
+              <div class="flex items-baseline justify-between">
+                <div><span class="text-[24px] font-medium font-mono-num">55,1 Box</span> <span class="text-[12px] text-[var(--color-muted)]">/ 1.320 Box</span></div>
+                <span class="serial-stamp serial-stamp-green">4,17% sản lượng</span>
+              </div>
+              <div class="flex gap-[3px] h-5 items-end" id="ticks-d1"></div>
+              <div class="text-[11.5px] text-[var(--color-muted)] flex justify-between pt-1 border-t border-[var(--color-line)]"><span>Ngân sách: 36.115.200đ</span><span>COGS: 655.870đ</span></div>
+            </div>
+          </div>
+
+          <div class="soft-shell">
+            <div class="px-3 py-1.5 flex justify-between text-[11.5px] text-[var(--color-ink-2)]"><span class="font-medium">Tiểu quỹ D2 · Trượt tỷ giá USD</span><span class="font-mono-num">1,5% Net</span></div>
+            <div class="inner-card space-y-2.5">
+              <div class="flex items-baseline justify-between">
+                <div><span class="text-[24px] font-medium font-mono-num">26.648đ</span> <span class="text-[12px] text-[var(--color-muted)]">/ USD trần</span></div>
+                <span class="serial-stamp serial-stamp-gold">+1.148đ / USD</span>
+              </div>
+              <div class="flex gap-[3px] h-5 items-end" id="ticks-d2"></div>
+              <div class="text-[11.5px] text-[var(--color-muted)] flex justify-between pt-1 border-t border-[var(--color-line)]"><span>Ngân sách: 27.086.400đ</span><span>Hóa đơn: $23.598</span></div>
+            </div>
+          </div>
+
+          <div class="soft-shell">
+            <div class="px-3 py-1.5 flex justify-between text-[11.5px] text-[var(--color-ink-2)]"><span class="font-medium">Tiểu quỹ D3 & Hoàn nhập 80/20</span><span class="font-mono-num">1,5% Net</span></div>
+            <div class="inner-card space-y-2.5">
+              <div class="flex items-baseline justify-between">
+                <div><span class="text-[24px] font-medium font-mono-num text-[var(--color-money)]">+72,23 tr</span> <span class="text-[12px] text-[var(--color-muted)]">hoàn về FX</span></div>
+                <span class="serial-stamp serial-stamp-green">+4,0% biên</span>
+              </div>
+              <div class="flex gap-[3px] h-5 items-end" id="ticks-d3"></div>
+              <div class="text-[11.5px] text-[var(--color-muted)] flex justify-between pt-1 border-t border-[var(--color-line)]"><span>Tổng Quỹ DP: 90,29 tr</span><span>FX Max: 567,55 tr</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table 3.1: 22-Line P&L Matrix with Search & Conditional Data Bars -->
+        <div class="pbi-card overflow-hidden">
+          <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex flex-wrap items-center justify-between gap-2">
+            <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 3.1 · Bảng Unit Economics Toàn diện 22 Dòng (VNĐ, trước VAT)</div>
+            <input type="text" id="search-22-lines" oninput="renderTable22Lines()" placeholder="Lọc hạng mục chi phí / doanh thu..." class="h-7 px-2.5 rounded-[5px] bg-[var(--color-card)] border border-[var(--color-line-strong)] text-[12px] outline-none focus:border-[var(--color-accent)] w-64" />
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full data-table">
+              <thead>
+                <tr>
+                  <th>Hạng mục Doanh thu & Chi phí chi tiết</th>
+                  <th class="text-right">Đợt 1 (445 Box) / Box</th>
+                  <th class="text-right">TB 3 Đợt / Box</th>
+                  <th class="text-right">TB 3 Đợt / Pack</th>
+                  <th class="text-right">TB 3 Đợt / Thẻ</th>
+                  <th class="text-right">Tổng 3 Đợt (1.320 Box)</th>
+                  <th class="text-right w-40">Tỷ trọng / Net Rev</th>
+                </tr>
+              </thead>
+              <tbody id="table-22-lines-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- PAGE 5: SCENARIOS, TORNADO, HEATMAP & GOVERNANCE (4. Giả lập)       -->
+      <!-- =================================================================== -->
+      <section id="page-whatif" class="pbi-page hidden-page space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[11.5px] font-mono-num text-[var(--color-muted)]">Trang 4 · Scenario stress test, Tornado sensitivity & Break-even rules</div>
+            <h2 class="text-[18px] font-medium text-[var(--color-ink)]">Mô phỏng 6 Kịch bản (S1–S6), Biểu đồ Tornado, Ma trận Độ nhạy 2D & Quy tắc Thực thi</h2>
+          </div>
+          <span class="serial-stamp serial-stamp-gold">Dùng bảng What-If bên phải để thay đổi thông số trực tiếp</span>
+        </div>
+
+        <!-- 6 Preset Scenario Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5" id="scenario-selector-grid">
+          <button onclick="selectScenario('S1')" id="sc-card-S1" class="pbi-card p-3 text-left hover:bg-[var(--color-soft)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-muted)]"><span>S1 · −20% Giá</span><span>100% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Thâm nhập Giá thấp</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-ink-2)] mt-1">249,73 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-muted)]">SRP 1.584k · ROI +49,9%</div>
+          </button>
+          <button onclick="selectScenario('S2')" id="sc-card-S2" class="pbi-card p-3 text-left hover:bg-[var(--color-soft)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-muted)]"><span>S2 · Ép CK & DP</span><span>100% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Áp lực Kép</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-ink-2)] mt-1">277,41 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-muted)]">CK 34% · Roy 12% · DP 8%</div>
+          </button>
+          <button onclick="selectScenario('S3')" id="sc-card-S3" class="pbi-card p-3 text-left ring-1 ring-inset ring-[var(--color-accent-ring)] bg-[var(--color-accent-bg)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-accent)] font-medium"><span>S3 · Chuẩn</span><span>100% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Cơ sở Chuẩn</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-money)] mt-1">495,32 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-ink-2)]">SRP 1.980k · ROI +99,1%</div>
+          </button>
+          <button onclick="selectScenario('S4')" id="sc-card-S4" class="pbi-card p-3 text-left hover:bg-[var(--color-soft)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-muted)]"><span>S4 · +5% Giá</span><span>100% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Tối ưu Vận hành</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-ink-2)] mt-1">606,15 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-muted)]">CK 28% · DP 3% · +121%</div>
+          </button>
+          <button onclick="selectScenario('S5')" id="sc-card-S5" class="pbi-card p-3 text-left hover:bg-[var(--color-soft)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-muted)]"><span>S5 · +20% Giá</span><span>100% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Định vị Cao cấp</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-ink-2)] mt-1">762,23 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-muted)]">SRP 2.376k · ROI +152%</div>
+          </button>
+          <button onclick="selectScenario('S6')" id="sc-card-S6" class="pbi-card p-3 text-left hover:bg-[var(--color-soft)]">
+            <div class="flex justify-between text-[11px] font-mono-num text-[var(--color-warn)] font-medium"><span>S6 · Tồn 25%</span><span>75% SL</span></div>
+            <div class="text-[13px] font-medium mt-1">Stress Tồn kho</div>
+            <div class="text-[15px] font-medium font-mono-num text-[var(--color-warn)] mt-1">188,34 tr</div>
+            <div class="text-[11px] font-mono-num text-[var(--color-muted)]">Bán 990 Box · Đ1: +3,56tr</div>
+          </button>
+        </div>
+
+        <!-- Tornado Chart (6 cols) + 2D Sensitivity Heatmap (6 cols) -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-6 pbi-card p-4 flex flex-col justify-between space-y-2.5">
+            <div class="flex items-center justify-between border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Biểu đồ Tornado · Độ nhạy Biến số lên Lãi ròng FX</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]">Đo độ lệch ± triệu VNĐ quanh mốc Chuẩn S3 (495,32 tr)</div>
+              </div>
+              <button onclick="openFocusMode('tornado-chart-wrap', 'Biểu đồ Tornado — Độ nhạy các biến số')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="tornado-chart-wrap" class="w-full py-1"></div>
+            <div class="pt-2 border-t border-[var(--color-line)] text-[11.5px] text-[var(--color-muted)]">
+              Kết luận: <strong class="text-[var(--color-ink)]">Tỷ lệ tiêu thụ (Sell-through)</strong> và <strong class="text-[var(--color-ink)]">Giá bán lẻ SRP</strong> là 2 đòn bẩy quyết định 85% biên độ rủi ro lợi nhuận.
+            </div>
+          </div>
+
+          <div class="xl:col-span-6 pbi-card p-4 flex flex-col justify-between space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-line)] pb-2.5">
+              <div>
+                <div class="text-[14px] font-medium">Ma trận Độ nhạy 2D (SRP gồm VAT × Sell-through)</div>
+                <div class="text-[11.5px] text-[var(--color-muted)]" id="heatmap-subtitle">Theo CK Sỉ 30% · Roy 10% · DP 5% · Click ô để nạp thông số</div>
+              </div>
+              <button onclick="openFocusMode('sensitivity-heatmap-wrap', 'Ma trận Độ nhạy 2D (SRP × Sell-through)')" class="focus-btn" title="Phóng to">⤢</button>
+            </div>
+            <div id="sensitivity-heatmap-wrap" class="overflow-x-auto"></div>
+          </div>
+        </div>
+
+        <!-- Table 4.1 -->
+        <div class="pbi-card overflow-hidden">
+          <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex justify-between items-center">
+            <span class="text-[13.5px] font-medium">Bảng 4.1 · Tổng hợp Kết quả Tài chính 6 Kịch bản Mô phỏng (1.320 Hobby Box)</span>
+            <span class="serial-stamp">Click dòng để nạp kịch bản</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full data-table">
+              <thead>
+                <tr>
+                  <th>Kịch bản</th><th class="text-right">Giá VAT (Trước VAT)</th><th class="text-center">CK / Roy / DP</th><th class="text-right">Sell-through</th><th class="text-right">Doanh thu thực</th><th class="text-right">Biên gộp</th><th class="text-right">Quỹ DP</th><th class="text-right">Trả GAM 3 dòng</th><th class="text-right">Lãi ròng An toàn FX</th><th class="text-right">Biên / ROI 500tr</th>
+                </tr>
+              </thead>
+              <tbody id="table-scenarios-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Bullet Graphs & 3 Rules -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-7 pbi-card p-4 space-y-4">
+            <div class="text-[14px] font-medium border-b border-[var(--color-line)] pb-2">Ngưỡng Hòa vốn Bắt buộc (Bullet Graphs & Bảng 4.2)</div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-[12.5px]">
+                <span class="font-medium">Đợt 1 độc lập (445 Box · Định phí 383,64 tr)</span>
+                <span class="font-mono-num">Hòa vốn: <strong>329,9 Box (74,1%)</strong> · Van Đ2: <strong class="text-[var(--color-accent)]">356 Box (80%)</strong></span>
+              </div>
+              <div class="relative h-6 w-full rounded-[5px] bg-[var(--color-soft)] overflow-hidden border border-[var(--color-line)] flex items-center px-1">
+                <div class="absolute inset-y-0 left-0 bg-[#171717]/10" style="width: 74.13%"></div>
+                <div class="relative h-2.5 rounded-[2px] bg-[var(--color-money)]" style="width: 100%"></div>
+                <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-ink)]" style="left: 74.13%"></div>
+                <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-accent)]" style="left: 80%"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-[12.5px]">
+                <span class="font-medium">Trọn 3 Đợt (1.320 Box · Định phí 915,75 tr)</span>
+                <span class="font-mono-num">Hòa vốn: <strong>787,5 Box (59,7%)</strong> · S6 Stress: <strong class="text-[var(--color-warn)]">990 Box (75%)</strong></span>
+              </div>
+              <div class="relative h-6 w-full rounded-[5px] bg-[var(--color-soft)] overflow-hidden border border-[var(--color-line)] flex items-center px-1">
+                <div class="absolute inset-y-0 left-0 bg-[#171717]/10" style="width: 59.66%"></div>
+                <div class="relative h-2.5 rounded-[2px] bg-[var(--color-money)]" style="width: 100%"></div>
+                <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-ink)]" style="left: 59.66%"></div>
+                <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-warn)]" style="left: 75%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xl:col-span-5 grid grid-cols-1 gap-2.5 text-[12.5px]">
+            <div class="pbi-card p-3.5"><span class="serial-stamp serial-stamp-gold mb-1">Quy tắc 01 · 80% Sell-through Gate</span><div class="text-[var(--color-ink-2)]">Chỉ mở lệnh in Đợt 2 (174,93 tr EXW) khi Đợt 1 bán vượt <strong>356 / 445 Box (80%)</strong> → rủi ro lỗ = 0%.</div></div>
+            <div class="pbi-card p-3.5"><span class="serial-stamp serial-stamp-gold mb-1">Quy tắc 02 · MAP Policy 60 ngày</span><div class="text-[var(--color-ink-2)]">Khóa sàn Pre-order tối đa <strong>−10% (1.782.000đ)</strong>; cấm đại lý quảng cáo dưới 1.980.000đ trong 60 ngày đầu.</div></div>
+            <div class="pbi-card p-3.5"><span class="serial-stamp serial-stamp-green mb-1">Quy tắc 03 · Phụ lục Hợp đồng GAM</span><div class="text-[var(--color-ink-2)]">Đính kèm Bảng 3.1 làm công thức đối soát Quý để bảo vệ Quỹ dự phòng 5% & tránh thất thoát <strong>45,6 tr</strong> Royalty.</div></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- RIGHT DRAWER: Power BI Filters & What-If Parameters Pane              -->
+    <!-- ===================================================================== -->
+    <aside id="right-whatif-drawer" class="w-[292px] shrink-0 bg-[var(--color-side)] border-l border-[var(--color-line)] hidden xl:flex flex-col justify-between p-4 overflow-y-auto select-none">
+      <div class="space-y-4">
+        <div class="flex items-center justify-between pb-2.5 border-b border-[var(--color-line)]">
+          <div>
+            <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Tham số What-If & Bộ lọc</div>
+            <div class="text-[11px] text-[var(--color-muted)]" id="sim-mode-label">Đang khớp: S3. Cơ sở Chuẩn</div>
+          </div>
+          <button onclick="selectScenario('S3')" class="h-6 px-2 rounded-[4px] text-[11px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)]">
+            Chuẩn S3
+          </button>
+        </div>
+
+        <!-- Live Result Mini-Readout -->
+        <div class="p-3 rounded-[8px] bg-[var(--color-card)] border border-[var(--color-line)] space-y-2">
+          <div class="flex justify-between items-baseline">
+            <span class="text-[11px] text-[var(--color-muted)]">Lãi ròng An toàn FX</span>
+            <span class="text-[17px] font-medium font-mono-num text-[var(--color-money)]" id="sim-out-fxprofit">495.317.600đ</span>
+          </div>
+          <div class="flex justify-between text-[11.5px] font-mono-num">
+            <span class="text-[var(--color-muted)]">Hoàn DP tối đa:</span>
+            <span class="text-[var(--color-ink)]" id="sim-out-fxmax">567,55 tr</span>
+          </div>
+          <div class="flex justify-between text-[11.5px] font-mono-num">
+            <span class="text-[var(--color-muted)]">Doanh thu thực (3Đ):</span>
+            <span class="text-[var(--color-ink)]" id="sim-out-netrev">1.805.760.000đ</span>
+          </div>
+          <div class="flex justify-between text-[11.5px] font-mono-num">
+            <span class="text-[var(--color-muted)]">Tổng trả GAM (3 dòng):</span>
+            <span class="text-[var(--color-ink-2)]" id="sim-out-gam">446.965.400đ</span>
+          </div>
+          <div class="flex justify-between text-[11.5px] font-mono-num pt-1.5 border-t border-[var(--color-line)]">
+            <span class="text-[var(--color-muted)]">Biên / ROI 500tr:</span>
+            <span class="font-medium text-[var(--color-ink)]" id="sim-out-roi">27,4% / +99,1%</span>
+          </div>
+          <div class="flex justify-between text-[11.5px] font-mono-num">
+            <span class="text-[var(--color-muted)]">Lãi Đợt 1 (445 Box):</span>
+            <span class="font-medium text-[var(--color-accent)]" id="sim-out-b1">+107,05 tr</span>
+          </div>
+        </div>
+
+        <!-- 5 Pricing & Stress Sliders -->
+        <div class="space-y-3">
+          <div class="text-[11px] font-medium text-[var(--color-muted)]">1. Thông số Định giá & Rủi ro</div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Giá bán lẻ (VAT)</span>
+              <span class="font-mono-num font-medium" id="sim-lbl-srp">1.980.000đ</span>
+            </div>
+            <input type="range" id="sim-srp" min="1350000" max="2250000" step="45000" value="1800000" oninput="runCustomSim()" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Chiết khấu Đại lý Sỉ</span>
+              <span class="font-mono-num font-medium" id="sim-lbl-ck">30,0%</span>
+            </div>
+            <input type="range" id="sim-ck" min="20" max="40" step="1" value="30" oninput="runCustomSim()" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Royalty IP GAM (T1)</span>
+              <span class="font-mono-num font-medium" id="sim-lbl-roy">10,0%</span>
+            </div>
+            <input type="range" id="sim-roy" min="5" max="18" step="1" value="10" oninput="runCustomSim()" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Quỹ Dự phòng (DP)</span>
+              <span class="font-mono-num font-medium" id="sim-lbl-dp">5,0%</span>
+            </div>
+            <input type="range" id="sim-dp" min="0" max="12" step="1" value="5" oninput="runCustomSim()" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Tỷ lệ bán hết (SL)</span>
+              <span class="font-mono-num font-medium text-[var(--color-accent)]" id="sim-lbl-sell">100% (1.320 Box)</span>
+            </div>
+            <input type="range" id="sim-sell" min="50" max="100" step="5" value="100" oninput="runCustomSim()" />
+          </div>
+        </div>
+
+        <!-- 3 Channel Mix Sliders -->
+        <div class="pt-3 border-t border-[var(--color-line)] space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-medium text-[var(--color-muted)]">2. Tỷ trọng 3 Kênh Phân phối</span>
+            <button onclick="resetChannelMix()" class="text-[11px] text-[var(--color-accent)] hover:underline">55/30/15</button>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">Đại lý Shop TCG</span>
+              <span class="font-mono-num font-medium" id="val-ch1">55%</span>
+            </div>
+            <input type="range" id="slider-ch1" min="10" max="85" step="5" value="55" oninput="updateChannelMix(1)" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11.5px] mb-1">
+              <span class="text-[var(--color-ink-2)]">GAM Store & Offline</span>
+              <span class="font-mono-num font-medium text-[var(--color-accent)]" id="val-ch2">30%</span>
+            </div>
+            <input type="range" id="slider-ch2" min="5" max="70" step="5" value="30" oninput="updateChannelMix(2)" />
+          </div>
+
+          <div class="flex justify-between text-[11.5px] pt-1">
+            <span class="text-[var(--color-ink-2)]">FramigosX D2C (Cân bằng)</span>
+            <span class="font-mono-num font-medium text-[var(--color-money)]" id="val-ch3">15%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[var(--color-line)] text-[11px] text-[var(--color-muted)]">
+        Thay đổi ở bảng này cập nhật đồng thời KPI, Waterfall, Heatmap và Biểu đồ CVP.
+      </div>
+    </aside>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- BOTTOM POWER BI SHEET TABS BAR                                          -->
+  <!-- ======================================================================= -->
+  <footer class="h-[34px] shrink-0 bg-[var(--color-side)] border-t border-[var(--color-line-strong)] flex items-center justify-between px-2 overflow-x-auto select-none z-30">
+    <div class="flex items-center h-full" id="bottom-sheet-tabs">
+      <button onclick="switchPage('page-exec')" data-page="page-exec" class="pbi-sheet-tab active">Tổng quan điều hành</button>
+      <button onclick="switchPage('page-benchmark')" data-page="page-benchmark" class="pbi-sheet-tab">1. Đối chuẩn 16 SKU</button>
+      <button onclick="switchPage('page-pricing')" data-page="page-pricing" class="pbi-sheet-tab">2. Giá đa tầng & Kênh sỉ</button>
+      <button onclick="switchPage('page-unitecon')" data-page="page-unitecon" class="pbi-sheet-tab">3. Unit Economics (22 dòng)</button>
+      <button onclick="switchPage('page-whatif')" data-page="page-whatif" class="pbi-sheet-tab">4. Giả lập & Stress Test</button>
+      <button onclick="switchPage('page-all')" data-page="page-all" class="pbi-sheet-tab">Xem toàn bộ</button>
+    </div>
+    <div class="hidden sm:flex items-center gap-3 px-3 text-[11px] text-[var(--color-muted)] font-mono-num">
+      <span id="bottom-status-text">S3 Chuẩn · 1.320 Box · 1 Box = 80 thẻ</span>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // DATA FIXTURES (Exact numbers from FramigosX Markdown Report)
+    // =========================================================================
+
+    const BENCHMARK_SKUS = [
+      { id: 1, seg: 'seg1', segLabel: '1. Phổ thông (VN)', shortName: 'VBA Pack 5', name: 'VBA Fantasy Card 2026 - Pack 5', packSpec: '1 Pack (5 thẻ)', origPrice: '99.000 VNĐ', vndBox: 99000, vndPack: 99000, vndCard: 19800, hasAuto: false, isBox: false, note: '3 cấp Common/Rare/Ultra Rare foil; 0 chữ ký, 0 áo đấu' },
+      { id: 2, seg: 'seg1', segLabel: '1. Phổ thông (VN)', shortName: 'VBA Pack 10', name: 'VBA Fantasy Card 2026 - Pack 10', packSpec: '1 Pack (10 thẻ)', origPrice: '180.000 VNĐ', vndBox: 180000, vndPack: 180000, vndCard: 18000, hasAuto: false, isBox: false, note: 'Phủ hiệu ứng lấp lánh; không có seri hay chữ ký/Relic' },
+      { id: 3, seg: 'seg1', segLabel: '1. Phổ thông (VN)', shortName: 'Match Attax Pack', name: 'Topps Match Attax UCL 2026/27 - Pack', packSpec: '1 Pack (8 thẻ)', origPrice: '109.000 VNĐ', vndBox: 109000, vndPack: 109000, vndCard: 13625, hasAuto: false, isBox: false, note: 'Thẻ giấy TCG đại chúng; không cam kết Hit chữ ký' },
+      { id: 4, seg: 'seg1', segLabel: '1. Phổ thông (VN)', shortName: 'Topps Display', name: 'Topps Match Attax UCL 2026/27 - Display Box', packSpec: '36 Pack (288 thẻ)', origPrice: '3.509.000 VNĐ', vndBox: 3509000, vndPack: 97472, vndCard: 12184, hasAuto: false, isBox: true, note: 'Hộp trưng bày quầy bán lẻ; thiên về số lượng thẻ phổ thông' },
+      { id: 5, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Kolex Starter', name: 'Kolex x Esports World Cup 2025 Starter Box', packSpec: '5 Pack (25 thẻ)', origPrice: '29,99 USD', vndBox: 764745, vndPack: 152949, vndCard: 30590, hasAuto: true, isBox: true, note: 'Có thẻ đánh số (/75 đến /10); tỷ lệ ký/áo đấu 1:418 pack' },
+      { id: 6, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Chrome UEFA Value', name: 'Topps Chrome UEFA 2025-26 - Value Box', packSpec: '7 Pack (28 thẻ)', origPrice: '30,00 EUR', vndBox: 825000, vndPack: 117857, vndCard: 29464, hasAuto: false, isBox: true, note: 'Phôi Chrome cao cấp, độc quyền Raywave; không cam kết Auto' },
+      { id: 7, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'LoL Crystal Rose', name: 'ShiningSoul LoL Crystal Rose Limited Box', packSpec: '10 Pack (30 thẻ)', origPrice: '39,90 USD', vndBox: 1017450, vndPack: 101745, vndCard: 33915, hasAuto: false, isBox: true, note: 'Thẻ sưu tầm nhân vật LMHT bản giới hạn, không chữ ký tuyển thủ' },
+      { id: 8, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Topps NBA Flagship', name: 'Topps Flagship Basketball 2026-27 Value Box', packSpec: '6 Pack (72 thẻ)', origPrice: '1.229.000 VNĐ', vndBox: 1229000, vndPack: 204833, vndCard: 17069, hasAuto: false, isBox: true, note: 'Hộp bán lẻ phổ thông NBA; không cam kết chữ ký mỗi hộp' },
+      { id: 9, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Riftbound Slim', name: 'ShiningSoul Riftbound LoL Unleashed Slim Box', packSpec: '24 Pack (120 thẻ)', origPrice: '49,00 USD', vndBox: 1249500, vndPack: 52063, vndCard: 10413, hasAuto: false, isBox: true, note: 'Dòng TCG chơi bài kết hợp sưu tầm nhân vật LMHT' },
+      { id: 10, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'NBA Hoops Value', name: 'Topps NBA Hoops 2025-26 Value Box', packSpec: '7 Pack (56 thẻ)', origPrice: '1.399.000 VNĐ', vndBox: 1399000, vndPack: 199857, vndCard: 24982, hasAuto: false, isBox: true, note: 'Hộp bán lẻ 7 pack tại thị trường VN; không cam kết Auto' },
+      { id: 11, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Riftbound Jumbo', name: 'ShiningSoul Riftbound LoL Unleashed Jumbo Box', packSpec: '12 Pack (168 thẻ)', origPrice: '69,90 USD', vndBox: 1782450, vndPack: 148538, vndCard: 10610, hasAuto: false, isBox: true, note: 'Bản hộp lớn 14 thẻ/pack của dòng TCG nhân vật LMHT' },
+      { id: 12, seg: 'seg2', segLabel: '2. Trung cấp & Esports', shortName: 'Kolex EWC Hobby', name: 'Kolex x Esports World Cup 2025 Hobby Box', packSpec: '24 Pack (120 thẻ)', origPrice: '99,99 USD', vndBox: 2549745, vndPack: 106239, vndCard: 21248, hasAuto: true, isBox: true, note: 'Thẻ tuyển thủ Esports đa bộ môn, đánh số 1/1; Auto/Jersey 1:418 pack' },
+      { id: 13, seg: 'seg3', segLabel: '3. Cao cấp & Hobby Hit', shortName: 'Riot T1 Bundle*', name: 'Riot Riftbound x T1 2025 Worlds Player Bundle*', packSpec: 'Bộ 5 thẻ + Phụ kiện', origPrice: '70,00 USD', vndBox: 1785000, vndPack: 1785000, vndCard: 357000, isBundle: true, hasAuto: true, isBox: true, note: 'Giá gốc Riot mở bán T11/2026: 5 thẻ vinh danh T1 + Binder + Deckbox' },
+      { id: 14, seg: 'seg3', segLabel: '3. Cao cấp & Hobby Hit', shortName: 'Riot Worlds Bundle*', name: 'Riot Riftbound x Worlds 2026 Edition Bundle*', packSpec: 'Bộ 4 thẻ + Phụ kiện', origPrice: '80,00 USD', vndBox: 2040000, vndPack: 2040000, vndCard: 510000, isBundle: true, hasAuto: true, isBox: true, note: 'Giá gốc Riot mở bán T11/2026: 4 thẻ Promo CKTG + Deckbox + Capsule' },
+      { id: 15, seg: 'seg3', segLabel: '3. Cao cấp & Hobby Hit', shortName: 'Riot Gift Retail', name: 'Riot Riftbound: Gift of the Rift Retail Box', packSpec: '16 Pack + 37 thẻ lẻ', origPrice: '109,00 USD', vndBox: 2779500, vndPack: 173719, vndCard: 10649, hasAuto: false, isBox: true, note: 'Hộp phân phối qua Local Game Stores (04/12/2026) kèm hộp lưu trữ' },
+      { id: 16, seg: 'seg3', segLabel: '3. Cao cấp & Hobby Hit', shortName: 'Topps Chrome Hobby', name: 'Topps Chrome UEFA 2025-26 - Hobby Box', packSpec: '20 Pack (80 thẻ)', origPrice: '260,00 EUR', vndBox: 7150000, vndPack: 357500, vndCard: 89375, hasAuto: true, isBox: true, note: 'Cùng quy mô 80 thẻ/Box; CAM KẾT 1 Autograph + thẻ đánh số/Box' },
+      { id: 99, seg: 'target', segLabel: 'FramigosX × GAM', shortName: 'FramigosX × GAM', name: 'FramigosX × GAM 10-Year Standard Hobby Box (Mốc chuẩn)', packSpec: '10 Pack (80 thẻ)', origPrice: '1.980.000 VNĐ', vndBox: 1980000, vndPack: 198000, vndCard: 24750, hasAuto: true, isBox: true, isTarget: true, note: 'Cam kết 1–2 Hit lớn (Auto/Jersey Relic 130pt) + 7–8 Gold /50 mỗi hộp' }
+    ];
+
+    const UNIT_ECON_LINES = [
+      { code: '1', title: '1. GIÁ BÁN LẺ NIÊM YẾT TRƯỚC VAT (GROSS SRP)', b1Box: 1800000, b3Box: 1800000, b3Pack: 180000, b3Card: 22500, b3Total: 2376000000, pct: 131.58, type: 'major' },
+      { code: '1a', title: '(-) Chiết khấu Đại lý TCG (55% SL × 30,0% CK)', b1Box: -297000, b3Box: -297000, b3Pack: -29700, b3Card: -3713, b3Total: -392040000, pct: -21.71, type: 'sub' },
+      { code: '1b', title: '(-) Hoa hồng bán trực tiếp GAM Store (30% SL × 20,0%)', b1Box: -108000, b3Box: -108000, b3Pack: -10800, b3Card: -1350, b3Total: -142560000, pct: -7.89, type: 'sub' },
+      { code: '1c', title: '(-) Ưu đãi Early-Bird, phí sàn & cổng TT D2C (15% SL × 10,0%)', b1Box: -27000, b3Box: -27000, b3Pack: -2700, b3Card: -338, b3Total: -35640000, pct: -1.97, type: 'sub' },
+      { code: '2', title: '2. DOANH THU THỰC THU VỀ DỰ ÁN (NET REALIZED REV)', b1Box: 1368000, b3Box: 1368000, b3Pack: 136800, b3Card: 17100, b3Total: 1805760000, pct: 100.00, type: 'highlight' },
+      { code: 'A', title: 'A. CHI PHÍ XƯỞNG & CHUỖI CUNG ỨNG NHẬP KHO (LANDED COGS)', b1Box: -794694, b3Box: -655870, b3Pack: -65587, b3Card: -8198, b3Total: -865749000, pct: -47.94, type: 'group' },
+      { code: 'A1', short: 'A1. R&D Sample', grp: 'shenzou', title: 'A1. Phân bổ làm mẫu R&D (Digital Sample $450 + Relic/DHL $550)', b1Box: -57303, b3Box: -19318, b3Pack: -1932, b3Card: -241, b3Total: -25500000, pct: -1.41, type: 'cogs' },
+      { code: 'A2', short: 'A2. Base 18pt', grp: 'shenzou', title: 'A2. Xưởng Shenzou: In thẻ Base 18pt (25.000 thẻ/đợt = $2.000)', b1Box: -114607, b3Box: -115909, b3Pack: -11591, b3Card: -1449, b3Total: -153000000, pct: -8.47, type: 'cogs' },
+      { code: 'A3', short: 'A3. PRISM 0,6mm', grp: 'shenzou', title: 'A3. Xưởng Shenzou: In thẻ PRISM 0,6mm (10.000 thẻ/đợt = $3.000)', b1Box: -171910, b3Box: -173864, b3Pack: -17386, b3Card: -2173, b3Total: -229500000, pct: -12.71, type: 'cogs' },
+      { code: 'A4', short: 'A4. Màng Holo', grp: 'shenzou', title: 'A4. Xưởng Shenzou: 2 hiệu ứng màng Hologram phụ ($300/đợt)', b1Box: -17191, b3Box: -17386, b3Pack: -1739, b3Card: -217, b3Total: -22950000, pct: -1.27, type: 'cogs' },
+      { code: 'A5', short: 'A5. Khuôn Ép kim', grp: 'shenzou', title: 'A5. Xưởng Shenzou: Khuôn Ép kim & Dập nổi ($1.000/đợt, trần 500 tờ)', b1Box: -57303, b3Box: -57955, b3Pack: -5795, b3Card: -724, b3Total: -76500000, pct: -4.24, type: 'cogs' },
+      { code: 'A6', short: 'A6. Jersey Relic', grp: 'shenzou', title: 'A6. Xưởng Shenzou: Phôi thẻ Jersey Relic (600 thẻ in gộp Đợt 1 = $2.000)', b1Box: -114607, b3Box: -38636, b3Pack: -3864, b3Card: -483, b3Total: -51000000, pct: -2.82, type: 'cogs' },
+      { code: 'A7', short: 'A7. Seri', grp: 'shenzou', title: 'A7. Xưởng Shenzou: Đánh số Seri ($0,03/thẻ; tổng 6.600 thẻ có seri)', b1Box: -4470, b3Box: -3825, b3Pack: -382, b3Card: -48, b3Total: -5049000, pct: -0.28, type: 'cogs' },
+      { code: 'A8', short: 'A8. Màng Pack', grp: 'shenzou', title: 'A8. Xưởng Shenzou: Cuộn màng nhôm hàn Pack ($1.000 Đ1 + $500 Đ2)', b1Box: -57303, b3Box: -28977, b3Pack: -2898, b3Card: -362, b3Total: -38250000, pct: -2.12, type: 'cogs' },
+      { code: 'A9', short: 'A9. Vỏ hộp Box', grp: 'pack', title: 'A9. Bao bì: Vỏ hộp cứng Hobby Box, khay định hình 10 pack & màng co', b1Box: -85000, b3Box: -85000, b3Pack: -8500, b3Card: -1062, b3Total: -112200000, pct: -6.21, type: 'cogs' },
+      { code: 'A10', short: 'A10. Vật tư phụ', grp: 'pack', title: 'A10. Vật tư phụ: Thùng Carton 5 lớp, tem Sticker ký & tem COA chống giả', b1Box: -35000, b3Box: -35000, b3Pack: -3500, b3Card: -438, b3Total: -46200000, pct: -2.56, type: 'cogs' },
+      { code: 'A11', short: 'A11. Logistics', grp: 'logistics', title: 'A11. Logistics: Vận tải chính ngạch Trung–Việt, Hải quan & Thuế NK', b1Box: -80000, b3Box: -80000, b3Pack: -8000, b3Card: -1000, b3Total: -105600000, pct: -5.85, type: 'cogs' },
+      { code: '3', title: '3. LỢI NHUẬN GỘP CHUẨN (GROSS PROFIT)', b1Box: 573306, b3Box: 712130, b3Pack: 71213, b3Card: 8902, b3Total: 940011000, pct: 52.06, type: 'major' },
+      { code: 'B', title: 'B. CHI PHÍ MARKETING & KÍCH HOẠT THƯƠNG MẠI', b1Box: -67416, b3Box: -37879, b3Pack: -3788, b3Card: -473, b3Total: -50000000, pct: -2.77, type: 'group' },
+      { code: 'B1', title: 'B1. Tổ chức buổi ký thẻ tuyển thủ & Sản xuất Media / Video Unbox', b1Box: -24719, b3Box: -11364, b3Pack: -1136, b3Card: -142, b3Total: -15000000, pct: -0.83, type: 'sub' },
+      { code: 'B2', title: 'B2. Tài trợ Sample Box cho KOLs / Streamers / Box Breakers LMHT', b1Box: -20225, b3Box: -11364, b3Pack: -1136, b3Card: -142, b3Total: -15000000, pct: -0.83, type: 'sub' },
+      { code: 'B3', title: 'B3. Vận hành hệ thống Landing Page tra cứu COA, Đua Top Grail & Ads', b1Box: -13483, b3Box: -9091, b3Pack: -909, b3Card: -114, b3Total: -12000000, pct: -0.66, type: 'sub' },
+      { code: 'B4', title: 'B4. Vật phẩm trưng bày quầy kệ POSM tại Đại lý TCG & GAM Store', b1Box: -8989, b3Box: -6061, b3Pack: -606, b3Card: -76, b3Total: -8000000, pct: -0.44, type: 'sub' },
+      { code: 'C', title: 'C. TẦNG 1 — ROYALTY IP TRẢ GAM (10,0% DOANH THU THỰC)', b1Box: -136800, b3Box: -136800, b3Pack: -13680, b3Card: -1710, b3Total: -180576000, pct: -10.00, type: 'group' },
+      { code: 'D', title: 'D. QUỸ DỰ PHÒNG PHÁT SINH & BẢO HÀNH (5,0% DOANH THU THỰC)', b1Box: -68400, b3Box: -68400, b3Pack: -6840, b3Card: -855, b3Total: -90288000, pct: -5.00, type: 'group' },
+      { code: 'D1', title: 'D1. Dự phòng đổi trả thẻ lỗi QC, lệch cắt bế & móp hộp vận chuyển (2,0%)', b1Box: -27360, b3Box: -27360, b3Pack: -2736, b3Card: -342, b3Total: -36115200, pct: -2.00, type: 'sub' },
+      { code: 'D2', title: 'D2. Dự phòng trượt tỷ giá USD/VNĐ & phụ phí kiểm hóa Hải quan (1,5%)', b1Box: -20520, b3Box: -20520, b3Pack: -2052, b3Card: -256, b3Total: -27086400, pct: -1.50, type: 'sub' },
+      { code: 'D3', title: 'D3. Dự phòng kích cầu thương mại / xử lý hàng chậm luân chuyển (1,5%)', b1Box: -20520, b3Box: -20520, b3Pack: -2052, b3Card: -256, b3Total: -27086400, pct: -1.50, type: 'sub' },
+      { code: '4', title: '4. THẶNG DƯ DỰ ÁN SAU THU HỒI VỐN & TRÍCH LẬP DỰ PHÒNG', b1Box: 300690, b3Box: 469051, b3Pack: 46905, b3Card: 5863, b3Total: 619147000, pct: 34.29, type: 'major' },
+      { code: 'E', title: 'E. TẦNG 2 — CHIA LỢI NHUẬN TRẢ GAM (20,0% THẶNG DƯ)', b1Box: -60138, b3Box: -93810, b3Pack: -9381, b3Card: -1173, b3Total: -123829400, pct: -6.86, type: 'group' },
+      { code: '5', title: '5. LỢI NHUẬN RÒNG AN TOÀN CỦA FRAMIGOSX (ĐÃ TRỪ ĐỦ 5% DỰ PHÒNG)', b1Box: 240552, b3Box: 375241, b3Pack: 37524, b3Card: 4691, b3Total: 495317600, pct: 27.43, type: 'profit' },
+      { code: '6', title: '6. Lợi nhuận ròng tối đa của FramigosX (Nếu hoàn nhập 100% Quỹ dự phòng)', b1Box: 295272, b3Box: 429961, b3Pack: 42996, b3Card: 5375, b3Total: 567548000, pct: 31.43, type: 'sub' }
+    ];
+
+    const SCENARIOS = {
+      S1: { code: 'S1', short: 'S1 (−20%)', name: 'S1. Thâm nhập Giá thấp (−20% Giá)', srpVat: 1584000, srpPre: 1440000, ck: 30, roy: 10, dp: 5, sell: 100, boxes: 1320, netRev: 1444608000, gpPct: 40.1, dpTotal: 72230400, gamTotal: 320942360, fxSafe: 249734240, fxMax: 307518560, netPct: 17.3, roi: 49.9, b1Safe: 24254240 },
+      S2: { code: 'S2', short: 'S2 (Áp lực)', name: 'S2. Áp lực Kép (−10% Giá, ép CK & đội DP)', srpVat: 1782000, srpPre: 1620000, ck: 34, roy: 12, dp: 8, sell: 100, boxes: 1320, netRev: 1578139200, gpPct: 45.1, dpTotal: 126251136, gamTotal: 387033176, fxSafe: 277409888, fxMax: 378410797, netPct: 17.6, roi: 55.5, b1Safe: 33584288 },
+      S3: { code: 'S3', short: 'S3 (Chuẩn)', name: 'S3. Kịch bản Cơ sở Chuẩn (Khuyến nghị)', srpVat: 1980000, srpPre: 1800000, ck: 30, roy: 10, dp: 5, sell: 100, boxes: 1320, netRev: 1805760000, gpPct: 52.1, dpTotal: 90288000, gamTotal: 446965400, fxSafe: 495317600, fxMax: 567548000, netPct: 27.4, roi: 99.1, b1Safe: 107045600 },
+      S4: { code: 'S4', short: 'S4 (+5%)', name: 'S4. Tối ưu Kênh & Vận hành (+5% Giá)', srpVat: 2079000, srpPre: 1890000, ck: 28, roy: 10, dp: 3, sell: 100, boxes: 1320, netRev: 1923490800, gpPct: 55.0, dpTotal: 57704724, gamTotal: 493574679, fxSafe: 606150397, fxMax: 652314176, netPct: 31.5, roi: 121.2, b1Safe: 144409687 },
+      S5: { code: 'S5', short: 'S5 (+20%)', name: 'S5. Định vị Cao cấp 10 năm (+20% Giá)', srpVat: 2376000, srpPre: 2160000, ck: 28, roy: 10, dp: 5, sell: 100, boxes: 1320, netRev: 2198275200, gpPct: 60.6, dpTotal: 109913760, gamTotal: 581456504, fxSafe: 762227936, fxMax: 850158944, netPct: 34.7, roi: 152.4, b1Safe: 197026736 },
+      S6: { code: 'S6', short: 'S6 (Tồn 25%)', name: 'S6. Stress Tồn kho 25% (Bán 75% SL)', srpVat: 1980000, srpPre: 1800000, ck: 30, roy: 10, dp: 5, sell: 75, boxes: 990, netRev: 1354320000, gpPct: 36.1, dpTotal: 67716000, gamTotal: 289436600, fxSafe: 188338400, fxMax: 242511200, netPct: 13.9, roi: 37.7, b1Safe: 3556400 }
+    };
+
+    // State
+    let activePage = 'page-exec';
+    let currentBatchMode = '3batch'; // '3batch' | 'batch1'
+    let currentUnitView = 'box';     // 'box' | 'pack' | 'card' | 'total'
+    let bmSegmentFilter = 'all';
+    let bmMetric = 'card';
+    let scatterZoom = 'target';
+    let activeScenarioCode = 'S3';
+    let selectedChannelFilter = null; // null | 1 | 2 | 3
+    let sort16Key = null, sort16Asc = true;
+    let rightDrawerOpen = true;
+
+    // Formatters
+    function fmtVND(n) {
+      const sign = n < 0 ? '−' : '';
+      return sign + Math.round(Math.abs(n)).toLocaleString('vi-VN');
+    }
+    function fmtTr(n, dec = 2) {
+      const sign = n < 0 ? '−' : '';
+      return sign + (Math.abs(n) / 1e6).toLocaleString('vi-VN', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + ' tr';
+    }
+    function fmtK(n) {
+      const sign = n < 0 ? '−' : '';
+      const abs = Math.abs(n);
+      if (abs >= 1e6) return sign + (abs / 1e6).toFixed(2).replace('.', ',') + 'tr';
+      if (abs >= 1000) return sign + (abs / 1000).toFixed(abs >= 100000 ? 0 : 1).replace('.', ',') + 'k';
+      return sign + Math.round(abs).toString();
+    }
+    function escAttr(str) {
+      return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // =========================================================================
+    // POWER BI NAVIGATION, FOCUS MODE, DRAWER & CSV EXPORT
+    // =========================================================================
+    function switchPage(pageId) {
+      activePage = pageId;
+      const pages = ['page-exec', 'page-benchmark', 'page-pricing', 'page-unitecon', 'page-whatif'];
+      pages.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (pageId === 'page-all' || pageId === id) {
+          el.classList.remove('hidden-page');
+        } else {
+          el.classList.add('hidden-page');
+        }
+      });
+
+      document.querySelectorAll('#left-page-nav .pbi-nav-item, #bottom-sheet-tabs .pbi-sheet-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-page') === pageId);
+      });
+      document.getElementById('pbi-canvas').scrollTop = 0;
+    }
+
+    function toggleRightDrawer() {
+      const drawer = document.getElementById('right-whatif-drawer');
+      rightDrawerOpen = !rightDrawerOpen;
+      if (rightDrawerOpen) {
+        drawer.classList.remove('hidden', 'xl:hidden');
+        drawer.classList.add('flex');
+      } else {
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex', 'xl:flex');
+      }
+    }
+
+    function openFocusMode(elementId, title) {
+      const src = document.getElementById(elementId);
+      if (!src) return;
+      document.getElementById('focus-modal-title').textContent = title;
+      const body = document.getElementById('focus-modal-body');
+      body.innerHTML = src.innerHTML;
+      document.getElementById('focus-modal').classList.remove('hidden');
+    }
+
+    function closeFocusMode() {
+      document.getElementById('focus-modal').classList.add('hidden');
+      document.getElementById('focus-modal-body').innerHTML = '';
+    }
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeFocusMode();
+    });
+
+    function toggleChannelFilter(chIdx) {
+      selectedChannelFilter = (selectedChannelFilter === chIdx) ? null : chIdx;
+      updateChannelMix(1);
+      renderChannelStackedChart();
+      renderTable32();
+      updateStatusBadges();
+    }
+
+    function resetAllFilters() {
+      currentBatchMode = '3batch';
+      currentUnitView = 'box';
+      bmSegmentFilter = 'all';
+      bmMetric = 'card';
+      scatterZoom = 'target';
+      selectedChannelFilter = null;
+      document.getElementById('slider-ch1').value = 55;
+      document.getElementById('slider-ch2').value = 30;
+      document.getElementById('search-16-skus').value = '';
+      document.getElementById('search-22-lines').value = '';
+      setBatchMode('3batch');
+      setUnitView('box');
+      filterBenchmark('all');
+      setBenchmarkMetric('card');
+      setScatterZoom('target');
+      selectScenario('S3');
+      updateChannelMix(1);
+    }
+
+    function exportUnitEconCSV() {
+      const headers = ['Hạng mục', 'Đợt 1 (445 Box) / Box', 'TB 3 Đợt / Box', 'TB 3 Đợt / Pack', 'TB 3 Đợt / Thẻ', 'Tổng 3 Đợt (1.320 Box)', 'Tỷ trọng / Net Rev (%)'];
+      const rows = UNIT_ECON_LINES.map(r => [
+        `"${r.title.replace(/"/g, '""')}"`, r.b1Box, r.b3Box, r.b3Pack, r.b3Card, r.b3Total, r.pct.toFixed(2)
+      ]);
+      const csv = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'FramigosX_GAM_Unit_Economics_22_Lines.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // =========================================================================
+    // LIVE SIMULATION ENGINE (Shared across KPIs, Waterfall, Scenarios, CVP)
+    // =========================================================================
+    function getSimParams() {
+      const srpPre = parseInt(document.getElementById('sim-srp').value, 10);
+      const ck = parseInt(document.getElementById('sim-ck').value, 10);
+      const roy = parseInt(document.getElementById('sim-roy').value, 10);
+      const dp = parseInt(document.getElementById('sim-dp').value, 10);
+      const sell = parseInt(document.getElementById('sim-sell').value, 10);
+      const c1 = parseInt(document.getElementById('slider-ch1').value, 10);
+      const c2 = parseInt(document.getElementById('slider-ch2').value, 10);
+      const c3 = 100 - c1 - c2;
+
+      const isDefaultMix = (c1 === 55 && c2 === 30 && c3 === 15);
+      let matched = null;
+      if (isDefaultMix) {
+        Object.values(SCENARIOS).forEach(s => {
+          if (s.srpPre === srpPre && s.ck === ck && s.roy === roy && s.dp === dp && s.sell === sell) {
+            matched = s.code;
+          }
+        });
+      }
+
+      const blendedDeductPct = (c1 / 100) * (ck / 100) + (c2 / 100) * 0.20 + (c3 / 100) * 0.10;
+      const netPerBox = srpPre * (1 - blendedDeductPct);
+      const boxes3 = Math.round(1320 * (sell / 100));
+      const boxes1 = Math.round(445 * (sell / 100));
+
+      return { srpPre, srpVat: Math.round(srpPre * 1.1), ck, roy, dp, sell, c1, c2, c3, matched, blendedDeductPct, netPerBox, boxes3, boxes1 };
+    }
+
+    function setBatchMode(mode) {
+      currentBatchMode = mode;
+      document.getElementById('ribbon-scale-3batch').classList.toggle('active', mode === '3batch');
+      document.getElementById('ribbon-scale-batch1').classList.toggle('active', mode === 'batch1');
+      updateAllVisuals();
+    }
+
+    function setUnitView(unit) {
+      currentUnitView = unit;
+      ['box', 'pack', 'card', 'total'].forEach(u => {
+        const btn = document.getElementById('unit-btn-' + u);
+        if (btn) btn.classList.toggle('active', u === unit);
+      });
+      updateAllVisuals();
+    }
+
+    function updateStatusBadges() {
+      const p = getSimParams();
+      const chNames = { 1: 'Kênh: Đại lý TCG', 2: 'Kênh: GAM Store', 3: 'Kênh: D2C' };
+      const chTag = selectedChannelFilter ? ` · ${chNames[selectedChannelFilter]}` : ` · ${p.c1}/${p.c2}/${p.c3}`;
+      const scenTag = p.matched ? `${p.matched}` : 'Tùy chỉnh';
+      document.getElementById('active-filter-badge').textContent = `${scenTag}${chTag}`;
+      const unitLbl = currentUnitView === 'box' ? '1 Box (80 thẻ)' : currentUnitView === 'pack' ? '1 Pack (8 thẻ)' : currentUnitView === 'card' ? '1 Thẻ' : (currentBatchMode === 'batch1' ? '445 Box' : '1.320 Box');
+      document.getElementById('bottom-status-text').textContent = `${scenTag} · ${currentBatchMode === 'batch1' ? 'Đợt 1 (445 Box)' : '3 Đợt (1.320 Box)'} · Đơn vị: ${unitLbl}`;
+    }
+
+    function updateAllVisuals() {
+      const p = getSimParams();
+      const isB1 = currentBatchMode === 'batch1';
+      const totalProdBoxes = isB1 ? 445 : 1320;
+      const soldBoxes = isB1 ? p.boxes1 : p.boxes3;
+      const fixedCogsTotal = isB1 ? 353638830 : 865749000;
+      const fixedMktTotal = isB1 ? 30000170 : 50000000;
+      const committedFixed = isB1 ? 383639000 : 915749000;
+
+      // Exact unit calculations
+      const cogsPerSoldBox = soldBoxes > 0 ? fixedCogsTotal / soldBoxes : 0;
+      const mktPerSoldBox = soldBoxes > 0 ? fixedMktTotal / soldBoxes : 0;
+
+      const u = currentUnitView;
+      const mult = u === 'box' ? 1 : u === 'pack' ? 0.1 : u === 'card' ? 0.0125 : soldBoxes;
+      const unitSuffix = u === 'box' ? '1 Hobby Box (80 thẻ)' : u === 'pack' ? '1 Pack (8 thẻ)' : u === 'card' ? '1 Thẻ' : `Tổng ${fmtVND(soldBoxes)} Box`;
+
+      const srpVat = p.srpVat * mult;
+      const srpPre = p.srpPre * mult;
+      const netRev = p.netPerBox * mult;
+      const cogsVal = cogsPerSoldBox * mult;
+      const gpVal = (p.netPerBox - cogsPerSoldBox) * mult;
+      const royVal = p.netPerBox * (p.roy / 100) * mult;
+      const dpVal = p.netPerBox * (p.dp / 100) * mult;
+      const mktVal = mktPerSoldBox * mult;
+      const surplusVal = gpVal - mktVal - royVal - dpVal;
+      const gamT2Val = surplusVal > 0 ? surplusVal * 0.20 : 0;
+      const fxSafeVal = surplusVal - gamT2Val;
+
+      // Total project figures for sub-lines
+      const totalNetRev = p.netPerBox * soldBoxes;
+      const totalSurplus = totalNetRev - committedFixed - totalNetRev * (p.roy / 100) - totalNetRev * (p.dp / 100);
+      const totalFxSafe = totalSurplus > 0 ? totalSurplus * 0.80 : totalSurplus;
+      const totalFxMax = totalFxSafe + totalNetRev * (p.dp / 100) * 0.80;
+      const totalGP = totalNetRev - fixedCogsTotal;
+      const gpPct = totalNetRev > 0 ? (totalGP / totalNetRev) * 100 : 0;
+      const netPct = totalNetRev > 0 ? (totalFxSafe / totalNetRev) * 100 : 0;
+
+      const unitContrib = p.netPerBox * (1 - (p.roy + p.dp) / 100);
+      const beBoxes = unitContrib > 0 ? committedFixed / unitContrib : 0;
+      const bePct = (beBoxes / totalProdBoxes) * 100;
+
+      // Update Top 6 KPIs
+      document.getElementById('kpi-badge-scen').textContent = p.matched || 'Custom';
+      document.getElementById('kpi-srp-vat').textContent = u === 'total' ? fmtTr(srpVat) : fmtVND(srpVat);
+      document.getElementById('kpi-srp-sub').textContent = `${u === 'total' ? fmtTr(srpPre) : fmtVND(srpPre) + 'đ'} trước VAT · ${fmtVND(p.srpVat / 80)}đ/thẻ`;
+
+      document.getElementById('kpi-net-srp-pct').textContent = `${(100 - p.blendedDeductPct * 100).toFixed(1)}% SRP`;
+      document.getElementById('kpi-net-rev').textContent = u === 'total' ? fmtTr(netRev) : fmtVND(netRev);
+      document.getElementById('kpi-net-rev-sub').textContent = `Tổng ${isB1 ? 'Đ1' : '3Đ'}: ${fmtTr(totalNetRev)} (${fmtVND(soldBoxes)}b)`;
+
+      document.getElementById('kpi-cogs').textContent = u === 'total' ? fmtTr(cogsVal) : fmtVND(cogsVal);
+      document.getElementById('kpi-cogs-pct').textContent = `${totalNetRev > 0 ? (fixedCogsTotal / totalNetRev * 100).toFixed(1) : 0}% Net`;
+      document.getElementById('kpi-cogs-sub').textContent = isB1 ? 'Chi phí gộp Đợt 1 độc lập' : '▼ 17,5% vs Đợt 1 (794,7k)';
+
+      document.getElementById('kpi-gp').textContent = u === 'total' ? fmtTr(gpVal) : fmtVND(gpVal);
+      document.getElementById('kpi-gp-pct').textContent = `${gpPct.toFixed(1)}%`;
+      document.getElementById('kpi-gp-sub').textContent = `Tổng ${isB1 ? 'Đ1' : '3Đ'}: ${fmtTr(totalGP)}`;
+
+      document.getElementById('kpi-net-profit').textContent = u === 'total' ? fmtTr(fxSafeVal) : fmtVND(fxSafeVal);
+      document.getElementById('kpi-net-profit').className = `text-[24px] font-medium font-mono-num tracking-[-0.02em] mt-1.5 ${totalFxSafe < 0 ? 'text-[var(--color-down)]' : 'text-[var(--color-money)]'}`;
+      document.getElementById('kpi-net-pct').textContent = `${netPct.toFixed(1)}%`;
+      document.getElementById('kpi-net-profit-sub').textContent = `Tổng ${isB1 ? 'Đ1' : '3Đ'}: ${fmtTr(totalFxSafe)} (Max ${fmtTr(totalFxMax)})`;
+
+      document.getElementById('kpi-be-pct').textContent = `${bePct.toFixed(1)}%`;
+      document.getElementById('kpi-be-boxes').textContent = `${beBoxes.toFixed(1).replace('.', ',')} Box`;
+      document.getElementById('kpi-be-sub').textContent = `Trên ${fmtVND(totalProdBoxes)} Box (${isB1 ? 'Đợt 1' : 'Đ1: 329,9b'})`;
+
+      document.getElementById('ue-active-unit-badge').textContent = `${unitSuffix} · ${isB1 ? 'Đợt 1 (445 Box)' : 'Bình quân 3 Đợt (1.320 Box)'}`;
+
+      renderWaterfallSVG(p, isB1, u, mult, srpPre, netRev, cogsVal, gpVal, mktVal, royVal, dpVal, surplusVal, gamT2Val, fxSafeVal, totalNetRev);
+      renderCOGSTreemapAndScale();
+      renderCVPChart();
+      updateStatusBadges();
+    }
+
+    // =========================================================================
+    // WATERFALL BRIDGE SVG (Linked to Scale, Unit, Scenario & What-If)
+    // =========================================================================
+    function renderWaterfallSVG(p, isB1, u, mult, srp, net, cogs, gp, mkt, roy, dp, surplus, gamT2, fxSafe, totalNetRev) {
+      document.getElementById('wf-batch-label').textContent = `${isB1 ? 'Đợt 1' : 'TB 3 Đợt'} · ${u === 'box' ? '1 Box' : u === 'pack' ? '1 Pack' : u === 'card' ? '1 Thẻ' : 'Tổng'}`;
+
+      const chDeduct = srp - net;
+      const dpRelease = dp * 0.80;
+      const pctOfNet = v => net > 0 ? (v / net) * 100 : 0;
+
+      const cols = [
+        { short: 'SRP', label: 'Giá niêm yết trước VAT', val: srp, start: 0, end: srp, type: 'ink', pctNet: pctOfNet(srp) },
+        { short: 'Kênh', label: `Khấu trừ 3 kênh (${(p.blendedDeductPct * 100).toFixed(1)}%)`, val: -chDeduct, start: srp, end: net, type: 'hatch-grey', pctNet: -pctOfNet(chDeduct) },
+        { short: 'Net', label: 'Doanh thu thực thu về', val: net, start: 0, end: net, type: 'accent', pctNet: 100.0 },
+        { short: 'COGS', label: 'Giá vốn Shenzou & Logistics', val: -cogs, start: net, end: gp, type: 'hatch-amber', pctNet: -pctOfNet(cogs) },
+        { short: 'GP', label: 'Lợi nhuận gộp chuẩn', val: gp, start: 0, end: gp, type: 'ink', pctNet: pctOfNet(gp) },
+        { short: 'Mkt', label: 'Marketing & Kích hoạt', val: -mkt, start: gp, end: gp - mkt, type: 'hatch-grey', pctNet: -pctOfNet(mkt) },
+        { short: `Roy ${p.roy}%`, label: `Tầng 1 — Royalty GAM (${p.roy}%)`, val: -roy, start: gp - mkt, end: gp - mkt - roy, type: 'hatch-amber', pctNet: -p.roy },
+        { short: `DP ${p.dp}%`, label: `Quỹ Dự phòng (${p.dp}%)`, val: -dp, start: gp - mkt - roy, end: surplus, type: 'hatch-grey', pctNet: -p.dp },
+        { short: 'Thặng dư', label: 'Thặng dư trước chia lãi', val: surplus, start: 0, end: surplus, type: 'ink', pctNet: pctOfNet(surplus) },
+        { short: 'GAM T2', label: 'Tầng 2 — Chia lãi GAM 20%', val: -gamT2, start: surplus, end: fxSafe, type: 'hatch-amber', pctNet: -pctOfNet(gamT2) },
+        { short: 'Lãi FX', label: 'Lãi ròng An toàn FramigosX', val: fxSafe, start: 0, end: fxSafe, type: fxSafe < 0 ? 'loss' : 'money', pctNet: pctOfNet(fxSafe), releaseCap: fxSafe >= 0 ? dpRelease : 0 }
+      ];
+
+      const wfWrap = document.getElementById('waterfall-svg-wrap');
+      const W = 680, H = 268;
+      const padL = 54, padR = 14, padT = 24, padB = 38;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const minVal = Math.min(0, fxSafe, surplus);
+      const maxVal = Math.max(srp * 1.08, 1);
+      const span = maxVal - minVal;
+      const sy = v => padT + plotH - ((v - minVal) / span) * plotH;
+      const colStep = plotW / cols.length;
+      const barW = Math.min(34, colStep * 0.64);
+
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Thác chuyển hóa Unit Economics">`;
+      svg += `
+        <defs>
+          <pattern id="wf-hatch-amber" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="rgba(180, 83, 9, 0.08)" />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(180, 83, 9, 0.45)" stroke-width="2" />
+          </pattern>
+          <pattern id="wf-hatch-grey" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="rgba(23, 23, 23, 0.04)" />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(23, 23, 23, 0.25)" stroke-width="2" />
+          </pattern>
+        </defs>
+      `;
+
+      [0, 0.25, 0.5, 0.75, 1.0].forEach(frac => {
+        const yv = srp * frac;
+        const py = sy(yv);
+        svg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="rgba(23,23,23,0.07)" stroke-width="1" />`;
+        svg += `<text x="${padL - 8}" y="${py + 4}" text-anchor="end" font-size="10.5" fill="#6e6e75">${yv === 0 ? '0' : fmtK(yv)}</text>`;
+      });
+
+      cols.forEach((c, i) => {
+        const cx = padL + i * colStep + colStep / 2;
+        const x = cx - barW / 2;
+        const yTop = sy(Math.max(c.start, c.end));
+        const yBot = sy(Math.min(c.start, c.end));
+        const bh = Math.max(2, yBot - yTop);
+
+        let fill = '#171717', stroke = 'none', lblColor = '#171717';
+        if (c.type === 'accent') { fill = '#b45309'; lblColor = '#b45309'; }
+        else if (c.type === 'money') { fill = '#0f7f57'; lblColor = '#0f7f57'; }
+        else if (c.type === 'loss') { fill = '#d23f45'; lblColor = '#d23f45'; }
+        else if (c.type === 'hatch-amber') { fill = 'url(#wf-hatch-amber)'; stroke = 'rgba(180,83,9,0.45)'; lblColor = '#92400e'; }
+        else if (c.type === 'hatch-grey') { fill = 'url(#wf-hatch-grey)'; stroke = 'rgba(23,23,23,0.25)'; lblColor = '#4a4a4f'; }
+
+        if (i > 0) {
+          const prev = cols[i - 1];
+          const prevCx = padL + (i - 1) * colStep + colStep / 2;
+          const bridgeY = sy(prev.end);
+          svg += `<line x1="${prevCx + barW / 2}" y1="${bridgeY}" x2="${x}" y2="${bridgeY}" stroke="rgba(23,23,23,0.26)" stroke-dasharray="2 2" stroke-width="1" />`;
+        }
+
+        const tipSub = escAttr(`Giá trị: ${fmtVND(c.val)}đ (${c.pctNet >= 0 ? '' : '−'}${Math.abs(c.pctNet).toFixed(1)}% Net Rev)`);
+        svg += `<g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(c.label)}', '${tipSub}')" onmouseleave="hideTip()">`;
+        svg += `<rect x="${x}" y="${yTop}" width="${barW}" height="${bh}" rx="3" fill="${fill}" ${stroke !== 'none' ? `stroke="${stroke}" stroke-width="1"` : ''} />`;
+
+        if (c.releaseCap > 0) {
+          const capTop = sy(c.end + c.releaseCap);
+          const capH = Math.max(2, yTop - capTop);
+          svg += `<rect x="${x}" y="${capTop}" width="${barW}" height="${capH}" rx="2" fill="rgba(15, 127, 87, 0.2)" stroke="#0f7f57" stroke-dasharray="2 2" stroke-width="1" />`;
+          svg += `<text x="${cx}" y="${capTop - 5}" text-anchor="middle" font-size="10" font-weight="600" fill="#0f7f57">${fmtK(c.val)}</text>`;
+        } else {
+          svg += `<text x="${cx}" y="${yTop - 5}" text-anchor="middle" font-size="10" font-weight="500" fill="${lblColor}">${fmtK(c.val)}</text>`;
+        }
+
+        svg += `<text x="${cx}" y="${padT + plotH + 15}" text-anchor="middle" font-size="10" font-weight="${c.type === 'money' || c.type === 'accent' ? '600' : '400'}" fill="#4a4a4f">${c.short}</text>`;
+        svg += `<text x="${cx}" y="${padT + plotH + 27}" text-anchor="middle" font-size="9.5" fill="#6e6e75">${Math.abs(c.pctNet).toFixed(0)}%</text>`;
+        svg += `</g>`;
+      });
+
+      svg += `</svg>`;
+      wfWrap.innerHTML = svg;
+      document.getElementById('wf-max-note').textContent = `Hoàn nhập 100% DP: ${fmtVND(fxSafe + dpRelease)}đ (${pctOfNet(fxSafe + dpRelease).toFixed(1)}% Net)`;
+    }
+
+    // =========================================================================
+    // PAGE 2: SCATTER PLOT, WHISKERS, BENCHMARK BARS & SORTABLE TABLE 1.1
+    // =========================================================================
+    function setScatterZoom(mode) {
+      scatterZoom = mode;
+      document.querySelectorAll('#scatter-zoom-group .seg-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-zoom') === mode));
+      renderScatterPlot();
+    }
+
+    function renderScatterPlot() {
+      const wrap = document.getElementById('scatter-chart-wrap');
+      const W = 920, H = 275;
+      const padL = 66, padR = 26, padT = 24, padB = 40;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const isTargetZoom = scatterZoom === 'target';
+      const xMax = isTargetZoom ? 3600000 : 7500000;
+      const yMax = isTargetZoom ? 40000 : 95000;
+      const sx = x => padL + (x / xMax) * plotW;
+      const sy = y => padT + plotH - (y / yMax) * plotH;
+
+      const xTicks = isTargetZoom ? [0, 900000, 1800000, 2700000, 3600000] : [0, 1500000, 3000000, 4500000, 6000000, 7500000];
+      const yTicks = isTargetZoom ? [0, 10000, 20000, 30000, 40000] : [0, 20000, 40000, 60000, 80000];
+
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Bản đồ định vị thị trường 2D">`;
+      yTicks.forEach(yv => {
+        const py = sy(yv);
+        svg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="rgba(23,23,23,0.08)" stroke-width="1" />`;
+        svg += `<text x="${padL - 10}" y="${py + 4}" text-anchor="end" font-size="11" fill="#6e6e75">${yv === 0 ? '0đ' : (yv / 1000) + 'k'}</text>`;
+      });
+      xTicks.forEach(xv => {
+        const px = sx(xv);
+        svg += `<line x1="${px}" y1="${padT}" x2="${px}" y2="${padT + plotH}" stroke="rgba(23,23,23,0.05)" stroke-width="1" />`;
+        svg += `<text x="${px}" y="${padT + plotH + 17}" text-anchor="middle" font-size="11" fill="#6e6e75">${xv === 0 ? '0' : (xv / 1e6).toFixed(1).replace('.0', '').replace('.', ',') + ' tr'}</text>`;
+      });
+      svg += `<text x="${padL + plotW / 2}" y="${H - 5}" text-anchor="middle" font-size="11" fill="#6e6e75">Giá phát hành gốc / Hộp hoặc Pack (VNĐ)</text>`;
+      svg += `<text x="15" y="${padT + plotH / 2}" text-anchor="middle" font-size="11" fill="#6e6e75" transform="rotate(-90 15 ${padT + plotH / 2})">Đơn giá / Thẻ (VNĐ)</text>`;
+
+      const cX1 = sx(1500000), cX2 = sx(2040000);
+      svg += `<rect x="${cX1}" y="${padT}" width="${cX2 - cX1}" height="${plotH}" fill="rgba(180, 83, 9, 0.07)" stroke="rgba(180, 83, 9, 0.28)" stroke-dasharray="4 3" stroke-width="1" />`;
+      svg += `<text x="${(cX1 + cX2) / 2}" y="${padT + 14}" text-anchor="middle" font-size="11" font-weight="500" fill="#b45309">Hành lang tối ưu: 1,50–2,04 tr</text>`;
+
+      const avgY = sy(25483);
+      svg += `<line x1="${padL}" y1="${avgY}" x2="${W - padR}" y2="${avgY}" stroke="#6e6e75" stroke-dasharray="5 3" stroke-width="1" />`;
+      svg += `<text x="${W - padR - 4}" y="${avgY - 6}" text-anchor="end" font-size="11" fill="#4a4a4f">TB 13 SKU thuần thẻ: 25.483đ/thẻ</text>`;
+
+      const pts = BENCHMARK_SKUS.filter(d => !d.isBundle && (isTargetZoom ? d.vndBox <= 3600000 : true));
+      [...pts.filter(d => !d.hasAuto && !d.isTarget), ...pts.filter(d => d.hasAuto && !d.isTarget), ...pts.filter(d => d.isTarget)].forEach(item => {
+        const px = sx(item.vndBox), py = sy(item.vndCard);
+        const tipSub = escAttr(`${item.packSpec} · Giá gốc: ${item.origPrice}<br/>Box/Pack: ${fmtVND(item.vndBox)}đ · Đơn giá: ${fmtVND(item.vndCard)}đ/thẻ`);
+        if (item.isTarget) {
+          svg += `
+            <g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(item.name)}', '${tipSub}')" onmouseleave="hideTip()">
+              <circle cx="${px}" cy="${py}" r="13" fill="rgba(180, 83, 9, 0.16)" />
+              <circle cx="${px}" cy="${py}" r="6.5" fill="#b45309" stroke="#ffffff" stroke-width="2" />
+              <rect x="${px + 12}" y="${py - 20}" width="146" height="22" rx="5" fill="#ffffff" stroke="rgba(180, 83, 9, 0.4)" stroke-width="1" />
+              <text x="${px + 18}" y="${py - 5}" font-size="11" font-weight="600" fill="#b45309">FramigosX · 1,98tr · 24.750đ</text>
+            </g>`;
+        } else {
+          const fill = item.hasAuto ? '#2563eb' : 'rgba(23, 23, 23, 0.42)';
+          const showLabelIds = isTargetZoom ? [1, 4, 5, 7, 10, 11, 12, 15] : [4, 7, 12, 15, 16];
+          let lbl = '';
+          if (showLabelIds.includes(item.id)) {
+            const dx = item.id === 4 ? -8 : 8, anchor = item.id === 4 ? 'end' : 'start', dy = item.id === 5 ? -7 : item.id === 11 ? 13 : 4;
+            lbl = `<text x="${px + dx}" y="${py + dy}" text-anchor="${anchor}" font-size="10.5" fill="#4a4a4f">${item.shortName}</text>`;
+          }
+          svg += `<g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(item.name)}', '${tipSub}')" onmouseleave="hideTip()"><circle cx="${px}" cy="${py}" r="${item.hasAuto ? 5.5 : 4.8}" fill="${fill}" stroke="#ffffff" stroke-width="1.5" />${lbl}</g>`;
+        }
+      });
+      svg += `</svg>`;
+      wrap.innerHTML = svg;
+    }
+
+    function renderSegmentWhiskers() {
+      const wrap = document.getElementById('segment-whiskers-wrap');
+      const rows = [
+        { title: '1. Nhóm Phổ thông VN (/thẻ)', min: 12184, med: 15813, mean: 15902, max: 19800, scaleMax: 90000, target: null, highlight: false },
+        { title: '2. Trung cấp & Esports (/thẻ)', min: 10413, med: 23115, mean: 22286, max: 33915, scaleMax: 90000, target: null, highlight: false },
+        { title: 'Toàn bộ 13 SKU thuần thẻ (/thẻ)', min: 10413, med: 19800, mean: 25483, max: 89375, scaleMax: 90000, target: 24750, highlight: true },
+        { title: 'Giá / Hộp — 13 SKU Hộp/Bundle', min: 764745, med: 1782450, mean: 2160030, max: 7150000, scaleMax: 7200000, target: 1980000, highlight: false }
+      ];
+
+      wrap.innerHTML = rows.map(r => {
+        const W = 310, H = 20, pad = 6, span = W - pad * 2, px = v => pad + (v / r.scaleMax) * span;
+        const targetSvg = r.target ? `<polygon points="${px(r.target)},3 ${px(r.target) + 5},10 ${px(r.target)},17 ${px(r.target) - 5},10" fill="#b45309" stroke="#ffffff" stroke-width="1" />` : '';
+        return `
+          <div class="p-2 rounded-[6px] ${r.highlight ? 'bg-[var(--color-accent-bg)] border border-[var(--color-accent-ring)]' : 'bg-[var(--color-soft)]'} space-y-0.5">
+            <div class="flex justify-between text-[11.5px]">
+              <span class="${r.highlight ? 'text-[var(--color-accent)]' : 'text-[var(--color-ink-2)]'} font-medium">${r.title}</span>
+              <span class="font-mono-num font-medium">TB: ${fmtVND(r.mean)}đ</span>
+            </div>
+            <svg viewBox="0 0 ${W} ${H}" class="w-full h-4 svg-chart">
+              <line x1="${pad}" y1="10" x2="${W - pad}" y2="10" stroke="rgba(23,23,23,0.1)" stroke-width="2" />
+              <line x1="${px(r.min)}" y1="10" x2="${px(r.max)}" y2="10" stroke="#4a4a4f" stroke-width="2.5" />
+              <line x1="${px(r.med)}" y1="3" x2="${px(r.med)}" y2="17" stroke="#171717" stroke-width="2" />
+              <circle cx="${px(r.mean)}" cy="10" r="3.5" fill="#2563eb" stroke="#ffffff" stroke-width="1" />
+              ${targetSvg}
+            </svg>
+            <div class="flex justify-between text-[10.5px] font-mono-num text-[var(--color-muted)]">
+              <span>Min: ${fmtK(r.min)}</span><span>Med: ${fmtK(r.med)}</span>${r.target ? `<span class="text-[var(--color-accent)] font-medium">◆ FX: ${fmtK(r.target)}</span>` : ''}<span>Max: ${fmtK(r.max)}</span>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function filterBenchmark(seg) {
+      bmSegmentFilter = seg;
+      document.querySelectorAll('#bm-seg-filter .seg-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-seg') === seg));
+      renderBenchmarkChart();
+    }
+
+    function setBenchmarkMetric(metric) {
+      bmMetric = metric;
+      document.querySelectorAll('#bm-metric-switch .seg-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-metric') === metric));
+      renderBenchmarkChart();
+    }
+
+    function renderBenchmarkChart() {
+      const container = document.getElementById('bm-bars-container');
+      let list = BENCHMARK_SKUS.filter(item => {
+        if (item.isTarget) return true;
+        if (bmMetric === 'card' && item.isBundle) return false;
+        if (bmMetric === 'box' && !item.isBox) return false;
+        return bmSegmentFilter === 'all' || item.seg === bmSegmentFilter;
+      });
+      const prop = bmMetric === 'card' ? 'vndCard' : bmMetric === 'box' ? 'vndBox' : 'vndPack';
+      list.sort((a, b) => b[prop] - a[prop]);
+      const maxVal = Math.max(...list.map(d => d[prop]));
+
+      document.getElementById('bm-chart-subtitle').textContent = bmMetric === 'card' ? 'Đơn giá phát hành gốc trên mỗi thẻ (13 SKU thuần thẻ)' : bmMetric === 'box' ? 'Giá phát hành gốc trên mỗi Hộp / Bundle' : 'Giá phát hành gốc trên mỗi Pack';
+      document.getElementById('bm-chart-headline').textContent = bmMetric === 'card' ? 'FramigosX: 24.750 VNĐ / thẻ' : bmMetric === 'box' ? 'FramigosX: 1.980.000 VNĐ / Box' : 'FramigosX: 198.000 VNĐ / Pack';
+      document.getElementById('bm-chart-avg').textContent = bmMetric === 'card' ? 'TB 13 SKU thuần thẻ: 25.483 VNĐ' : bmMetric === 'box' ? 'TB 13 SKU Hộp: 2.160.030 VNĐ' : '8 thẻ / Pack';
+
+      container.innerHTML = list.map(item => {
+        const val = item[prop], w = Math.max(4, (val / maxVal) * 100);
+        const barCol = item.isTarget ? 'bg-[var(--color-accent)]' : item.hasAuto ? 'bg-[#2563eb]/75' : 'bg-[#171717]/22';
+        return `
+          <div class="${item.isTarget ? 'bg-[var(--color-accent-bg)] ring-1 ring-inset ring-[var(--color-accent-ring)] rounded-[6px] px-2.5 py-1.5' : 'px-2.5 py-1 hover:bg-[var(--color-soft)] rounded-[5px]'}" onmouseenter="showTip(event, '${escAttr(item.name)}', '${escAttr(item.packSpec)} · ${escAttr(item.origPrice)}<br/>${escAttr(item.note)}')" onmouseleave="hideTip()">
+            <div class="flex justify-between text-[12px] gap-2 mb-1">
+              <span class="truncate ${item.isTarget ? 'font-medium text-[var(--color-ink)]' : 'text-[var(--color-ink-2)]'}">${item.name} <span class="text-[11px] text-[var(--color-muted)]">(${item.packSpec})</span></span>
+              <span class="font-mono-num shrink-0 ${item.isTarget ? 'font-medium text-[var(--color-accent)]' : 'text-[var(--color-ink)]'}">${fmtVND(val)}đ</span>
+            </div>
+            <div class="h-2 w-full rounded-[3px] bg-[var(--color-line)] overflow-hidden"><div class="h-full rounded-[3px] ${barCol}" style="width:${w.toFixed(1)}%"></div></div>
+          </div>`;
+      }).join('');
+    }
+
+    function sortTable16(key) {
+      if (sort16Key === key) sort16Asc = !sort16Asc;
+      else { sort16Key = key; sort16Asc = false; }
+      renderTable16SKUs();
+    }
+
+    function renderTable16SKUs() {
+      const q = (document.getElementById('search-16-skus').value || '').toLowerCase().trim();
+      let list = BENCHMARK_SKUS.filter(i => !q || i.name.toLowerCase().includes(q) || i.segLabel.toLowerCase().includes(q) || i.note.toLowerCase().includes(q));
+      if (sort16Key) {
+        list = list.slice().sort((a, b) => sort16Asc ? a[sort16Key] - b[sort16Key] : b[sort16Key] - a[sort16Key]);
+      }
+      const maxCard = 89375;
+      document.getElementById('table-16-skus-body').innerHTML = list.map(item => {
+        const w = item.isBundle ? 0 : Math.min(100, (item.vndCard / maxCard) * 100);
+        const cardCell = item.isBundle
+          ? `<span class="italic text-[var(--color-muted)]">${fmtVND(item.vndCard)} (PK)</span>`
+          : `<div class="flex items-center justify-end gap-2"><div class="w-16 h-1.5 rounded bg-[var(--color-line)] overflow-hidden"><div class="h-full ${item.isTarget ? 'bg-[var(--color-accent)]' : 'bg-[#2563eb]/70'}" style="width:${w.toFixed(0)}%"></div></div><span class="font-medium">${fmtVND(item.vndCard)}</span></div>`;
+        return `
+          <tr class="${item.isTarget ? 'row-highlight' : ''}">
+            <td class="whitespace-nowrap">${item.segLabel}</td>
+            <td class="font-medium text-[var(--color-ink)]">${item.name}</td>
+            <td class="whitespace-nowrap font-mono-num">${item.packSpec}</td>
+            <td class="text-right font-mono-num whitespace-nowrap">${item.origPrice}</td>
+            <td class="text-right font-mono-num">${fmtVND(item.vndBox)}</td>
+            <td class="text-right font-mono-num">${fmtVND(item.vndPack)}</td>
+            <td class="text-right font-mono-num">${cardCell}</td>
+            <td class="text-[12px]">${item.note}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    // =========================================================================
+    // PAGE 3: SKU LADDER, CHANNEL MIX DONUT, STACKED CHART & TABLE 3.2
+    // =========================================================================
+    function renderSkuLadderSVG() {
+      const wrap = document.getElementById('sku-ladder-wrap');
+      const W = 920, H = 124, padL = 195, padR = 130, padT = 10, rowH = 25, gap = 4, plotW = W - padL - padR;
+      const sx = v => padL + (v / 28000) * plotW;
+      const skus = [
+        { label: 'SKU 1 · Single Booster Pack', cardVat: 26125, cardPre: 23750, delta: '+5,6% vs Box', color: '#4a4a4f' },
+        { label: 'SKU 3 · Standard Hobby Box (Mốc)', cardVat: 24750, cardPre: 22500, delta: '0,0% Mốc chuẩn', color: '#b45309', isAnchor: true },
+        { label: 'SKU 4 · Sealed Master Case', cardVat: 23513, cardPre: 21375, delta: '−5,0% thùng seal', color: '#0f7f57' },
+        { label: 'SKU 2 · Early-Bird Pre-order', cardVat: 22275, cardPre: 20250, delta: '−10,0% ưu đãi', color: '#2563eb' }
+      ];
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Thang đơn giá 4 SKU">`;
+      skus.forEach((s, i) => {
+        const y = padT + i * (rowH + gap), bw = sx(s.cardVat) - padL;
+        svg += `<g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(s.label)}', 'Gồm VAT: ${fmtVND(s.cardVat)}đ/thẻ · Trước VAT: ${fmtVND(s.cardPre)}đ/thẻ')" onmouseleave="hideTip()">
+          <text x="${padL - 10}" y="${y + 16}" text-anchor="end" font-size="12" font-weight="${s.isAnchor ? '600' : '400'}" fill="${s.isAnchor ? '#b45309' : '#4a4a4f'}">${s.label}</text>
+          <rect x="${padL}" y="${y + 4}" width="${plotW}" height="15" rx="3" fill="#f1f1ee" />
+          <rect x="${padL}" y="${y + 4}" width="${bw}" height="15" rx="3" fill="${s.color}" opacity="${s.isAnchor ? '1' : '0.82'}" />
+          <text x="${padL + bw + 8}" y="${y + 15}" font-size="11.5" font-weight="500" fill="#171717">${fmtVND(s.cardVat)}đ/thẻ <tspan fill="#6e6e75" font-weight="400">(${s.delta})</tspan></text>
+        </g>`;
+      });
+      svg += `<line x1="${sx(24750)}" y1="${padT - 2}" x2="${sx(24750)}" y2="${padT + 4 * (rowH + gap)}" stroke="#171717" stroke-dasharray="3 3" stroke-width="1.2" /></svg>`;
+      wrap.innerHTML = svg;
+    }
+
+    function renderChannelVisuals(c1, c2, c3, netPerBox, srpPct) {
+      const donutWrap = document.getElementById('channel-donut-wrap');
+      const size = 144, cx = 72, cy = 72, r = 52, strokeW = 16, circ = 2 * Math.PI * r;
+      const segs = [
+        { id: 1, label: 'Đại lý TCG', pct: c1, color: '#171717' },
+        { id: 2, label: 'GAM Store', pct: c2, color: '#b45309' },
+        { id: 3, label: 'FramigosX D2C', pct: c3, color: '#0f7f57' }
+      ];
+      let offset = 0, arcs = '';
+      segs.forEach(s => {
+        const len = (s.pct / 100) * circ;
+        const dim = selectedChannelFilter && selectedChannelFilter !== s.id ? 0.25 : 1;
+        arcs += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" opacity="${dim}" stroke-width="${strokeW}" stroke-dasharray="${Math.max(0, len - 2)} ${circ}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" class="cursor-pointer" onclick="toggleChannelFilter(${s.id})" onmouseenter="showTip(event, '${s.label}', 'Tỷ trọng: ${s.pct}% (${Math.round(1320 * s.pct / 100)} Box) · Click để lọc')" onmouseleave="hideTip()" />`;
+        offset += len;
+      });
+      donutWrap.innerHTML = `<svg viewBox="0 0 ${size} ${size}" class="w-[132px] h-[132px] svg-chart"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(23,23,23,0.06)" stroke-width="${strokeW}" />${arcs}<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="14.5" font-weight="600" fill="#171717">${fmtK(netPerBox)}</text><text x="${cx}" y="${cy + 13}" text-anchor="middle" font-size="10.5" fill="#6e6e75">${srpPct.toFixed(1)}% SRP</text></svg>`;
+
+      const barsWrap = document.getElementById('channel-profit-bars-wrap');
+      const box1 = 1320 * (c1 / 100), box2 = 1320 * (c2 / 100), box3 = 1320 * (c3 / 100);
+      const p1 = box1 * 301801, p2 = box2 * 424201, p3 = box3 * 546601, maxP = Math.max(p1, p2, p3, 1);
+      const chRows = [
+        { id: 1, name: 'Đại lý TCG', pct: c1, boxes: box1, profit: p1, color: '#171717' },
+        { id: 2, name: 'GAM Store', pct: c2, boxes: box2, profit: p2, color: '#b45309' },
+        { id: 3, name: 'FramigosX D2C', pct: c3, boxes: box3, profit: p3, color: '#0f7f57' }
+      ];
+      let barSvg = `<svg viewBox="0 0 280 124" class="w-full h-auto svg-chart"><text x="0" y="12" font-size="11" font-weight="500" fill="#4a4a4f">Đóng góp Lãi ròng FX (1.320 Box)</text>`;
+      chRows.forEach((row, i) => {
+        const y = 24 + i * 33, bw = Math.max(4, (row.profit / maxP) * 132), dim = selectedChannelFilter && selectedChannelFilter !== row.id ? 0.3 : 1;
+        barSvg += `<g class="cursor-pointer" opacity="${dim}" onclick="toggleChannelFilter(${row.id})" onmouseenter="showTip(event, '${row.name} (${row.pct}%)', 'Sản lượng: ${Math.round(row.boxes)} Box · Lãi ròng: ${fmtVND(row.profit)}đ')" onmouseleave="hideTip()">
+          <text x="0" y="${y + 10}" font-size="11.5" fill="#171717" font-weight="500">${row.name} (${row.pct}%)</text>
+          <rect x="0" y="${y + 16}" width="132" height="7" rx="3" fill="rgba(23,23,23,0.08)" />
+          <rect x="0" y="${y + 16}" width="${bw}" height="7" rx="3" fill="${row.color}" />
+          <text x="140" y="${y + 22}" font-size="11.5" font-weight="500" fill="${row.color}">${fmtTr(row.profit)} <tspan fill="#6e6e75" font-weight="400">(${Math.round(row.boxes)}b)</tspan></text>
+        </g>`;
+      });
+      barSvg += `</svg>`;
+      barsWrap.innerHTML = barSvg;
+    }
+
+    function updateChannelMix(changedIdx) {
+      let c1 = parseInt(document.getElementById('slider-ch1').value, 10);
+      let c2 = parseInt(document.getElementById('slider-ch2').value, 10);
+      if (c1 + c2 > 95) {
+        if (changedIdx === 1) { c2 = 95 - c1; document.getElementById('slider-ch2').value = c2; }
+        else { c1 = 95 - c2; document.getElementById('slider-ch1').value = c1; }
+      }
+      const c3 = 100 - c1 - c2;
+      document.getElementById('val-ch1').textContent = c1 + '%';
+      document.getElementById('val-ch2').textContent = c2 + '%';
+      document.getElementById('val-ch3').textContent = c3 + '%';
+
+      const p = getSimParams();
+      const srpPct = (p.netPerBox / p.srpPre) * 100;
+      const totalNet = p.netPerBox * p.boxes3;
+      const surplus = totalNet - 915749000 - totalNet * (p.roy / 100) - totalNet * (p.dp / 100);
+      const fxTotal = surplus > 0 ? surplus * 0.80 : surplus;
+
+      document.getElementById('exec-ch-net').textContent = `${fmtVND(p.netPerBox)}đ/Box`;
+      document.getElementById('exec-ch-profit').textContent = `Lãi FX: ${fmtTr(fxTotal)}`;
+      renderChannelVisuals(c1, c2, c3, p.netPerBox, srpPct);
+      runCustomSim();
+    }
+
+    function resetChannelMix() {
+      document.getElementById('slider-ch1').value = 55;
+      document.getElementById('slider-ch2').value = 30;
+      selectedChannelFilter = null;
+      updateChannelMix(1);
+    }
+
+    function renderChannelStackedChart() {
+      const wrap = document.getElementById('channel-stacked-chart-wrap');
+      const channels = [
+        { id: 1, name: '1. Đại lý TCG (CK 30%)', net: 1260000, cogs: 693749, roy: 126000, dp: 63000, gamT2: 75450, fx: 301801 },
+        { id: 2, name: '2. GAM Store (Comm 20%)', net: 1440000, cogs: 693749, roy: 144000, dp: 72000, gamT2: 106050, fx: 424201 },
+        { id: 3, name: '3. FramigosX D2C (Phí 10%)', net: 1620000, cogs: 693749, roy: 162000, dp: 81000, gamT2: 136650, fx: 546601 },
+        { id: 0, name: 'Bình quân hệ thống (55/30/15)', net: 1368000, cogs: 693749, roy: 136800, dp: 68400, gamT2: 93810, fx: 375241, isBold: true }
+      ];
+      const W = 540, H = 170, padL = 165, padR = 56, barW = W - padL - padR;
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart">`;
+      const leg = [{ lbl: 'COGS+Mkt', col: '#27272a' }, { lbl: 'Roy 10%', col: '#d97706' }, { lbl: 'DP 5%', col: '#9ca3af' }, { lbl: 'GAM T2', col: '#f59e0b' }, { lbl: 'Lãi FX', col: '#0f7f57' }];
+      let lx = padL;
+      leg.forEach(item => {
+        svg += `<rect x="${lx}" y="4" width="8" height="8" rx="2" fill="${item.col}" /><text x="${lx + 11}" y="12" font-size="10" fill="#4a4a4f">${item.lbl}</text>`;
+        lx += item.lbl.length * 5.6 + 22;
+      });
+      channels.forEach((ch, idx) => {
+        const y = 28 + idx * 34;
+        const dim = selectedChannelFilter && ch.id !== 0 && selectedChannelFilter !== ch.id ? 0.3 : 1;
+        const parts = [
+          { lbl: 'COGS + Mkt', val: ch.cogs, col: '#27272a', textCol: '#ffffff' },
+          { lbl: 'Royalty GAM', val: ch.roy, col: '#d97706', textCol: '#ffffff' },
+          { lbl: 'Quỹ dự phòng', val: ch.dp, col: '#9ca3af', textCol: '#ffffff' },
+          { lbl: 'Chia lãi T2', val: ch.gamT2, col: '#f59e0b', textCol: '#171717' },
+          { lbl: 'Lãi ròng FX', val: ch.fx, col: '#0f7f57', textCol: '#ffffff' }
+        ];
+        svg += `<g opacity="${dim}" class="${ch.id ? 'cursor-pointer' : ''}" ${ch.id ? `onclick="toggleChannelFilter(${ch.id})"` : ''}>`;
+        svg += `<text x="${padL - 8}" y="${y + 15}" text-anchor="end" font-size="11" font-weight="${ch.isBold ? '600' : '400'}" fill="#171717">${ch.name}</text>`;
+        let curX = padL;
+        parts.forEach(p => {
+          const pct = (p.val / ch.net) * 100, segW = (p.val / ch.net) * barW;
+          svg += `<g onmouseenter="showTip(event, '${escAttr(ch.name)}', '${p.lbl}: ${fmtVND(p.val)}đ/Box (${pct.toFixed(1)}%)')" onmouseleave="hideTip()">
+            <rect x="${curX}" y="${y + 2}" width="${Math.max(1, segW - 1)}" height="19" rx="2" fill="${p.col}" />
+            ${segW > 30 ? `<text x="${curX + segW / 2}" y="${y + 15}" text-anchor="middle" font-size="9.5" font-weight="500" fill="${p.textCol}">${pct.toFixed(0)}%</text>` : ''}
+          </g>`;
+          curX += segW;
+        });
+        svg += `<text x="${padL + barW + 6}" y="${y + 15}" font-size="11" font-weight="600" fill="#0f7f57">${fmtK(ch.fx)}</text></g>`;
+      });
+      svg += `</svg>`;
+      wrap.innerHTML = svg;
+    }
+
+    function renderTable32() {
+      const rows = [
+        { id: 1, name: '1. Đại lý Shop TCG (CK 30% · 55%)', net: 1260000, cm: -693749, roy: -126000, dp: -63000, t2: -75450, b1: '167.112 (13,3%)', b3: 301801, margin: '24,0%' },
+        { id: 2, name: '2. GAM Store & Sự kiện (Comm 20% · 30%)', net: 1440000, cm: -693749, roy: -144000, dp: -72000, t2: -106050, b1: '289.512 (20,1%)', b3: 424201, margin: '29,5%' },
+        { id: 3, name: '3. FramigosX D2C (Phí 10% · 15%)', net: 1620000, cm: -693749, roy: -162000, dp: -81000, t2: -136650, b1: '411.912 (25,4%)', b3: 546601, margin: '33,7%' },
+        { id: 0, name: 'Bình quân gia quyền (55 / 30 / 15)', net: 1368000, cm: -693749, roy: -136800, dp: -68400, t2: -93810, b1: '240.552 (17,6%)', b3: 375241, margin: '27,4%', isSum: true }
+      ];
+      document.getElementById('table-32-channels-body').innerHTML = rows.map(r => {
+        const isSel = selectedChannelFilter && r.id === selectedChannelFilter;
+        const cls = r.isSum ? 'row-profit' : isSel ? 'row-highlight cursor-pointer' : r.id ? 'cursor-pointer' : '';
+        const op = selectedChannelFilter && !r.isSum && r.id !== selectedChannelFilter ? 'opacity-45' : '';
+        return `<tr class="${cls} ${op}" ${r.id ? `onclick="toggleChannelFilter(${r.id})"` : ''}>
+          <td class="font-medium text-[var(--color-ink)]">${r.name}</td>
+          <td class="text-right font-mono-num">${fmtVND(r.net)}</td>
+          <td class="text-right font-mono-num">${fmtVND(r.cm)}</td>
+          <td class="text-right font-mono-num">${fmtVND(r.roy)}</td>
+          <td class="text-right font-mono-num">${fmtVND(r.dp)}</td>
+          <td class="text-right font-mono-num">${fmtVND(r.t2)}</td>
+          <td class="text-right font-mono-num">${r.b1}</td>
+          <td class="text-right font-mono-num font-medium text-[var(--color-money)]">${fmtVND(r.b3)}đ</td>
+          <td class="text-right font-mono-num font-medium">${r.margin}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    // =========================================================================
+    // PAGE 4: COGS TREEMAP SVG, SCALE CHART & 22-LINE DATA GRID
+    // =========================================================================
+    function renderCOGSTreemapAndScale() {
+      const isB1 = currentBatchMode === 'batch1';
+      const u = currentUnitView;
+      const mult = u === 'box' ? 1 : u === 'pack' ? 0.1 : u === 'card' ? 0.0125 : (isB1 ? 445 : 1320);
+
+      const cogsItems = UNIT_ECON_LINES.filter(l => l.type === 'cogs').map(l => ({
+        ...l,
+        valBox: Math.abs(isB1 ? l.b1Box : l.b3Box),
+        savedBox: Math.abs(l.b1Box) - Math.abs(l.b3Box)
+      })).sort((a, b) => b.valBox - a.valBox);
+
+      const totalBox = cogsItems.reduce((s, d) => s + d.valBox, 0);
+      document.getElementById('cogs-header-total').textContent = `${fmtVND(totalBox * mult)}đ`;
+
+      // Proportional Row-Sliced Treemap SVG (620 x 250)
+      const wrap = document.getElementById('cogs-treemap-wrap');
+      const W = 620, H = 248, pad = 2;
+      const shenzou = cogsItems.filter(d => d.grp === 'shenzou');
+      const pack = cogsItems.filter(d => d.grp === 'pack');
+      const log = cogsItems.filter(d => d.grp === 'logistics');
+
+      const wShen = (shenzou.reduce((s, d) => s + d.valBox, 0) / totalBox) * W;
+      const wOther = W - wShen;
+      const packSum = pack.reduce((s, d) => s + d.valBox, 0);
+      const logSum = log.reduce((s, d) => s + d.valBox, 0);
+      const hPack = (packSum / (packSum + logSum)) * H;
+
+      let rects = [];
+      // Slice Shenzou items into 2 columns inside [0..wShen, 0..H]
+      const shenCol1 = shenzou.slice(0, 3), shenCol2 = shenzou.slice(3);
+      const s1Sum = shenCol1.reduce((s, d) => s + d.valBox, 0), s2Sum = shenCol2.reduce((s, d) => s + d.valBox, 0);
+      const wC1 = (s1Sum / (s1Sum + s2Sum)) * wShen, wC2 = wShen - wC1;
+
+      let cy = 0;
+      shenCol1.forEach(d => {
+        const rh = (d.valBox / s1Sum) * H;
+        rects.push({ ...d, x: 0, y: cy, w: wC1, h: rh, bg: '#27272a', fg: '#ffffff' });
+        cy += rh;
+      });
+      cy = 0;
+      shenCol2.forEach((d, idx) => {
+        const rh = (d.valBox / s2Sum) * H;
+        const shades = ['#3f3f46', '#52525b', '#63636e', '#71717a', '#82828c'];
+        rects.push({ ...d, x: wC1, y: cy, w: wC2, h: rh, bg: shades[idx % shades.length], fg: '#ffffff' });
+        cy += rh;
+      });
+
+      // Pack group top-right
+      cy = 0;
+      pack.forEach((d, idx) => {
+        const rh = (d.valBox / packSum) * hPack;
+        rects.push({ ...d, x: wShen, y: cy, w: wOther, h: rh, bg: idx === 0 ? '#b45309' : '#d97706', fg: '#ffffff' });
+        cy += rh;
+      });
+      // Logistics bottom-right
+      log.forEach(d => {
+        rects.push({ ...d, x: wShen, y: hPack, w: wOther, h: H - hPack, bg: '#2563eb', fg: '#ffffff' });
+      });
+
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Treemap 11 cấu phần Giá vốn nhập kho">`;
+      rects.forEach(r => {
+        const share = (r.valBox / totalBox) * 100;
+        const rx = r.x + pad, ry = r.y + pad, rw = Math.max(1, r.w - pad * 2), rh = Math.max(1, r.h - pad * 2);
+        const saveNote = r.savedBox > 0 ? `<br/>Tiết kiệm khi gộp 3 đợt: −${fmtVND(r.savedBox)}đ/Box` : '';
+        const tipSub = escAttr(`Chi phí: ${fmtVND(r.valBox * mult)}đ (${share.toFixed(1)}% COGS)${saveNote}`);
+        svg += `<g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(r.title)}', '${tipSub}')" onmouseleave="hideTip()">
+          <rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" rx="4" fill="${r.bg}" />`;
+        if (rw > 62 && rh > 34) {
+          svg += `<text x="${rx + 8}" y="${ry + 17}" font-size="11" font-weight="600" fill="${r.fg}">${r.short}</text>
+                  <text x="${rx + 8}" y="${ry + 32}" font-size="10.5" fill="${r.fg}" opacity="0.88">${fmtK(r.valBox * mult)} · ${share.toFixed(1)}%</text>`;
+        } else if (rw > 42 && rh > 18) {
+          svg += `<text x="${rx + 6}" y="${ry + 14}" font-size="9.5" font-weight="500" fill="${r.fg}">${r.code} (${share.toFixed(0)}%)</text>`;
+        }
+        svg += `</g>`;
+      });
+      svg += `</svg>`;
+      wrap.innerHTML = svg;
+
+      // Scale Comparison SVG
+      const scaleWrap = document.getElementById('cogs-scale-chart-wrap');
+      const scaleItems = [
+        { name: 'A6. Jersey Relic', b1: 114607 * mult, b3: 38636 * mult, save: '−66,3%' },
+        { name: 'A1. R&D Sample', b1: 57303 * mult, b3: 19318 * mult, save: '−66,3%' },
+        { name: 'A8. Màng nhôm', b1: 57303 * mult, b3: 28977 * mult, save: '−49,4%' }
+      ];
+      const maxS = 114607 * mult;
+      let sSvg = `<svg viewBox="0 0 380 88" class="w-full h-auto svg-chart">`;
+      scaleItems.forEach((si, idx) => {
+        const y = 4 + idx * 28, w1 = Math.max(4, (si.b1 / maxS) * 145), w3 = Math.max(4, (si.b3 / maxS) * 145);
+        sSvg += `<text x="0" y="${y + 11}" font-size="11" fill="#4a4a4f">${si.name}</text>
+          <rect x="112" y="${y + 2}" width="${w1}" height="5.5" rx="2" fill="rgba(23,23,23,0.28)" />
+          <rect x="112" y="${y + 10}" width="${w3}" height="5.5" rx="2" fill="#0f7f57" />
+          <text x="${112 + w1 + 6}" y="${y + 13}" font-size="10.5" font-weight="500" fill="#0f7f57">${fmtK(si.b1)} → ${fmtK(si.b3)} (${si.save})</text>`;
+      });
+      sSvg += `</svg>`;
+      scaleWrap.innerHTML = sSvg;
+
+      // Ranked COGS List
+      document.getElementById('cogs-breakdown-list').innerHTML = cogsItems.map(item => {
+        const val = item.valBox * mult, share = (item.valBox / totalBox) * 100;
+        return `<div class="p-1 rounded-[5px] hover:bg-[var(--color-soft)] space-y-0.5">
+          <div class="flex justify-between text-[11.5px] gap-2"><span class="truncate text-[var(--color-ink-2)]">${item.title}</span><span class="font-mono-num shrink-0 font-medium">${fmtVND(val)}đ (${share.toFixed(1)}%)</span></div>
+          <div class="h-1 w-full rounded bg-[var(--color-line)] overflow-hidden"><div class="h-full bg-[#171717]/65" style="width:${share.toFixed(1)}%"></div></div>
+        </div>`;
+      }).join('');
+    }
+
+    function renderTable22Lines() {
+      const q = (document.getElementById('search-22-lines').value || '').toLowerCase().trim();
+      const list = UNIT_ECON_LINES.filter(r => !q || r.title.toLowerCase().includes(q));
+      document.getElementById('table-22-lines-body').innerHTML = list.map(row => {
+        let trClass = '', titleClass = 'text-[var(--color-ink-2)]';
+        if (row.type === 'highlight') { trClass = 'row-highlight'; titleClass = 'font-medium text-[var(--color-ink)]'; }
+        else if (row.type === 'profit') { trClass = 'row-profit'; titleClass = 'font-medium text-[var(--color-money)]'; }
+        else if (row.type === 'major' || row.type === 'group') { titleClass = 'font-medium text-[var(--color-ink)]'; trClass = 'bg-[var(--color-soft)]/45'; }
+        else if (row.type === 'cogs' || row.type === 'sub') { titleClass = 'pl-4 text-[var(--color-muted)]'; }
+
+        const w = Math.min(100, (Math.abs(row.pct) / 131.58) * 100);
+        const barCol = row.pct < 0 ? 'bg-[#b45309]/65' : row.type === 'profit' ? 'bg-[var(--color-money)]' : 'bg-[var(--color-ink)]/70';
+
+        return `<tr class="${trClass}">
+          <td class="${titleClass}">${row.title}</td>
+          <td class="text-right font-mono-num">${fmtVND(row.b1Box)}</td>
+          <td class="text-right font-mono-num font-medium text-[var(--color-ink)]">${fmtVND(row.b3Box)}</td>
+          <td class="text-right font-mono-num">${fmtVND(row.b3Pack)}</td>
+          <td class="text-right font-mono-num">${fmtVND(row.b3Card)}</td>
+          <td class="text-right font-mono-num">${fmtVND(row.b3Total)}</td>
+          <td class="text-right font-mono-num">
+            <div class="flex items-center justify-end gap-2">
+              <div class="w-16 h-1.5 rounded bg-[var(--color-line)] overflow-hidden"><div class="h-full ${barCol}" style="width:${w.toFixed(0)}%"></div></div>
+              <span class="w-14 text-right">${row.pct > 0 ? '' : '−'}${Math.abs(row.pct).toFixed(1)}%</span>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderTickBars() {
+      const makeTicks = (total, filled, cls) => Array.from({ length: total }, (_, i) => `<span class="flex-1 h-full rounded-[1px] ${i < filled ? cls : 'bg-[var(--color-line-strong)]'}"></span>`).join('');
+      document.getElementById('ticks-d1').innerHTML = makeTicks(40, 33, 'bg-[var(--color-money)]');
+      document.getElementById('ticks-d2').innerHTML = makeTicks(40, 30, 'bg-[var(--color-accent)]');
+      document.getElementById('ticks-d3').innerHTML = makeTicks(40, 32, 'bg-[var(--color-money)]');
+    }
+
+    // =========================================================================
+    // PAGE 5: SCENARIOS, TORNADO CHART, 2D HEATMAP & CVP BREAK-EVEN CHART
+    // =========================================================================
+    function selectScenario(code) {
+      activeScenarioCode = code;
+      const sc = SCENARIOS[code];
+      document.getElementById('sim-srp').value = sc.srpPre;
+      document.getElementById('sim-ck').value = sc.ck;
+      document.getElementById('sim-roy').value = sc.roy;
+      document.getElementById('sim-dp').value = sc.dp;
+      document.getElementById('sim-sell').value = sc.sell;
+      document.getElementById('ribbon-scenario-select').value = code;
+      runCustomSim(code);
+    }
+
+    function applyHeatmapCell(srpPre, sellPct) {
+      document.getElementById('sim-srp').value = srpPre;
+      document.getElementById('sim-sell').value = sellPct;
+      runCustomSim();
+    }
+
+    function runCustomSim(presetCode) {
+      const p = getSimParams();
+      const matched = presetCode || p.matched;
+
+      document.getElementById('ribbon-scenario-select').value = matched || 'Custom';
+      Object.keys(SCENARIOS).forEach(k => {
+        const card = document.getElementById('sc-card-' + k);
+        if (!card) return;
+        card.className = k === matched
+          ? 'pbi-card p-3 text-left ring-1 ring-inset ring-[var(--color-accent-ring)] bg-[var(--color-accent-bg)]'
+          : 'pbi-card p-3 text-left hover:bg-[var(--color-soft)]';
+      });
+
+      document.getElementById('sim-lbl-srp').textContent = `${fmtVND(p.srpVat)}đ (${fmtVND(p.srpPre)}đ)`;
+      document.getElementById('sim-lbl-ck').textContent = `${p.ck},0%`;
+      document.getElementById('sim-lbl-roy').textContent = `${p.roy},0%`;
+      document.getElementById('sim-lbl-dp').textContent = `${p.dp},0%`;
+      document.getElementById('sim-lbl-sell').textContent = `${p.sell}% (${fmtVND(p.boxes3)} Box)`;
+
+      let netRev, dpTotal, gamTotal, fxSafe, fxMax, netPct, roi, b1Safe;
+      if (matched && SCENARIOS[matched]) {
+        const sc = SCENARIOS[matched];
+        document.getElementById('sim-mode-label').textContent = `Đang khớp: ${sc.name}`;
+        ({ netRev, dpTotal, gamTotal, fxSafe, fxMax, netPct, roi, b1Safe } = sc);
+      } else {
+        document.getElementById('sim-mode-label').textContent = 'Đang chạy: ★ Tùy chỉnh (What-If)';
+        netRev = p.netPerBox * p.boxes3;
+        const royaltyTotal = netRev * (p.roy / 100);
+        dpTotal = netRev * (p.dp / 100);
+        const surplus = netRev - 915749000 - royaltyTotal - dpTotal;
+        const gamT2 = surplus > 0 ? surplus * 0.20 : 0;
+        fxSafe = surplus - gamT2;
+        fxMax = fxSafe + dpTotal * 0.80;
+        gamTotal = (p.c2 / 100) * p.boxes3 * 0.20 * p.srpPre + royaltyTotal + gamT2;
+        netPct = netRev > 0 ? (fxSafe / netRev) * 100 : 0;
+        roi = (fxSafe / 500000000) * 100;
+        const b1NetRev = p.netPerBox * p.boxes1;
+        const b1Surplus = b1NetRev - 383639000 - b1NetRev * (p.roy / 100) - b1NetRev * (p.dp / 100);
+        b1Safe = b1Surplus > 0 ? b1Surplus * 0.80 : b1Surplus;
+      }
+
+      document.getElementById('sim-out-netrev').textContent = fmtVND(netRev) + 'đ';
+      document.getElementById('sim-out-gam').textContent = fmtVND(gamTotal) + 'đ';
+      document.getElementById('sim-out-fxprofit').textContent = fmtVND(fxSafe) + 'đ';
+      document.getElementById('sim-out-fxprofit').className = `text-[17px] font-medium font-mono-num ${fxSafe < 0 ? 'text-[var(--color-down)]' : 'text-[var(--color-money)]'}`;
+      document.getElementById('sim-out-fxmax').textContent = fmtTr(fxMax);
+      document.getElementById('sim-out-roi').textContent = `${netPct.toFixed(1)}% / ${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%`;
+      document.getElementById('sim-out-b1').textContent = `${b1Safe >= 0 ? '+' : ''}${fmtTr(b1Safe)}`;
+
+      renderScenarioChart(matched, { code: 'Custom', short: 'Tùy chỉnh', name: 'Kịch bản Tùy chỉnh (Live)', fxSafe, fxMax, gamTotal, b1Safe, netPct, roi });
+      renderTornadoChart();
+      renderSensitivityHeatmap(p.srpPre, p.ck, p.roy, p.dp, p.sell, p.blendedDeductPct);
+      renderScenarioTable(matched);
+      updateAllVisuals();
+    }
+
+    function renderScenarioChart(activeCode, customObj) {
+      const container = document.getElementById('scenario-bars-chart');
+      const items = ['S6', 'S1', 'S2', 'S3', 'S4', 'S5'].map(k => SCENARIOS[k]);
+      if (!activeCode && customObj) items.push(customObj);
+
+      const W = 520, H = 264, padL = 44, padR = 12, padT = 22, padB = 38;
+      const plotW = W - padL - padR, plotH = H - padT - padB, yMax = 900000000;
+      const sy = v => padT + plotH - (Math.max(0, v) / yMax) * plotH;
+
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Biểu đồ 6 kịch bản">`;
+      [0, 250e6, 500e6, 750e6].forEach(yv => {
+        const py = sy(yv);
+        svg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="rgba(23,23,23,0.08)" stroke-width="1" />`;
+        svg += `<text x="${padL - 6}" y="${py + 4}" text-anchor="end" font-size="10" fill="#6e6e75">${yv === 0 ? '0' : (yv / 1e6) + 'tr'}</text>`;
+      });
+      svg += `<line x1="${padL}" y1="${sy(500e6)}" x2="${W - padR}" y2="${sy(500e6)}" stroke="#171717" stroke-dasharray="4 3" stroke-width="1.1" />`;
+
+      const grpW = plotW / items.length, bw = Math.min(16, grpW * 0.22), gap = 2;
+      items.forEach((sc, idx) => {
+        const cx = padL + idx * grpW + grpW / 2;
+        const isSel = sc.code === activeCode || sc.code === 'Custom', isCust = sc.code === 'Custom';
+        if (isSel) svg += `<rect x="${cx - grpW * 0.45}" y="${padT}" width="${grpW * 0.9}" height="${plotH + 32}" rx="6" fill="${isCust ? 'rgba(15,127,87,0.07)' : 'rgba(180,83,9,0.07)'}" stroke="${isCust ? 'rgba(15,127,87,0.25)' : 'rgba(180,83,9,0.28)'}" stroke-width="1" />`;
+        const startX = cx - (bw * 3 + gap * 2) / 2;
+        const ySafe = sy(sc.fxSafe), hSafe = Math.max(2, sy(0) - ySafe), yMaxPt = sy(sc.fxMax), hCap = Math.max(0, ySafe - yMaxPt);
+        const yGam = sy(sc.gamTotal), hGam = Math.max(2, sy(0) - yGam), yB1 = sy(sc.b1Safe), hB1 = Math.max(2, sy(0) - yB1);
+
+        const tipSub = escAttr(`Lãi FX: ${fmtVND(sc.fxSafe)}đ (Max: ${fmtTr(sc.fxMax)})<br/>Trả GAM: ${fmtVND(sc.gamTotal)}đ · Lãi Đ1: ${fmtTr(sc.b1Safe)}`);
+        svg += `<g class="cursor-pointer" ${isCust ? '' : `onclick="selectScenario('${sc.code}')"`} onmouseenter="showTip(event, '${escAttr(sc.name)}', '${tipSub}')" onmouseleave="hideTip()">
+          <rect x="${startX}" y="${ySafe}" width="${bw}" height="${hSafe}" rx="2" fill="${sc.fxSafe < 0 ? '#d23f45' : '#0f7f57'}" />
+          ${hCap > 1 && sc.fxSafe >= 0 ? `<rect x="${startX}" y="${yMaxPt}" width="${bw}" height="${hCap}" rx="2" fill="rgba(15,127,87,0.25)" />` : ''}
+          <text x="${startX + bw / 2}" y="${Math.min(ySafe, yMaxPt) - 4}" text-anchor="middle" font-size="9.5" font-weight="600" fill="${sc.fxSafe < 0 ? '#d23f45' : '#0f7f57'}">${Math.round(sc.fxSafe / 1e6)}</text>
+          <rect x="${startX + bw + gap}" y="${yGam}" width="${bw}" height="${hGam}" rx="2" fill="rgba(180,83,9,0.8)" />
+          <rect x="${startX + (bw + gap) * 2}" y="${yB1}" width="${bw}" height="${hB1}" rx="2" fill="rgba(37,99,235,0.82)" />
+          <text x="${cx}" y="${padT + plotH + 14}" text-anchor="middle" font-size="10" font-weight="${isSel ? '600' : '500'}" fill="#171717">${sc.short}</text>
+          <text x="${cx}" y="${padT + plotH + 26}" text-anchor="middle" font-size="9.5" fill="#6e6e75">ROI ${sc.roi >= 0 ? '+' : ''}${sc.roi.toFixed(0)}%</text>
+        </g>`;
+      });
+      svg += `</svg>`;
+      container.innerHTML = svg;
+    }
+
+    function renderTornadoChart() {
+      const wrap = document.getElementById('tornado-chart-wrap');
+      const base = 495317600;
+      const calcFX = (srpPre, ck, roy, dp, sell) => {
+        const deduct = 0.55 * (ck / 100) + 0.06 + 0.015;
+        const net = srpPre * (1 - deduct) * (1320 * sell / 100);
+        const surp = net - 915749000 - net * (roy / 100) - net * (dp / 100);
+        return surp > 0 ? surp * 0.80 : surp;
+      };
+      const drivers = [
+        { name: 'Sell-through (75% vs 100%)', low: calcFX(1800000, 30, 10, 5, 75) - base, high: 0, lowLbl: '75% SL', highLbl: '100% SL' },
+        { name: 'Giá bán lẻ SRP (±20%)', low: calcFX(1440000, 30, 10, 5, 100) - base, high: calcFX(2160000, 30, 10, 5, 100) - base, lowLbl: '1.584k', highLbl: '2.376k' },
+        { name: 'Chiết khấu sỉ (34% vs 26%)', low: calcFX(1800000, 34, 10, 5, 100) - base, high: calcFX(1800000, 26, 10, 5, 100) - base, lowLbl: 'CK 34%', highLbl: 'CK 26%' },
+        { name: 'Quỹ Dự phòng (8% vs 3%)', low: calcFX(1800000, 30, 10, 8, 100) - base, high: calcFX(1800000, 30, 10, 3, 100) - base, lowLbl: 'DP 8%', highLbl: 'DP 3%' },
+        { name: 'Royalty GAM (12% vs 8%)', low: calcFX(1800000, 30, 12, 5, 100) - base, high: calcFX(1800000, 30, 8, 5, 100) - base, lowLbl: 'Roy 12%', highLbl: 'Roy 8%' }
+      ];
+
+      const W = 540, H = 225, padL = 175, padR = 20, padT = 20, rowH = 38;
+      const plotW = W - padL - padR, maxAbs = 330e6, zeroX = padL + plotW * 0.54;
+      const sx = delta => zeroX + (delta / maxAbs) * (plotW * 0.45);
+
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Biểu đồ Tornado độ nhạy lợi nhuận">`;
+      svg += `<line x1="${zeroX}" y1="${padT - 6}" x2="${zeroX}" y2="${padT + drivers.length * rowH - 6}" stroke="#171717" stroke-width="1.2" />`;
+      svg += `<text x="${zeroX}" y="12" text-anchor="middle" font-size="10.5" font-weight="600" fill="#171717">Mốc S3: 495,3 tr (0)</text>`;
+
+      drivers.forEach((d, idx) => {
+        const y = padT + idx * rowH + 6;
+        const xLow = sx(d.low), wLow = Math.max(0, zeroX - xLow);
+        const xHigh = sx(d.high), wHigh = Math.max(0, xHigh - zeroX);
+        const tipSub = escAttr(`${d.lowLbl}: ${fmtTr(d.low, 1)} · ${d.highLbl}: +${fmtTr(d.high, 1)} quanh mốc S3`);
+        svg += `<g class="cursor-pointer" onmouseenter="showTip(event, '${escAttr(d.name)}', '${tipSub}')" onmouseleave="hideTip()">
+          <text x="${padL - 10}" y="${y + 14}" text-anchor="end" font-size="11.5" fill="#4a4a4f">${d.name}</text>
+          ${wLow > 1 ? `<rect x="${xLow}" y="${y + 2}" width="${wLow}" height="18" rx="3" fill="#d23f45" opacity="0.82" />
+            <text x="${xLow - 5}" y="${y + 15}" text-anchor="end" font-size="10" font-weight="500" fill="#d23f45">${fmtTr(d.low, 1)}</text>` : ''}
+          ${wHigh > 1 ? `<rect x="${zeroX}" y="${y + 2}" width="${wHigh}" height="18" rx="3" fill="#0f7f57" opacity="0.85" />
+            <text x="${xHigh + 5}" y="${y + 15}" text-anchor="start" font-size="10" font-weight="500" fill="#0f7f57">+${fmtTr(d.high, 1)}</text>` : ''}
+        </g>`;
+      });
+      svg += `</svg>`;
+      wrap.innerHTML = svg;
+    }
+
+    function renderSensitivityHeatmap(activeSrpPre, ck, roy, dp, activeSell, blendedDeductPct) {
+      const wrap = document.getElementById('sensitivity-heatmap-wrap');
+      document.getElementById('heatmap-subtitle').textContent = `Theo CK Sỉ ${ck}% · Royalty ${roy}% · Dự phòng ${dp}% · Click ô để nạp thông số`;
+
+      const srpRows = [
+        { label: '1.584k (−20% · S1)', vat: 1584000, pre: 1440000 },
+        { label: '1.782k (−10% · S2)', vat: 1782000, pre: 1620000 },
+        { label: '1.980k (Chuẩn · S3)', vat: 1980000, pre: 1800000 },
+        { label: '2.079k (+5% · S4)', vat: 2079000, pre: 1890000 },
+        { label: '2.376k (+20% · S5)', vat: 2376000, pre: 2160000 }
+      ];
+      const sellCols = [60, 70, 75, 80, 90, 100];
+
+      let html = `<table class="w-full text-[11.5px] border-separate border-spacing-1"><thead><tr><th class="text-left font-medium text-[var(--color-muted)] px-1.5 py-1">SRP \\ Sell</th>`;
+      sellCols.forEach(s => { html += `<th class="text-center font-medium text-[var(--color-ink-2)] px-1.5 py-1 font-mono-num">${s}%</th>`; });
+      html += `</tr></thead><tbody>`;
+
+      srpRows.forEach(r => {
+        html += `<tr><td class="font-medium text-[var(--color-ink)] px-1.5 py-1 whitespace-nowrap">${r.label}</td>`;
+        sellCols.forEach(s => {
+          const boxes = Math.round(1320 * (s / 100));
+          const netRev = r.pre * (1 - blendedDeductPct) * boxes;
+          const surplus = netRev - 915749000 - netRev * (roy / 100) - netRev * (dp / 100);
+          const fxSafe = surplus > 0 ? surplus * 0.80 : surplus;
+          const m = fxSafe / 1e6;
+
+          let bg = 'bg-[#0f7f57]/10 text-[#0f7f57]';
+          if (fxSafe < 0) bg = 'bg-[#d23f45]/15 text-[#d23f45] font-medium';
+          else if (m < 200) bg = 'bg-[#c98a00]/15 text-[#926200]';
+          else if (m < 450) bg = 'bg-[#0f7f57]/10 text-[#0f7f57]';
+          else if (m < 650) bg = 'bg-[#0f7f57]/22 text-[#0b6142] font-medium';
+          else bg = 'bg-[#0f7f57]/35 text-[#06452e] font-semibold';
+
+          const isCurrent = r.pre === activeSrpPre && s === activeSell;
+          const ring = isCurrent ? 'ring-2 ring-inset ring-[var(--color-ink)]' : (r.pre === 1800000 && s === 100) ? 'ring-1 ring-inset ring-[var(--color-accent)]' : '';
+          const tipSub = escAttr(`SRP ${fmtVND(r.vat)}đ · Bán ${s}% (${boxes} Box)<br/>Lãi/Lỗ ròng FX: ${fmtVND(fxSafe)}đ (ROI ${(fxSafe / 500e6 * 100).toFixed(0)}%)`);
+
+          html += `<td onclick="applyHeatmapCell(${r.pre}, ${s})" onmouseenter="showTip(event, 'Độ nhạy 2D', '${tipSub}')" onmouseleave="hideTip()" class="heatmap-cell rounded-[5px] px-1.5 py-2 text-center font-mono-num ${bg} ${ring}">${fxSafe < 0 ? '▼ ' : ''}${m.toFixed(0)}tr</td>`;
+        });
+        html += `</tr>`;
+      });
+      wrap.innerHTML = html + `</tbody></table>`;
+    }
+
+    function renderScenarioTable(activeCode) {
+      const maxFx = 762227936;
+      document.getElementById('table-scenarios-body').innerHTML = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6'].map(k => {
+        const sc = SCENARIOS[k];
+        const w = Math.max(4, (sc.fxSafe / maxFx) * 100);
+        return `<tr class="${k === activeCode ? 'row-highlight cursor-pointer' : 'cursor-pointer'}" onclick="selectScenario('${k}')">
+          <td class="font-medium text-[var(--color-ink)]">${sc.name}</td>
+          <td class="text-right font-mono-num">${fmtVND(sc.srpVat)} <span class="text-[11px] text-[var(--color-muted)]">(${fmtVND(sc.srpPre)})</span></td>
+          <td class="text-center font-mono-num">${sc.ck}%/${sc.roy}%/${sc.dp}%</td>
+          <td class="text-right font-mono-num">${sc.sell}% (${fmtVND(sc.boxes)}b)</td>
+          <td class="text-right font-mono-num">${fmtVND(sc.netRev)}</td>
+          <td class="text-right font-mono-num">${sc.gpPct.toFixed(1)}%</td>
+          <td class="text-right font-mono-num">${fmtVND(sc.dpTotal)}</td>
+          <td class="text-right font-mono-num">${fmtVND(sc.gamTotal)}</td>
+          <td class="text-right font-mono-num font-medium text-[var(--color-money)]">
+            <div class="flex items-center justify-end gap-2"><div class="w-14 h-1.5 rounded bg-[var(--color-line)] overflow-hidden"><div class="h-full bg-[var(--color-money)]" style="width:${w.toFixed(0)}%"></div></div><span>${fmtVND(sc.fxSafe)}</span></div>
+          </td>
+          <td class="text-right font-mono-num font-medium">${sc.netPct.toFixed(1)}% / +${sc.roi.toFixed(1)}%</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderCVPChart() {
+      const wrap = document.getElementById('cvp-chart-wrap');
+      const p = getSimParams();
+      const isB1 = currentBatchMode === 'batch1';
+      document.getElementById('cvp-scale-badge').textContent = isB1 ? 'Đợt 1 (445 Box)' : '3 Đợt (1.320 Box)';
+
+      const maxQ = isB1 ? 445 : 1320;
+      const fixedCost = isB1 ? 383639000 : 915749000;
+      const unitContrib = p.netPerBox * (1 - (p.roy + p.dp) / 100);
+      const beQ = unitContrib > 0 ? fixedCost / unitContrib : maxQ;
+      const clampedBe = Math.min(maxQ, Math.max(0, beQ));
+      const yMax = Math.max(fixedCost * 1.4, unitContrib * maxQ * 1.12);
+
+      const W = 640, H = 228, padL = 52, padR = 20, padT = 20, padB = 34;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const sx = q => padL + (q / maxQ) * plotW;
+      const sy = v => padT + plotH - (v / yMax) * plotH;
+
+      const xBe = sx(clampedBe), yBe = sy(fixedCost), xEnd = sx(maxQ), yRevEnd = sy(unitContrib * maxQ), yRev0 = sy(0);
+      let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto svg-chart" role="img" aria-label="Đồ thị hòa vốn CVP">`;
+
+      [0, 0.33, 0.66, 1].forEach(f => {
+        const yv = yMax * f, py = sy(yv);
+        svg += `<line x1="${padL}" y1="${py}" x2="${W - padR}" y2="${py}" stroke="rgba(23,23,23,0.08)" stroke-width="1" />`;
+        svg += `<text x="${padL - 7}" y="${py + 4}" text-anchor="end" font-size="10" fill="#6e6e75">${yv === 0 ? '0' : Math.round(yv / 1e6) + 'tr'}</text>`;
+      });
+
+      const xSteps = isB1 ? [0, 111, 222, 330, 445] : [0, 330, 660, 990, 1320];
+      xSteps.forEach(qv => svg += `<text x="${sx(qv)}" y="${padT + plotH + 15}" text-anchor="middle" font-size="10" fill="#6e6e75">${fmtVND(qv)} Box</text>`);
+
+      svg += `<polygon points="${sx(0)},${yBe} ${xBe},${yBe} ${sx(0)},${yRev0}" fill="rgba(210, 63, 69, 0.10)" />`;
+      if (beQ < maxQ) svg += `<polygon points="${xBe},${yBe} ${xEnd},${yRevEnd} ${xEnd},${yBe}" fill="rgba(15, 127, 87, 0.11)" />`;
+
+      svg += `<line x1="${padL}" y1="${yBe}" x2="${xEnd}" y2="${yBe}" stroke="#171717" stroke-dasharray="5 3" stroke-width="1.4" />`;
+      svg += `<text x="${padL + 6}" y="${yBe - 6}" font-size="10" font-weight="500" fill="#171717">Định phí: ${fmtTr(fixedCost)}</text>`;
+
+      svg += `<line x1="${sx(0)}" y1="${yRev0}" x2="${xEnd}" y2="${yRevEnd}" stroke="#0f7f57" stroke-width="2" />`;
+      svg += `<text x="${xEnd - 4}" y="${yRevEnd - 7}" text-anchor="end" font-size="10" font-weight="500" fill="#0f7f57">Thu thuần: ${fmtTr(unitContrib * maxQ)}</text>`;
+
+      if (isB1) {
+        const xGate = sx(356);
+        svg += `<line x1="${xGate}" y1="${padT}" x2="${xGate}" y2="${padT + plotH}" stroke="#b45309" stroke-dasharray="3 3" stroke-width="1.2" />`;
+        svg += `<text x="${xGate + 4}" y="${padT + 12}" font-size="10" font-weight="600" fill="#b45309">Van Đ2: 356 Box (80%)</text>`;
+      } else {
+        const xS6 = sx(990);
+        svg += `<line x1="${xS6}" y1="${padT}" x2="${xS6}" y2="${padT + plotH}" stroke="#c98a00" stroke-dasharray="3 3" stroke-width="1.2" />`;
+        svg += `<text x="${xS6 + 4}" y="${padT + 12}" font-size="10" font-weight="600" fill="#926200">S6 Stress: 990 Box (75%)</text>`;
+      }
+
+      if (beQ <= maxQ) {
+        svg += `<line x1="${xBe}" y1="${yBe}" x2="${xBe}" y2="${padT + plotH}" stroke="#171717" stroke-dasharray="2 2" stroke-width="1.1" />`;
+        svg += `<circle cx="${xBe}" cy="${yBe}" r="4.5" fill="#171717" stroke="#ffffff" stroke-width="1.5" />`;
+        svg += `<text x="${xBe - 6}" y="${padT + plotH - 7}" text-anchor="end" font-size="10" font-weight="600" fill="#171717">Hòa vốn: ${beQ.toFixed(1).replace('.', ',')} Box</text>`;
+      }
+
+      svg += `<line id="cvp-cross-line" x1="0" y1="${padT}" x2="0" y2="${padT + plotH}" stroke="#b45309" stroke-width="1" opacity="0" />`;
+      svg += `<circle id="cvp-cross-dot" cx="0" cy="0" r="4.5" fill="#0f7f57" stroke="#ffffff" stroke-width="1.5" opacity="0" />`;
+      svg += `<rect id="cvp-hover-rect" x="${padL}" y="${padT}" width="${plotW}" height="${plotH}" fill="transparent" class="cursor-crosshair" />`;
+      svg += `</svg>`;
+      wrap.innerHTML = svg;
+
+      const hoverRect = document.getElementById('cvp-hover-rect');
+      const crossLine = document.getElementById('cvp-cross-line');
+      const crossDot = document.getElementById('cvp-cross-dot');
+
+      hoverRect.addEventListener('mousemove', e => {
+        const rect = hoverRect.getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const q = Math.round(ratio * maxQ), rev = unitContrib * q, surplus = rev - fixedCost, fx = surplus > 0 ? surplus * 0.80 : surplus;
+        crossLine.setAttribute('x1', sx(q)); crossLine.setAttribute('x2', sx(q)); crossLine.setAttribute('opacity', '1');
+        crossDot.setAttribute('cx', sx(q)); crossDot.setAttribute('cy', sy(rev)); crossDot.setAttribute('opacity', '1');
+        const st = fx >= 0 ? `Lãi ròng FX: <strong style="color:#4cc38a">+${fmtVND(fx)}đ</strong>` : `Lỗ ròng: <strong style="color:#ff6b70">${fmtVND(fx)}đ</strong>`;
+        showTip(e, `Sản lượng: ${fmtVND(q)} / ${fmtVND(maxQ)} Box (${(q / maxQ * 100).toFixed(1)}%)`, `Thu thuần: ${fmtVND(rev)}đ · Định phí: ${fmtVND(fixedCost)}đ<br/>${st}`);
+      });
+      hoverRect.addEventListener('mouseleave', () => { crossLine.setAttribute('opacity', '0'); crossDot.setAttribute('opacity', '0'); hideTip(); });
+    }
+
+    // =========================================================================
+    // TOOLTIP & INIT
+    // =========================================================================
+    const tipEl = document.getElementById('global-tooltip');
+    function showTip(e, title, sub) {
+      tipEl.innerHTML = `<div class="font-medium text-white mb-0.5">${title}</div><div class="text-[#a1a1aa] text-[11px]">${sub}</div>`;
+      tipEl.style.opacity = '1';
+      moveTip(e);
+    }
+    function moveTip(e) {
+      tipEl.style.left = Math.min(window.innerWidth - 320, e.clientX + 12) + 'px';
+      tipEl.style.top = Math.max(12, e.clientY - 58) + 'px';
+    }
+    function hideTip() { tipEl.style.opacity = '0'; }
+    window.addEventListener('mousemove', e => { if (tipEl.style.opacity === '1') moveTip(e); });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderScatterPlot();
+      renderSegmentWhiskers();
+      renderBenchmarkChart();
+      renderTable16SKUs();
+      renderSkuLadderSVG();
+      renderChannelStackedChart();
+      renderTable32();
+      renderTable22Lines();
+      renderTickBars();
+      selectScenario('S3');
+      updateChannelMix(1);
+    });
+  </script>
+</body>
+</html>

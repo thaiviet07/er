@@ -1,0 +1,126 @@
+---
+---
+
+<div class="shrink-0 z-30 select-none">
+  <header class="h-12 bg-[var(--color-card)] border-b border-[var(--color-line-strong)] px-4 flex items-center justify-between gap-3">
+    <!-- Left: Report Title & Live Data Badge -->
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-7 h-7 rounded-[6px] bg-[#1e3a8a] text-white flex items-center justify-center font-mono-num text-[11px] font-medium shrink-0">
+        FX
+      </div>
+      <div class="min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="text-[14px] font-medium text-[var(--color-ink)] truncate">FramigosX × GAM · Pricing & Unit Economics</span>
+          <span class="hidden 2xl:inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)] bg-[var(--color-soft)] px-2 py-0.5 rounded-[4px] border border-[var(--color-line)] shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#047857]"></span>
+            MSRP gốc · Shenzou · 25/11/2026
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Global Slicers (Desktop xl+) -->
+    <div class="hidden xl:flex items-center gap-2 shrink-0">
+      <div class="seg-group" role="group" aria-label="Phạm vi hạch toán">
+        <button type="button" data-action="set-batch" data-batch="3batch" id="ribbon-scale-3batch" class="seg-btn active">
+          3 Đợt (1.320 Box)
+        </button>
+        <button type="button" data-action="set-batch" data-batch="batch1" id="ribbon-scale-batch1" class="seg-btn">
+          Đợt 1 (445 Box)
+        </button>
+      </div>
+
+      <div class="seg-group" role="group" aria-label="Đơn vị hiển thị">
+        <button type="button" data-action="set-unit" data-unit="box" id="unit-btn-box" class="seg-btn active">Box</button>
+        <button type="button" data-action="set-unit" data-unit="pack" id="unit-btn-pack" class="seg-btn">Pack</button>
+        <button type="button" data-action="set-unit" data-unit="card" id="unit-btn-card" class="seg-btn">Thẻ</button>
+        <button type="button" data-action="set-unit" data-unit="total" id="unit-btn-total" class="seg-btn">Tổng</button>
+      </div>
+
+      <div class="flex items-center gap-1.5 bg-[var(--color-soft)] border border-[var(--color-line)] rounded-[6px] px-2.5 h-8 shrink-0">
+        <span class="text-[11px] text-[var(--color-muted)] whitespace-nowrap">Kịch bản:</span>
+        <select
+          id="ribbon-scenario-select"
+          class="bg-transparent text-[12px] font-medium text-[var(--color-ink)] outline-none cursor-pointer max-w-[168px] truncate"
+        >
+          <option value="S1">S1 · Giá thấp (−20%)</option>
+          <option value="S2">S2 · Áp lực Kép</option>
+          <option value="S3" selected>S3 · Cơ sở Chuẩn</option>
+          <option value="S4">S4 · Tối ưu (+5%)</option>
+          <option value="S5">S5 · Cao cấp (+20%)</option>
+          <option value="S6">S6 · Stress Tồn 25%</option>
+          <option value="Custom">★ Tùy chỉnh (What-If)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right: Cross-Filter Pill, Reset, Export CSV, Toggle Drawer -->
+    <div class="flex items-center gap-2 shrink-0">
+      <span id="active-filter-badge" class="hidden 2xl:inline-flex serial-stamp serial-stamp-gold">S3 · 55/30/15</span>
+      <button
+        type="button"
+        data-action="reset-all"
+        class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium bg-[var(--color-soft)] hover:bg-[var(--color-line-strong)] text-[var(--color-ink-2)] transition-colors cursor-pointer"
+        title="Đặt lại toàn bộ bộ lọc & thông số What-If"
+      >
+        Đặt lại
+      </button>
+      <button
+        type="button"
+        data-action="export-csv"
+        class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)] text-[var(--color-ink)] transition-colors flex items-center gap-1.5 cursor-pointer"
+        title="Tải xuống Bảng 3.1 (22 dòng Unit Economics) dạng CSV"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        <span class="hidden sm:inline">Xuất CSV</span>
+      </button>
+      <button
+        type="button"
+        data-action="toggle-drawer"
+        id="toggle-drawer-btn"
+        class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium bg-[var(--color-ink)] text-white hover:opacity-90 transition-opacity flex items-center gap-1.5 cursor-pointer"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="4" y1="21" x2="4" y2="14" />
+          <line x1="4" y1="10" x2="4" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12" y2="3" />
+          <line x1="20" y1="21" x2="20" y2="16" />
+          <line x1="20" y1="12" x2="20" y2="3" />
+        </svg>
+        <span>What-If</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Compact Secondary Slicer Bar (< xl viewports) -->
+  <div class="xl:hidden bg-[var(--color-side)] border-b border-[var(--color-line)] px-3 py-1.5 flex items-center gap-2 overflow-x-auto">
+    <div class="seg-group shrink-0" role="group" aria-label="Phạm vi hạch toán mobile">
+      <button type="button" data-action="set-batch" data-batch="3batch" class="seg-btn active">3 Đợt</button>
+      <button type="button" data-action="set-batch" data-batch="batch1" class="seg-btn">Đợt 1</button>
+    </div>
+
+    <div class="seg-group shrink-0" role="group" aria-label="Đơn vị hiển thị mobile">
+      <button type="button" data-action="set-unit" data-unit="box" class="seg-btn active">Box</button>
+      <button type="button" data-action="set-unit" data-unit="pack" class="seg-btn">Pack</button>
+      <button type="button" data-action="set-unit" data-unit="card" class="seg-btn">Thẻ</button>
+      <button type="button" data-action="set-unit" data-unit="total" class="seg-btn">Tổng</button>
+    </div>
+
+    <div class="flex items-center gap-1 bg-[var(--color-card)] border border-[var(--color-line)] rounded-[6px] px-2 h-8 shrink-0">
+      <select id="mobile-scenario-select" class="bg-transparent text-[12px] font-medium text-[var(--color-ink)] outline-none cursor-pointer">
+        <option value="S1">S1 · −20%</option>
+        <option value="S2">S2 · Áp lực</option>
+        <option value="S3" selected>S3 · Chuẩn</option>
+        <option value="S4">S4 · +5%</option>
+        <option value="S5">S5 · +20%</option>
+        <option value="S6">S6 · Tồn 25%</option>
+        <option value="Custom">★ Tùy chỉnh</option>
+      </select>
+    </div>
+  </div>
+</div>

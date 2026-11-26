@@ -1,0 +1,99 @@
+---
+import { REFERENCE_SPECS } from '../../data/economics';
+---
+
+<aside class="w-[236px] shrink-0 bg-[var(--color-side)] border-r border-[var(--color-line)] hidden lg:flex flex-col justify-between p-4 overflow-y-auto select-none">
+  <div class="space-y-4">
+    <div>
+      <div class="px-2 pb-2 text-[11px] font-medium text-[var(--color-muted)]">Trang báo cáo (Report Pages)</div>
+      <nav class="space-y-1" id="left-page-nav">
+        <button type="button" data-action="switch-page" data-page="page-exec" class="pbi-nav-item active">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+          <span>Tổng quan điều hành</span>
+        </button>
+
+        <button type="button" data-action="switch-page" data-page="page-benchmark" class="pbi-nav-item">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M3 3v18h18" />
+            <path d="M7 16l4-4 4 4 5-6" />
+          </svg>
+          <span>1. Đối chuẩn 16 SKU</span>
+          <span class="ml-auto text-[11px] font-mono-num text-[var(--color-muted)]">16</span>
+        </button>
+
+        <button type="button" data-action="switch-page" data-page="page-pricing" class="pbi-nav-item">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
+          <span>2. Giá đa tầng & Kênh sỉ</span>
+        </button>
+
+        <button type="button" data-action="switch-page" data-page="page-unitecon" class="pbi-nav-item">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+          </svg>
+          <span>3. Unit Economics</span>
+          <span class="ml-auto text-[11px] font-mono-num text-[var(--color-muted)]">22</span>
+        </button>
+
+        <button type="button" data-action="switch-page" data-page="page-whatif" class="pbi-nav-item">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span>4. Giả lập & Stress Test</span>
+        </button>
+
+        <button type="button" data-action="switch-page" data-page="page-slides" class="pbi-nav-item">
+          <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          <span>5. Slide trình bày</span>
+          <span class="ml-auto text-[11px] font-mono-num text-[var(--color-muted)]">8</span>
+        </button>
+
+        <div class="pt-2 mt-2 border-t border-[var(--color-line)]">
+          <button type="button" data-action="switch-page" data-page="page-all" class="pbi-nav-item">
+            <svg class="w-4 h-4 shrink-0 text-[var(--color-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span>Xem toàn bộ (All)</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Fixed Reference Box -->
+    <div class="p-3 rounded-[8px] bg-[var(--color-card)] border border-[var(--color-line)] space-y-2 text-[11.5px]">
+      <div class="font-medium text-[var(--color-ink)] pb-1.5 border-b border-[var(--color-line)]">Thông số hạch toán gốc</div>
+      {REFERENCE_SPECS.map((item) => (
+        <div class="flex justify-between gap-2">
+          <span class="text-[var(--color-muted)]">{item.label}</span>
+          <span
+            class:list={[
+              item.tone === 'money'
+                ? 'font-mono-num text-[var(--color-money)] font-medium'
+                : item.tone === 'mono'
+                  ? 'font-mono-num text-[var(--color-ink)]'
+                  : 'font-medium text-[var(--color-ink)]',
+            ]}
+          >
+            {item.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="pt-3 border-t border-[var(--color-line)] px-1 flex items-center justify-between text-[11px] text-[var(--color-muted)]">
+    <span>GAM 10th Anniversary</span>
+    <span class="serial-stamp serial-stamp-gold">/50</span>
+  </div>
+</aside>

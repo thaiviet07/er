@@ -1,0 +1,166 @@
+---
+import { GOVERNANCE_RULES, SCENARIOS, SCENARIO_ORDER } from '../../data/economics';
+import { fmtTr } from '../../scripts/format';
+import PageHeader from '../ui/PageHeader.astro';
+import VisualCard from '../ui/VisualCard.astro';
+---
+
+<section id="page-whatif" class="pbi-page hidden-page space-y-5">
+  <PageHeader
+    eyebrow="Trang 4 · Scenario stress test, Tornado sensitivity & Break-even rules"
+    title="Mô phỏng 6 Kịch bản (S1–S6), Biểu đồ Tornado, Ma trận Độ nhạy 2D & Quy tắc Thực thi"
+  >
+    <span class="serial-stamp serial-stamp-gold">Dùng bảng What-If bên phải để thay đổi thông số trực tiếp</span>
+  </PageHeader>
+
+  <!-- 6 Preset Scenario Cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5" id="scenario-selector-grid">
+    {SCENARIO_ORDER.map((code) => {
+      const sc = SCENARIOS[code];
+      const isS3 = code === 'S3';
+      const isS6 = code === 'S6';
+      return (
+        <button
+          type="button"
+          data-action="select-scenario"
+          data-scenario={code}
+          id={`sc-card-${code}`}
+          class:list={[
+            'pbi-card p-3 text-left cursor-pointer',
+            isS3 ? 'ring-1 ring-inset ring-[var(--color-accent-ring)] bg-[var(--color-accent-bg)]' : 'hover:bg-[var(--color-soft)]',
+          ]}
+        >
+          <div
+            class:list={[
+              'flex justify-between text-[11px] font-mono-num',
+              isS3 ? 'text-[var(--color-accent)] font-medium' : isS6 ? 'text-[var(--color-warn)] font-medium' : 'text-[var(--color-muted)]',
+            ]}
+          >
+            <span>{sc.cardHeaderLeft}</span>
+            <span>{sc.cardHeaderRight}</span>
+          </div>
+          <div class="text-[13px] font-medium mt-1 text-[var(--color-ink)]">{sc.cardTitle}</div>
+          <div
+            class:list={[
+              'text-[15px] font-medium font-mono-num mt-1',
+              isS3 ? 'text-[var(--color-money)]' : isS6 ? 'text-[var(--color-warn)]' : 'text-[var(--color-ink-2)]',
+            ]}
+          >
+            {fmtTr(sc.fxSafe)}
+          </div>
+          <div class:list={['text-[11px] font-mono-num', isS3 ? 'text-[var(--color-ink-2)]' : 'text-[var(--color-muted)]']}>
+            {sc.cardFooter}
+          </div>
+        </button>
+      );
+    })}
+  </div>
+
+  <!-- Tornado Chart (6 cols) + 2D Sensitivity Heatmap (6 cols) -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <VisualCard
+      className="xl:col-span-6"
+      title="Biểu đồ Tornado · Độ nhạy Biến số lên Lãi ròng FX"
+      subtitle="Đo độ lệch ± triệu VNĐ quanh mốc Chuẩn S3 (495,32 tr)"
+      focusTarget="tornado-chart-wrap"
+      focusTitle="Biểu đồ Tornado — Độ nhạy các biến số"
+    >
+      <div id="tornado-chart-wrap" class="w-full py-1"></div>
+      <div slot="footer" class="text-[11.5px] text-[var(--color-muted)]">
+        Kết luận: <strong class="text-[var(--color-ink)]">Tỷ lệ tiêu thụ (Sell-through)</strong> và{' '}
+        <strong class="text-[var(--color-ink)]">Giá bán lẻ SRP</strong> là 2 đòn bẩy quyết định 85% biên độ rủi ro lợi nhuận.
+      </div>
+    </VisualCard>
+
+    <VisualCard
+      className="xl:col-span-6"
+      title="Ma trận Độ nhạy 2D (SRP gồm VAT × Sell-through)"
+      subtitle="Theo CK Sỉ 30% · Roy 10% · DP 5% · Click ô để nạp thông số"
+      subtitleId="heatmap-subtitle"
+      focusTarget="sensitivity-heatmap-wrap"
+      focusTitle="Ma trận Độ nhạy 2D (SRP × Sell-through)"
+    >
+      <div id="sensitivity-heatmap-wrap" class="overflow-x-auto"></div>
+    </VisualCard>
+  </div>
+
+  <!-- Table 4.1 -->
+  <div class="pbi-card overflow-hidden">
+    <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex flex-wrap justify-between items-center gap-2">
+      <span class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 4.1 · Tổng hợp Kết quả Tài chính 6 Kịch bản Mô phỏng (1.320 Hobby Box)</span>
+      <span class="serial-stamp">Click dòng để nạp kịch bản</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full data-table">
+        <thead>
+          <tr>
+            <th>Kịch bản</th>
+            <th class="text-right">Giá VAT (Trước VAT)</th>
+            <th class="text-center">CK / Roy / DP</th>
+            <th class="text-right">Sell-through</th>
+            <th class="text-right">Doanh thu thực</th>
+            <th class="text-right">Biên gộp</th>
+            <th class="text-right">Quỹ DP</th>
+            <th class="text-right">Trả GAM 3 dòng</th>
+            <th class="text-right">Lãi ròng An toàn FX</th>
+            <th class="text-right">Biên / ROI 500tr</th>
+          </tr>
+        </thead>
+        <tbody id="table-scenarios-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bullet Graphs & 3 Rules -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <div class="xl:col-span-7 pbi-card p-4 space-y-4">
+      <div class="text-[14px] font-medium border-b border-[var(--color-line)] pb-2 text-[var(--color-ink)]">
+        Ngưỡng Hòa vốn Bắt buộc (Bullet Graphs & Bảng 4.2)
+      </div>
+      <div class="space-y-1.5">
+        <div class="flex flex-wrap justify-between gap-2 text-[12.5px]">
+          <span class="font-medium">Đợt 1 độc lập (445 Box · Định phí 383,64 tr)</span>
+          <span class="font-mono-num">
+            Hòa vốn: <strong>329,9 Box (74,1%)</strong> · Van Đ2: <strong class="text-[var(--color-accent)]">356 Box (80%)</strong>
+          </span>
+        </div>
+        <div class="relative h-6 w-full rounded-[6px] bg-[var(--color-soft)] overflow-hidden border border-[var(--color-line)] flex items-center px-1">
+          <div class="absolute inset-y-0 left-0 bg-[#0f172a]/10" style="width: 74.13%"></div>
+          <div class="relative h-2.5 rounded-[2px] bg-[var(--color-money)]" style="width: 100%"></div>
+          <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-ink)]" style="left: 74.13%"></div>
+          <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-accent)]" style="left: 80%"></div>
+        </div>
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="flex flex-wrap justify-between gap-2 text-[12.5px]">
+          <span class="font-medium">Trọn 3 Đợt (1.320 Box · Định phí 915,75 tr)</span>
+          <span class="font-mono-num">
+            Hòa vốn: <strong>787,5 Box (59,7%)</strong> · S6 Stress: <strong class="text-[var(--color-warn)]">990 Box (75%)</strong>
+          </span>
+        </div>
+        <div class="relative h-6 w-full rounded-[6px] bg-[var(--color-soft)] overflow-hidden border border-[var(--color-line)] flex items-center px-1">
+          <div class="absolute inset-y-0 left-0 bg-[#0f172a]/10" style="width: 59.66%"></div>
+          <div class="relative h-2.5 rounded-[2px] bg-[var(--color-money)]" style="width: 100%"></div>
+          <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-ink)]" style="left: 59.66%"></div>
+          <div class="absolute top-0.5 bottom-0.5 w-[2.5px] bg-[var(--color-warn)]" style="left: 75%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="xl:col-span-5 grid grid-cols-1 gap-3 text-[12.5px]">
+      {GOVERNANCE_RULES.map((rule) => (
+        <div class="pbi-card p-3.5">
+          <span class:list={['serial-stamp mb-1.5', rule.badgeTone === 'gold' ? 'serial-stamp-gold' : 'serial-stamp-green']}>
+            {rule.badge}
+          </span>
+          <div class="text-[var(--color-ink-2)]">
+            {rule.textPrefix}
+            <strong class="text-[var(--color-ink)]">{rule.emphasis}</strong>
+            {rule.textSuffix}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

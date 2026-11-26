@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  subtitleId?: string;
+  badgeText?: string;
+  badgeId?: string;
+  badgeTone?: 'default' | 'gold' | 'green';
+  focusTarget?: string;
+  focusTitle?: string;
+  cardId?: string;
+  className?: string;
+}
+
+const {
+  title,
+  subtitle,
+  subtitleId,
+  badgeText,
+  badgeId,
+  badgeTone = 'default',
+  focusTarget,
+  focusTitle,
+  cardId,
+  className = '',
+} = Astro.props;
+
+const badgeClass =
+  badgeTone === 'gold'
+    ? 'serial-stamp serial-stamp-gold'
+    : badgeTone === 'green'
+      ? 'serial-stamp serial-stamp-green'
+      : 'serial-stamp';
+---
+
+<div id={cardId} class:list={['pbi-card p-4 flex flex-col justify-start gap-2.5', className]}>
+  <div class="flex items-start justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+    <div class="min-w-0">
+      <div class="text-[14px] font-medium text-[var(--color-ink)]">{title}</div>
+      {subtitle && (
+        <div id={subtitleId} class="text-[11.5px] text-[var(--color-muted)]">
+          {subtitle}
+        </div>
+      )}
+    </div>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <slot name="header-actions" />
+      {badgeText && (
+        <span id={badgeId} class={badgeClass}>
+          {badgeText}
+        </span>
+      )}
+      {focusTarget && (
+        <button
+          type="button"
+          data-action="open-focus"
+          data-focus-target={focusTarget}
+          data-focus-title={focusTitle || title}
+          class="focus-btn"
+          title="Phóng to (Focus Mode)"
+          aria-label={`Phóng to ${focusTitle || title}`}
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 3 21 3 21 9" />
+            <polyline points="9 21 3 21 3 15" />
+            <line x1="21" y1="3" x2="14" y2="10" />
+            <line x1="3" y1="21" x2="10" y2="14" />
+          </svg>
+        </button>
+      )}
+    </div>
+  </div>
+
+  <div class="w-full min-w-0 flex-1">
+    <slot />
+  </div>
+
+  {Astro.slots.has('footer') && (
+    <div class="pt-2 border-t border-[var(--color-line)]">
+      <slot name="footer" />
+    </div>
+  )}
+</div>

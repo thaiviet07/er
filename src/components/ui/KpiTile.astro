@@ -1,0 +1,64 @@
+---
+interface Props {
+  label: string;
+  valueId: string;
+  initialValue: string;
+  subId: string;
+  initialSub: string;
+  metaId?: string;
+  initialMeta?: string;
+  metaVariant?: 'text' | 'stamp-gold' | 'stamp-green';
+  metaToneClass?: string;
+  tileTone?: 'default' | 'accent' | 'money';
+  valueToneClass?: string;
+  subToneClass?: string;
+}
+
+const {
+  label,
+  valueId,
+  initialValue,
+  subId,
+  initialSub,
+  metaId,
+  initialMeta,
+  metaVariant = 'text',
+  metaToneClass = 'text-[var(--color-muted)]',
+  tileTone = 'default',
+  valueToneClass = 'text-[var(--color-ink)]',
+  subToneClass = 'text-[var(--color-muted)]',
+} = Astro.props;
+
+const tileBg =
+  tileTone === 'accent'
+    ? 'bg-[var(--color-accent-bg)]'
+    : tileTone === 'money'
+      ? 'bg-[var(--color-money-bg)]'
+      : '';
+
+const labelTone = tileTone === 'default' ? 'text-[var(--color-ink-2)]' : 'font-medium text-[var(--color-ink)]';
+
+const metaClass =
+  metaVariant === 'stamp-gold'
+    ? 'serial-stamp serial-stamp-gold'
+    : metaVariant === 'stamp-green'
+      ? 'serial-stamp serial-stamp-green'
+      : `font-mono-num text-[11px] ${metaToneClass}`;
+---
+
+<div class:list={['p-4', tileBg]}>
+  <div class:list={['flex items-center justify-between gap-2 text-[12px]', labelTone]}>
+    <span>{label}</span>
+    {initialMeta && (
+      <span id={metaId} class={metaClass}>
+        {initialMeta}
+      </span>
+    )}
+  </div>
+  <div id={valueId} class:list={['text-[24px] font-medium font-mono-num tracking-[-0.02em] mt-1.5', valueToneClass]}>
+    {initialValue}
+  </div>
+  <div id={subId} class:list={['text-[11.5px] font-mono-num mt-0.5', subToneClass]}>
+    {initialSub}
+  </div>
+</div>

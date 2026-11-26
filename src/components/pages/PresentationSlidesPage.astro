@@ -1,0 +1,136 @@
+---
+import { PRESENTATION_SLIDES } from '../../data/slides';
+import PageHeader from '../ui/PageHeader.astro';
+import SlideFrame from '../slides/SlideFrame.astro';
+---
+
+<section id="page-slides" class="pbi-page hidden-page space-y-4">
+  <PageHeader
+    eyebrow="Trang 5 · Executive Presentation Deck (Conclusion-First)"
+    title="Bộ Slide Trình bày Luận điểm & Minh họa Dữ liệu (8 Slides)"
+  >
+    <div class="seg-group" id="slide-view-switch" role="group" aria-label="Chế độ xem slide">
+      <button type="button" data-action="set-slide-view" data-view="deck" class="seg-btn active">
+        Chế độ Slide
+      </button>
+      <button type="button" data-action="set-slide-view" data-view="scroll" class="seg-btn">
+        Xem cuộn (8)
+      </button>
+    </div>
+
+    <button
+      type="button"
+      data-action="open-slide-present"
+      class="h-8 px-3 rounded-[6px] text-[12px] font-medium bg-[var(--color-ink)] text-white hover:opacity-90 transition-opacity inline-flex items-center gap-1.5 cursor-pointer"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+      <span>Trình chiếu</span>
+    </button>
+  </PageHeader>
+
+  <!-- Slide Navigator Strip -->
+  <div class="pbi-card p-2.5 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5 flex-1 min-w-0" id="slide-nav-pills">
+      {PRESENTATION_SLIDES.map((slide, idx) => (
+        <button
+          type="button"
+          data-action="select-slide"
+          data-slide-index={idx}
+          class:list={[
+            'h-8 px-2.5 rounded-[6px] text-[12px] font-medium inline-flex items-center gap-1.5 shrink-0 transition-colors border cursor-pointer',
+            idx === 0
+              ? 'bg-[var(--color-accent-bg)] text-[var(--color-ink)] border-[var(--color-accent-ring)]'
+              : 'bg-transparent text-[var(--color-ink-2)] border-transparent hover:bg-[var(--color-soft)]',
+          ]}
+        >
+          <span class="font-mono-num text-[11px] text-[var(--color-accent)]">{slide.num}</span>
+          <span>{slide.shortTitle}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-1.5 shrink-0 pl-2 border-l border-[var(--color-line)]">
+      <button
+        type="button"
+        data-action="prev-slide"
+        id="slide-prev-btn"
+        class="h-8 px-2.5 rounded-[6px] text-[12px] font-medium bg-[var(--color-soft)] hover:bg-[var(--color-line-strong)] text-[var(--color-ink)] transition-colors cursor-pointer disabled:opacity-40"
+        aria-label="Slide trước"
+      >
+        ← Trước
+      </button>
+      <span id="slide-counter-badge" class="serial-stamp font-mono-num">01 / 08</span>
+      <button
+        type="button"
+        data-action="next-slide"
+        id="slide-next-btn"
+        class="h-8 px-2.5 rounded-[6px] text-[12px] font-medium bg-[var(--color-soft)] hover:bg-[var(--color-line-strong)] text-[var(--color-ink)] transition-colors cursor-pointer disabled:opacity-40"
+        aria-label="Slide tiếp theo"
+      >
+        Tiếp →
+      </button>
+    </div>
+  </div>
+
+  <!-- Slide Deck Stage -->
+  <div id="slides-deck-container" class="space-y-5">
+    {PRESENTATION_SLIDES.map((slide, idx) => (
+      <div class:list={['slide-slot', idx === 0 ? '' : 'hidden']} data-slide-slot={idx}>
+        <SlideFrame slide={slide} totalSlides={PRESENTATION_SLIDES.length} index={idx} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Fullscreen Presentation Modal -->
+<div
+  id="slide-present-modal"
+  class="fixed inset-0 z-50 hidden bg-[#0f172a]/92 backdrop-blur-[2px] flex flex-col justify-between p-4 md:p-6"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Trình chiếu Slide FramigosX × GAM"
+>
+  <div class="max-w-6xl w-full mx-auto flex items-center justify-between text-white/90 pb-3">
+    <div class="flex items-center gap-2.5">
+      <span class="px-2 py-0.5 rounded-[4px] bg-white/10 border border-white/15 font-mono-num text-[11px]">
+        Presentation Mode
+      </span>
+      <span id="slide-present-title" class="text-[13.5px] font-medium truncate"></span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        data-action="prev-slide"
+        class="h-8 px-3 rounded-[6px] text-[12px] font-medium bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
+      >
+        ← Trước
+      </button>
+      <span id="slide-present-counter" class="px-2.5 py-1 rounded-[4px] bg-white/10 font-mono-num text-[11.5px]">01 / 08</span>
+      <button
+        type="button"
+        data-action="next-slide"
+        class="h-8 px-3 rounded-[6px] text-[12px] font-medium bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
+      >
+        Tiếp →
+      </button>
+      <button
+        type="button"
+        data-action="close-slide-present"
+        class="h-8 px-3 rounded-[6px] text-[12px] font-medium bg-white text-[#0f172a] hover:bg-white/90 transition-colors cursor-pointer ml-1"
+      >
+        Đóng (Esc)
+      </button>
+    </div>
+  </div>
+
+  <div id="slide-present-stage" class="max-w-6xl w-full mx-auto flex-1 min-h-0 overflow-y-auto flex items-center justify-center py-2"></div>
+
+  <div class="max-w-6xl w-full mx-auto pt-2 flex justify-between text-[11px] text-white/60 font-mono-num">
+    <span>Phím mũi tên ← / → để chuyển slide</span>
+    <span>Esc để thoát trình chiếu</span>
+  </div>
+</div>

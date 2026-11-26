@@ -1,0 +1,118 @@
+---
+import { CONTINGENCY_FUNDS } from '../../data/economics';
+import PageHeader from '../ui/PageHeader.astro';
+import VisualCard from '../ui/VisualCard.astro';
+---
+
+<section id="page-unitecon" class="pbi-page hidden-page space-y-5">
+  <PageHeader
+    eyebrow="Trang 3 · 22-line Unit Economics, COGS Treemap & Risk buffer"
+    title="Bóc tách Chi phí Xưởng Shenzou (Treemap), Quỹ Dự phòng 5% & Bảng 22 Dòng"
+  >
+    <span class="serial-stamp serial-stamp-gold" id="ue-active-unit-badge">1 Hobby Box (80 thẻ) · Bình quân 3 Đợt</span>
+  </PageHeader>
+
+  <!-- COGS Treemap (7 cols) + Scale Savings (5 cols) -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <VisualCard
+      className="xl:col-span-7"
+      title="Bản đồ Tỷ trọng Giá vốn Nhập kho (COGS Treemap · A1–A11)"
+      subtitle="Diện tích tỷ lệ thuận với chi phí từng hạng mục · Phân nhóm Xưởng, Bao bì & Logistics"
+      badgeText="655.870đ / Box"
+      badgeId="cogs-header-total"
+      badgeTone="green"
+      focusTarget="cogs-treemap-wrap"
+      focusTitle="COGS Treemap — 11 Hạng mục A1–A11"
+    >
+      <div id="cogs-treemap-wrap" class="w-full"></div>
+      <div slot="footer" class="flex flex-wrap justify-between gap-2 text-[11px] text-[var(--color-muted)]">
+        <span>■ Xưởng Shenzou (A1–A8) · ■ Bao bì & Vật tư (A9–A10) · ■ Logistics & Hải quan (A11)</span>
+        <span class="font-mono-num">Rê chuột lên từng ô để xem tiết kiệm khi gộp 3 đợt</span>
+      </div>
+    </VisualCard>
+
+    <VisualCard
+      className="xl:col-span-5"
+      title="Hiệu quả Quy mô (Đợt 1 vs TB 3 Đợt)"
+      subtitle="Tiết kiệm −138.824đ/Box (−17,5%) khi đặt 3 đợt"
+      focusTarget="cogs-scale-chart-wrap"
+      focusTitle="Hiệu quả Quy mô Giá vốn"
+    >
+      <div id="cogs-scale-chart-wrap" class="p-3 rounded-[6px] bg-[var(--color-soft)] border border-[var(--color-line)]"></div>
+      <div id="cogs-breakdown-list" class="space-y-1 max-h-[168px] overflow-y-auto pr-1 mt-2"></div>
+    </VisualCard>
+  </div>
+
+  <!-- Contingency Risk Tiles -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {CONTINGENCY_FUNDS.map((fund) => (
+      <div class="soft-shell">
+        <div class="px-3 py-1.5 flex justify-between text-[11.5px] text-[var(--color-ink-2)]">
+          <span class="font-medium">{fund.title}</span>
+          <span class="font-mono-num">{fund.pctLabel}</span>
+        </div>
+        <div class="inner-card space-y-2.5">
+          <div class="flex items-baseline justify-between gap-2">
+            <div>
+              <span
+                class:list={[
+                  'text-[24px] font-medium font-mono-num',
+                  fund.id === 'd3' ? 'text-[var(--color-money)]' : 'text-[var(--color-ink)]',
+                ]}
+              >
+                {fund.headlineValue}
+              </span>{' '}
+              <span class="text-[12px] text-[var(--color-muted)]">{fund.headlineUnit}</span>
+            </div>
+            <span class:list={['serial-stamp', fund.badgeTone === 'green' ? 'serial-stamp-green' : 'serial-stamp-gold']}>
+              {fund.badgeText}
+            </span>
+          </div>
+          <div class="flex gap-[3px] h-5 items-end" id={`ticks-${fund.id}`}>
+            {Array.from({ length: fund.ticksTotal }).map((_, idx) => (
+              <span
+                class:list={[
+                  'flex-1 h-full rounded-[1px]',
+                  idx < fund.ticksFilled ? fund.tickColorClass : 'bg-[var(--color-line-strong)]',
+                ]}
+              />
+            ))}
+          </div>
+          <div class="text-[11.5px] text-[var(--color-muted)] flex justify-between pt-1 border-t border-[var(--color-line)] font-mono-num">
+            <span>{fund.footerLeft}</span>
+            <span>{fund.footerRight}</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Table 3.1: 22-Line P&L Matrix with Search & Conditional Data Bars -->
+  <div class="pbi-card overflow-hidden">
+    <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex flex-wrap items-center justify-between gap-2">
+      <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 3.1 · Bảng Unit Economics Toàn diện 22 Dòng (VNĐ, trước VAT)</div>
+      <input
+        type="text"
+        id="search-22-lines"
+        placeholder="Lọc hạng mục chi phí / doanh thu"
+        class="h-7 px-2.5 rounded-[6px] bg-[var(--color-card)] border border-[var(--color-line-strong)] text-[12px] outline-none focus:border-[var(--color-accent)] w-64"
+      />
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full data-table">
+        <thead>
+          <tr>
+            <th>Hạng mục Doanh thu & Chi phí chi tiết</th>
+            <th class="text-right">Đợt 1 (445 Box) / Box</th>
+            <th class="text-right">TB 3 Đợt / Box</th>
+            <th class="text-right">TB 3 Đợt / Pack</th>
+            <th class="text-right">TB 3 Đợt / Thẻ</th>
+            <th class="text-right">Tổng 3 Đợt (1.320 Box)</th>
+            <th class="text-right w-40">Tỷ trọng / Net Rev</th>
+          </tr>
+        </thead>
+        <tbody id="table-22-lines-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

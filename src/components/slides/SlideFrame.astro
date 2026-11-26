@@ -1,0 +1,94 @@
+---
+import type { SlideItem } from '../../data/slides';
+import SlideVisual from './SlideVisual.astro';
+
+interface Props {
+  slide: SlideItem;
+  totalSlides: number;
+  index: number;
+}
+
+const { slide, totalSlides, index } = Astro.props;
+
+const metricBadgeClass =
+  slide.keyMetric.tone === 'green'
+    ? 'serial-stamp serial-stamp-green'
+    : slide.keyMetric.tone === 'gold'
+      ? 'serial-stamp serial-stamp-gold'
+      : 'serial-stamp';
+---
+
+<article
+  class="slide-frame pbi-card overflow-hidden flex flex-col justify-between"
+  data-slide-index={index}
+  data-slide-id={slide.id}
+>
+  <!-- Top Accent Rule -->
+  <div class="h-1 w-full bg-[var(--color-soft)]">
+    <div
+      class="h-full bg-[var(--color-accent)] transition-[width] duration-200"
+      style={`width: ${((index + 1) / totalSlides) * 100}%`}
+    ></div>
+  </div>
+
+  <!-- Slide Header -->
+  <div class="px-6 pt-5 pb-4 border-b border-[var(--color-line)] flex flex-wrap items-start justify-between gap-3">
+    <div class="min-w-0 max-w-3xl space-y-1">
+      <div class="flex items-center gap-2 text-[11.5px] font-mono-num text-[var(--color-muted)]">
+        <span class="serial-stamp">{slide.num} / {String(totalSlides).padStart(2, '0')}</span>
+        <span>{slide.pillar}</span>
+      </div>
+      <h3 class="text-[20px] md:text-[22px] font-medium text-[var(--color-ink)] leading-snug tracking-[-0.01em]">
+        {slide.headline}
+      </h3>
+      <p class="text-[12.5px] text-[var(--color-ink-2)] leading-relaxed">{slide.subheadline}</p>
+    </div>
+
+    <div class="shrink-0 flex flex-col items-end gap-1 bg-[var(--color-side)] border border-[var(--color-line)] rounded-[8px] px-3.5 py-2">
+      <span class="text-[10.5px] text-[var(--color-muted)]">{slide.keyMetric.label}</span>
+      <span class={metricBadgeClass}>{slide.keyMetric.value}</span>
+    </div>
+  </div>
+
+  <!-- Slide Body: 2-Column Thesis + Visualization -->
+  <div class="p-6 grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch flex-1">
+    <!-- Left: 3 Conclusion-First Arguments & Executive Takeaway -->
+    <div class="xl:col-span-6 flex flex-col justify-between gap-4">
+      <div class="space-y-3">
+        {slide.arguments.map((arg, idx) => (
+          <div class="p-3.5 rounded-[8px] bg-[var(--color-side)] border border-[var(--color-line)] flex gap-3 items-start">
+            <div class="w-6 h-6 rounded-[4px] bg-[var(--color-card)] border border-[var(--color-line-strong)] flex items-center justify-center font-mono-num text-[11px] font-medium text-[var(--color-accent)] shrink-0 mt-0.5">
+              {idx + 1}
+            </div>
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-[13.5px] font-medium text-[var(--color-ink)]">{arg.lead}</span>
+                {arg.metricTag && (
+                  <span class="serial-stamp shrink-0">{arg.metricTag}</span>
+                )}
+              </div>
+              <p class="text-[12.5px] text-[var(--color-ink-2)] leading-relaxed m-0">{arg.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Bottom Callout / Takeaway -->
+      <div class="p-3.5 rounded-[8px] bg-[var(--color-accent-bg)] border border-[var(--color-accent-ring)] flex items-start gap-2.5">
+        <span class="serial-stamp serial-stamp-gold shrink-0 mt-0.5">Kết luận</span>
+        <p class="text-[12.5px] font-medium text-[var(--color-ink)] leading-relaxed m-0">{slide.takeaway}</p>
+      </div>
+    </div>
+
+    <!-- Right: Dedicated Data Visualization -->
+    <div class="xl:col-span-6 flex flex-col">
+      <SlideVisual visualKey={slide.visualKey} />
+    </div>
+  </div>
+
+  <!-- Slide Footer -->
+  <div class="px-6 py-2.5 bg-[var(--color-side)] border-t border-[var(--color-line)] flex items-center justify-between text-[11px] text-[var(--color-muted)] font-mono-num">
+    <span>FramigosX × GAM 10th Anniversary · Pricing &amp; Unit Economics Deck</span>
+    <span>Slide {slide.num} / {String(totalSlides).padStart(2, '0')} · {slide.shortTitle}</span>
+  </div>
+</article>

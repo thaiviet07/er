@@ -1,0 +1,38 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import TopRibbon from '../components/shell/TopRibbon.astro';
+import LeftSidebar from '../components/shell/LeftSidebar.astro';
+import RightWhatIfDrawer from '../components/shell/RightWhatIfDrawer.astro';
+import BottomSheetTabs from '../components/shell/BottomSheetTabs.astro';
+import ExecSummaryPage from '../components/pages/ExecSummaryPage.astro';
+import BenchmarkPage from '../components/pages/BenchmarkPage.astro';
+import PricingChannelsPage from '../components/pages/PricingChannelsPage.astro';
+import UnitEconomicsPage from '../components/pages/UnitEconomicsPage.astro';
+import WhatIfPage from '../components/pages/WhatIfPage.astro';
+import PresentationSlidesPage from '../components/pages/PresentationSlidesPage.astro';
+---
+
+<DashboardLayout>
+  <TopRibbon />
+
+  <div class="flex-1 flex min-h-0 overflow-hidden">
+    <LeftSidebar />
+
+    <main class="flex-1 min-w-0 overflow-y-auto p-5 space-y-6" id="pbi-canvas">
+      <ExecSummaryPage />
+      <BenchmarkPage />
+      <PricingChannelsPage />
+      <UnitEconomicsPage />
+      <WhatIfPage />
+      <PresentationSlidesPage />
+    </main>
+
+    <RightWhatIfDrawer />
+  </div>
+
+  <BottomSheetTabs />
+
+  <script>
+    import '../scripts/dashboard.ts';
+  </script>
+</DashboardLayout>

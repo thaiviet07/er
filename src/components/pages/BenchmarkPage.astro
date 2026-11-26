@@ -1,0 +1,136 @@
+---
+import PageHeader from '../ui/PageHeader.astro';
+import VisualCard from '../ui/VisualCard.astro';
+---
+
+<section id="page-benchmark" class="pbi-page hidden-page space-y-5">
+  <PageHeader
+    eyebrow="Trang 1 · Release price benchmarking (2025–2026)"
+    title="Đối chuẩn 16 SKU tương đồng & Bản đồ Định vị Điểm rơi 1.980.000đ"
+  >
+    <div class="seg-group" id="bm-seg-filter">
+      <button type="button" data-action="filter-bm-seg" data-seg="all" class="seg-btn active">Tất cả (16)</button>
+      <button type="button" data-action="filter-bm-seg" data-seg="seg1" class="seg-btn">Phổ thông VN (4)</button>
+      <button type="button" data-action="filter-bm-seg" data-seg="seg2" class="seg-btn">Trung cấp & Esports (8)</button>
+      <button type="button" data-action="filter-bm-seg" data-seg="seg3" class="seg-btn">Cao cấp & Hit (4)</button>
+    </div>
+    <div class="seg-group" id="bm-metric-switch">
+      <button type="button" data-action="set-bm-metric" data-metric="card" class="seg-btn active">Giá / Thẻ</button>
+      <button type="button" data-action="set-bm-metric" data-metric="box" class="seg-btn">Giá / Hộp</button>
+      <button type="button" data-action="set-bm-metric" data-metric="pack" class="seg-btn">Giá / Pack</button>
+    </div>
+  </PageHeader>
+
+  <!-- 2D Scatter Plot Card -->
+  <VisualCard
+    title="Bản đồ Định vị Thị trường 2D (Giá phát hành / Hộp vs Đơn giá / Thẻ)"
+    subtitle="Hành lang tối ưu 1,50–2,04 triệu VNĐ & trung bình 13 SKU thuần thẻ (25.483đ/thẻ)"
+    focusTarget="scatter-chart-wrap"
+    focusTitle="Bản đồ Định vị Thị trường 2D"
+  >
+    <div slot="header-actions" class="seg-group" id="scatter-zoom-group">
+      <button type="button" data-action="set-scatter-zoom" data-zoom="target" class="seg-btn active">Zoom ≤ 3,6 tr</button>
+      <button type="button" data-action="set-scatter-zoom" data-zoom="all" class="seg-btn">Toàn thị trường ≤ 7,5 tr</button>
+    </div>
+    <div id="scatter-chart-wrap" class="w-full"></div>
+    <div slot="footer" class="flex flex-wrap justify-between gap-2 text-[11.5px] text-[var(--color-muted)]">
+      <span>* Tách riêng 2 Bundle phụ kiện Riot (T1 70 USD & Worlds 80 USD) khỏi trục đơn giá/thẻ để tránh nhiễu tỷ lệ</span>
+      <span>● Xanh lơ: Có Auto/Seri · ● Xám: Phổ thông · ● Xanh Navy: FramigosX × GAM (1,98tr · 24.750đ/thẻ)</span>
+    </div>
+  </VisualCard>
+
+  <!-- Ranked Bars + Segment Whiskers -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <div class="xl:col-span-8 pbi-card p-4 flex flex-col justify-start">
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[var(--color-line)]">
+        <div>
+          <div class="text-[12px] text-[var(--color-muted)]" id="bm-chart-subtitle">So sánh đơn giá phát hành gốc trên mỗi thẻ</div>
+          <div class="flex flex-wrap items-baseline gap-3">
+            <span class="text-[18px] font-medium font-mono-num text-[var(--color-accent)]" id="bm-chart-headline">
+              FramigosX: 24.750 VNĐ / thẻ
+            </span>
+            <span class="text-[12px] text-[var(--color-muted)] font-mono-num" id="bm-chart-avg">
+              TB 13 SKU thuần thẻ: 25.483 VNĐ
+            </span>
+          </div>
+        </div>
+        <button
+          type="button"
+          data-action="open-focus"
+          data-focus-target="bm-bars-container"
+          data-focus-title="Xếp hạng Giá phát hành 16 SKU"
+          class="focus-btn"
+          title="Phóng to"
+          aria-label="Phóng to Xếp hạng Giá phát hành 16 SKU"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 3 21 3 21 9" />
+            <polyline points="9 21 3 21 3 15" />
+            <line x1="21" y1="3" x2="14" y2="10" />
+            <line x1="3" y1="21" x2="10" y2="14" />
+          </svg>
+        </button>
+      </div>
+      <div id="bm-bars-container" class="py-2.5 space-y-1.5 max-h-[420px] overflow-y-auto pr-1"></div>
+    </div>
+
+    <div class="xl:col-span-4 flex flex-col gap-4">
+      <div class="pbi-card p-4 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-[14px] font-medium text-[var(--color-ink)]">Phân bố Phân khúc (Bảng 1.2)</span>
+          <span class="serial-stamp">Min · Med · Mean · Max</span>
+        </div>
+        <div id="segment-whiskers-wrap" class="space-y-2"></div>
+      </div>
+
+      <div class="pbi-card p-4 space-y-2.5 text-[12.5px] text-[var(--color-ink-2)]">
+        <div class="text-[14px] font-medium text-[var(--color-ink)]">3 Định đề chiến lược giá</div>
+        <div>
+          <strong class="text-[var(--color-ink)]">1. Trần LMHT 1,78–2,04 tr:</strong> Riot neo T1 & Worlds ở 70–80 USD; giữ dưới 2,00 tr đảm bảo quay vòng đại lý.
+        </div>
+        <div>
+          <strong class="text-[var(--color-ink)]">2. Sàn vật lý &gt; 1,50 tr:</strong> VBA (18–19,8k/thẻ) không chữ ký; GAM có PRISM 0,6mm, Relic 130pt & cam kết 1–2 Hit lớn.
+        </div>
+        <div>
+          <strong class="text-[var(--color-accent)]">3. Sweet Spot 1.980.000đ:</strong> 24.750đ/thẻ khớp TB thị trường (25.483đ) và rẻ hơn Kolex EWC Hobby −22,3%.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Power BI Data Grid: Table 1.1 with Search & Sort -->
+  <div class="pbi-card overflow-hidden">
+    <div class="px-4 py-3 border-b border-[var(--color-line)] flex flex-wrap items-center justify-between gap-2 bg-[var(--color-side)]">
+      <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 1.1 · Dữ liệu Giá phát hành gốc 16 SKU Tham chiếu (MSRP)</div>
+      <input
+        type="text"
+        id="search-16-skus"
+        placeholder="Tìm sản phẩm, hãng, Hit"
+        class="h-7 px-2.5 rounded-[6px] bg-[var(--color-card)] border border-[var(--color-line-strong)] text-[12px] outline-none focus:border-[var(--color-accent)] w-64"
+      />
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full data-table">
+        <thead>
+          <tr>
+            <th>Phân khúc</th>
+            <th>Tên sản phẩm</th>
+            <th>Quy cách</th>
+            <th class="text-right">Giá gốc</th>
+            <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" data-action="sort-table16" data-sort-key="vndBox">
+              Quy đổi (VNĐ) ↕
+            </th>
+            <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" data-action="sort-table16" data-sort-key="vndPack">
+              Giá / Pack ↕
+            </th>
+            <th class="text-right cursor-pointer hover:text-[var(--color-ink)]" data-action="sort-table16" data-sort-key="vndCard">
+              Giá / Thẻ ↕
+            </th>
+            <th>Cam kết Hit & Kỹ thuật</th>
+          </tr>
+        </thead>
+        <tbody id="table-16-skus-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

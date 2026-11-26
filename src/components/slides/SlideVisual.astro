@@ -1,0 +1,390 @@
+---
+import type { SlideVisualKey } from '../../data/slides';
+
+interface Props {
+  visualKey: SlideVisualKey;
+}
+
+const { visualKey } = Astro.props;
+---
+
+<div class="w-full h-full flex items-center justify-center rounded-[8px] bg-[var(--color-side)] border border-[var(--color-line)] p-4">
+  {visualKey === 'exec-split' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Phân bổ Doanh thu thực và ROI">
+      <text x="16" y="24" font-size="11.5" font-weight="600" fill="#0f172a">Phân bổ 1.805,76 tr Doanh thu thực (3 Đợt · 1.320 Box)</text>
+
+      <!-- 100% Stacked Net Revenue Bar -->
+      <rect x="16" y="38" width="205" height="34" rx="4" fill="#1e293b" />
+      <rect x="223" y="38" width="12" height="34" rx="2" fill="#64748b" />
+      <rect x="237" y="38" width="43" height="34" rx="2" fill="#1d4ed8" />
+      <rect x="282" y="38" width="21" height="34" rx="2" fill="#94a3b8" />
+      <rect x="305" y="38" width="29" height="34" rx="2" fill="#0284c7" />
+      <rect x="336" y="38" width="108" height="34" rx="4" fill="#047857" />
+
+      <text x="118" y="59" text-anchor="middle" font-size="10.5" font-weight="500" fill="#ffffff">COGS 47,9% (865,7tr)</text>
+      <text x="390" y="59" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff">Lãi FX 27,4%</text>
+
+      <!-- Compact Legend -->
+      <rect x="16" y="84" width="8" height="8" rx="2" fill="#1e293b" />
+      <text x="28" y="92" font-size="10" fill="#334155">COGS 865,7tr</text>
+      <rect x="108" y="84" width="8" height="8" rx="2" fill="#64748b" />
+      <text x="120" y="92" font-size="10" fill="#334155">Mkt 50tr</text>
+      <rect x="178" y="84" width="8" height="8" rx="2" fill="#1d4ed8" />
+      <text x="190" y="92" font-size="10" fill="#334155">Roy 180,6tr</text>
+      <rect x="262" y="84" width="8" height="8" rx="2" fill="#94a3b8" />
+      <text x="274" y="92" font-size="10" fill="#334155">DP 90,3tr</text>
+      <rect x="336" y="84" width="8" height="8" rx="2" fill="#0284c7" />
+      <text x="348" y="92" font-size="10" fill="#334155">GAM T2 123,8tr</text>
+
+      <!-- Divider -->
+      <line x1="16" y1="112" x2="444" y2="112" stroke="rgba(15,23,42,0.08)" stroke-width="1" />
+      <text x="16" y="134" font-size="11.5" font-weight="600" fill="#0f172a">So sánh Vốn đầu tư vs Lợi nhuận 2 bên (Triệu VNĐ)</text>
+
+      <!-- Horizontal comparison bars (scale max = 600tr -> width 250px from x=130) -->
+      <text x="16" y="162" font-size="11" fill="#334155">Vốn cam kết FX</text>
+      <rect x="130" y="149" width="208" height="18" rx="3" fill="#0f172a" />
+      <text x="346" y="162" font-size="11" font-weight="600" fill="#0f172a">500,00 tr (Mốc 100%)</text>
+
+      <text x="16" y="194" font-size="11" font-weight="600" fill="#047857">Lãi FX An toàn</text>
+      <rect x="130" y="181" width="206" height="18" rx="3" fill="#047857" />
+      <text x="346" y="194" font-size="11" font-weight="600" fill="#047857">495,32 tr (+99,1% ROI)</text>
+
+      <text x="16" y="226" font-size="11" fill="#065f46">Lãi FX Hoàn DP 80%</text>
+      <rect x="130" y="213" width="236" height="18" rx="3" fill="rgba(4,120,87,0.22)" stroke="#047857" stroke-dasharray="3 2" stroke-width="1" />
+      <text x="374" y="226" font-size="11" font-weight="500" fill="#047857">567,55 tr</text>
+
+      <text x="16" y="258" font-size="11" fill="#1d4ed8">Tổng thu GAM (3 dòng)</text>
+      <rect x="130" y="245" width="186" height="18" rx="3" fill="#1d4ed8" />
+      <text x="324" y="258" font-size="11" font-weight="500" fill="#1d4ed8">446,97 tr (0 rủi ro tồn)</text>
+
+      <text x="16" y="288" font-size="10.5" fill="#64748b">Lãi ròng Đợt 1 độc lập (445 Box): +107,05 tr (Biên 17,6%)</text>
+    </svg>
+  )}
+
+  {visualKey === 'benchmark-corridor' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Bản đồ định vị 16 SKU">
+      <text x="16" y="22" font-size="11.5" font-weight="600" fill="#0f172a">Hành lang Định vị 1,50–2,04 tr &amp; Đơn giá / Thẻ</text>
+
+      <!-- Axes -->
+      <line x1="56" y1="242" x2="438" y2="242" stroke="rgba(15,23,42,0.18)" stroke-width="1" />
+      <line x1="56" y1="42" x2="56" y2="242" stroke="rgba(15,23,42,0.18)" stroke-width="1" />
+
+      <!-- Grid Y (0..40k) -->
+      <line x1="56" y1="192" x2="438" y2="192" stroke="rgba(15,23,42,0.06)" stroke-width="1" />
+      <text x="48" y="196" text-anchor="end" font-size="10" fill="#64748b">10k</text>
+      <line x1="56" y1="142" x2="438" y2="142" stroke="rgba(15,23,42,0.06)" stroke-width="1" />
+      <text x="48" y="146" text-anchor="end" font-size="10" fill="#64748b">20k</text>
+      <line x1="56" y1="92" x2="438" y2="92" stroke="rgba(15,23,42,0.06)" stroke-width="1" />
+      <text x="48" y="96" text-anchor="end" font-size="10" fill="#64748b">30k</text>
+      <text x="48" y="48" text-anchor="end" font-size="10" fill="#64748b">40k</text>
+
+      <!-- X Ticks (0..3.6M -> plotW=382) -->
+      <text x="56" y="258" text-anchor="middle" font-size="10" fill="#64748b">0</text>
+      <text x="162" y="258" text-anchor="middle" font-size="10" fill="#64748b">1,0 tr</text>
+      <text x="268" y="258" text-anchor="middle" font-size="10" fill="#64748b">2,0 tr</text>
+      <text x="374" y="258" text-anchor="middle" font-size="10" fill="#64748b">3,0 tr</text>
+      <text x="247" y="276" text-anchor="middle" font-size="10.5" fill="#64748b">Giá phát hành / Hộp hoặc Pack (Zoom ≤ 3,6 tr)</text>
+
+      <!-- Corridor 1.50M..2.04M (x = 215..272) -->
+      <rect x="215" y="42" width="57" height="200" fill="rgba(29,78,216,0.07)" stroke="rgba(29,78,216,0.32)" stroke-dasharray="3 3" stroke-width="1" />
+      <text x="243" y="56" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1d4ed8">1,50–2,04 tr</text>
+
+      <!-- Avg line 25.483 (y = 114.6) -->
+      <line x1="56" y1="115" x2="438" y2="115" stroke="#64748b" stroke-dasharray="4 3" stroke-width="1" />
+      <text x="434" y="109" text-anchor="end" font-size="9.5" fill="#334155">TB 13 SKU thuần thẻ: 25.483đ</text>
+
+      <!-- Sample points -->
+      <circle cx="67" cy="143" r="4.5" fill="rgba(15,23,42,0.4)" />
+      <text x="74" y="146" font-size="9.5" fill="#334155">VBA 99k</text>
+
+      <circle cx="137" cy="89" r="5" fill="#0284c7" />
+      <text x="144" y="85" font-size="9.5" fill="#334155">Kolex Starter</text>
+
+      <circle cx="164" cy="72" r="4.5" fill="rgba(15,23,42,0.4)" />
+      <text x="171" y="75" font-size="9.5" fill="#334155">Crystal Rose</text>
+
+      <circle cx="204" cy="117" r="4.5" fill="rgba(15,23,42,0.4)" />
+      <text x="196" y="131" text-anchor="end" font-size="9.5" fill="#334155">NBA Hoops</text>
+
+      <circle cx="326" cy="136" r="5.5" fill="#0284c7" />
+      <text x="334" y="139" font-size="9.5" fill="#334155">Kolex Hobby (2,55tr)</text>
+
+      <circle cx="351" cy="189" r="4.5" fill="rgba(15,23,42,0.4)" />
+      <text x="359" y="192" font-size="9.5" fill="#334155">Riot Gift Box</text>
+
+      <!-- Target FramigosX x GAM: 1.98M (x=266), 24.750 (y=118) -->
+      <circle cx="266" cy="118" r="11" fill="rgba(29,78,216,0.16)" />
+      <circle cx="266" cy="118" r="5.5" fill="#1e3a8a" stroke="#ffffff" stroke-width="1.8" />
+      <rect x="276" y="152" width="146" height="22" rx="4" fill="#ffffff" stroke="rgba(29,78,216,0.38)" stroke-width="1" />
+      <line x1="266" y1="123" x2="282" y2="152" stroke="#1d4ed8" stroke-width="1" />
+      <text x="282" y="166" font-size="10" font-weight="600" fill="#1d4ed8">FX × GAM · 1,98tr · 24.750đ</text>
+
+      <text x="16" y="292" font-size="9.5" fill="#64748b">Topps Chrome Hobby (7,15 tr · 89.375đ/thẻ) nằm ngoài khung Zoom để giữ độ phân giải.</text>
+    </svg>
+  )}
+
+  {visualKey === 'sku-staircase' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Bậc thang đơn giá 4 SKU">
+      <text x="16" y="24" font-size="11.5" font-weight="600" fill="#0f172a">Đơn giá / Thẻ (Gồm VAT) qua 4 bậc SKU</text>
+
+      <!-- Anchor vertical line at 24.750 -->
+      <line x1="318.5" y1="42" x2="318.5" y2="232" stroke="#0f172a" stroke-dasharray="3 3" stroke-width="1.2" />
+      <text x="318.5" y="246" text-anchor="middle" font-size="9.5" font-weight="600" fill="#0f172a">Mốc chuẩn: 24.750đ/thẻ</text>
+
+      <!-- Row 1: Single Pack -->
+      <text x="16" y="64" font-size="11" font-weight="500" fill="#0f172a">SKU 1 · Single Pack</text>
+      <text x="16" y="78" font-size="9.5" fill="#64748b">209.000đ (8 thẻ)</text>
+      <rect x="155" y="54" width="185" height="22" rx="4" fill="rgba(15,23,42,0.06)" />
+      <rect x="155" y="54" width="173" height="22" rx="4" fill="#334155" />
+      <text x="336" y="69" font-size="10.5" font-weight="600" fill="#0f172a" paint-order="stroke" stroke="#f8fafc" stroke-width="4">26.125đ (+5,6%)</text>
+
+      <!-- Row 2: Hobby Box -->
+      <text x="16" y="114" font-size="11" font-weight="600" fill="#1d4ed8">SKU 3 · Hobby Box</text>
+      <text x="16" y="128" font-size="9.5" fill="#1d4ed8">1.980.000đ (80 thẻ)</text>
+      <rect x="155" y="104" width="185" height="22" rx="4" fill="rgba(15,23,42,0.06)" />
+      <rect x="155" y="104" width="163.5" height="22" rx="4" fill="#1d4ed8" />
+      <text x="326" y="119" font-size="10.5" font-weight="600" fill="#1d4ed8" paint-order="stroke" stroke="#f8fafc" stroke-width="4">24.750đ (Mốc 0%)</text>
+
+      <!-- Row 3: Master Case -->
+      <text x="16" y="164" font-size="11" font-weight="500" fill="#0f172a">SKU 4 · Master Case</text>
+      <text x="16" y="178" font-size="9.5" fill="#64748b">18.810.000đ (800 thẻ)</text>
+      <rect x="155" y="154" width="185" height="22" rx="4" fill="rgba(15,23,42,0.06)" />
+      <rect x="155" y="154" width="155" height="22" rx="4" fill="#047857" />
+      <text x="318" y="169" font-size="10.5" font-weight="600" fill="#047857" paint-order="stroke" stroke="#f8fafc" stroke-width="4">23.513đ (−5,0%)</text>
+
+      <!-- Row 4: Early-Bird -->
+      <text x="16" y="214" font-size="11" font-weight="500" fill="#0f172a">SKU 2 · Early-Bird Box</text>
+      <text x="16" y="228" font-size="9.5" fill="#64748b">1.782.000đ (80 thẻ)</text>
+      <rect x="155" y="204" width="185" height="22" rx="4" fill="rgba(15,23,42,0.06)" />
+      <rect x="155" y="204" width="147" height="22" rx="4" fill="#0284c7" />
+      <text x="310" y="219" font-size="10.5" font-weight="600" fill="#0284c7" paint-order="stroke" stroke="#f8fafc" stroke-width="4">22.275đ (−10,0%)</text>
+
+      <rect x="16" y="260" width="428" height="28" rx="5" fill="#ffffff" stroke="rgba(15,23,42,0.09)" stroke-width="1" />
+      <text x="28" y="278" font-size="10.5" fill="#334155">Biên độ giãn cách hợp lý (22,3k–26,1k/thẻ) chống xung đột kênh Retail vs Pre-order.</text>
+    </svg>
+  )}
+
+  {visualKey === 'channel-margin' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Hiệu quả ròng qua 3 kênh phân phối">
+      <text x="16" y="24" font-size="11.5" font-weight="600" fill="#0f172a">Doanh thu thực &amp; Lãi ròng FX trên mỗi Hobby Box (VNĐ)</text>
+
+      <!-- Legend -->
+      <rect x="16" y="34" width="9" height="9" rx="2" fill="rgba(15,23,42,0.20)" />
+      <text x="29" y="42" font-size="10" fill="#334155">Doanh thu thực (Net Rev)</text>
+      <rect x="172" y="34" width="9" height="9" rx="2" fill="#047857" />
+      <text x="185" y="42" font-size="10" fill="#334155">Lãi ròng An toàn FX (TB 3 Đợt)</text>
+
+      <!-- 1. TCG -->
+      <text x="16" y="76" font-size="11" font-weight="500" fill="#0f172a">1. Đại lý TCG (55%)</text>
+      <text x="16" y="90" font-size="9.5" fill="#64748b">CK BQ 30,0%</text>
+      <rect x="138" y="64" width="167" height="11" rx="2" fill="rgba(15,23,42,0.20)" />
+      <text x="311" y="73" font-size="10" fill="#334155">1.260.000đ</text>
+      <rect x="138" y="78" width="40" height="11" rx="2" fill="#1e293b" />
+      <text x="184" y="87" font-size="10.5" font-weight="600" fill="#1e293b">301.801đ (24,0%)</text>
+
+      <!-- 2. GAM Store -->
+      <text x="16" y="130" font-size="11" font-weight="500" fill="#1d4ed8">2. GAM Store (30%)</text>
+      <text x="16" y="144" font-size="9.5" fill="#64748b">Hoa hồng 20,0%</text>
+      <rect x="138" y="118" width="191" height="11" rx="2" fill="rgba(15,23,42,0.20)" />
+      <text x="335" y="127" font-size="10" fill="#334155">1.440.000đ</text>
+      <rect x="138" y="132" width="56" height="11" rx="2" fill="#1d4ed8" />
+      <text x="200" y="141" font-size="10.5" font-weight="600" fill="#1d4ed8">424.201đ (29,5%)</text>
+
+      <!-- 3. D2C -->
+      <text x="16" y="184" font-size="11" font-weight="500" fill="#047857">3. FramigosX D2C (15%)</text>
+      <text x="16" y="198" font-size="9.5" fill="#64748b">Early-Bird &amp; sàn 10%</text>
+      <rect x="138" y="172" width="215" height="11" rx="2" fill="rgba(15,23,42,0.20)" />
+      <text x="359" y="181" font-size="10" fill="#334155">1.620.000đ</text>
+      <rect x="138" y="186" width="73" height="11" rx="2" fill="#047857" />
+      <text x="217" y="195" font-size="10.5" font-weight="600" fill="#047857">546.601đ (33,7%)</text>
+
+      <!-- Blended -->
+      <rect x="12" y="214" width="436" height="40" rx="6" fill="rgba(4,120,87,0.07)" stroke="rgba(4,120,87,0.24)" stroke-width="1" />
+      <text x="22" y="232" font-size="11" font-weight="600" fill="#0f172a">Bình quân (55/30/15)</text>
+      <text x="22" y="246" font-size="9.5" fill="#334155">76,0% SRP trước VAT</text>
+      <text x="180" y="232" font-size="10.5" fill="#334155">Net: <tspan font-weight="600" fill="#0f172a">1.368.000đ</tspan></text>
+      <text x="180" y="246" font-size="10.5" fill="#047857" font-weight="600">Lãi FX: 375.241đ/Box (27,4%)</text>
+
+      <text x="16" y="280" font-size="10" fill="#64748b">Sỉ đứt đoạn 3 hạng: Silver 26% (lãi ĐL 468k) · Gold 30% (540k) · Platinum 34% (612k).</text>
+    </svg>
+  )}
+
+  {visualKey === 'cogs-scale' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Tiết kiệm giá vốn quy mô 3 đợt">
+      <text x="16" y="24" font-size="11.5" font-weight="600" fill="#0f172a">Giảm Giá vốn Landed COGS: Đợt 1 (445b) vs TB 3 Đợt (1.320b)</text>
+
+      <!-- Total COGS comparison -->
+      <rect x="16" y="42" width="428" height="72" rx="6" fill="#ffffff" stroke="rgba(15,23,42,0.09)" stroke-width="1" />
+      <text x="28" y="63" font-size="11" fill="#334155">Đợt 1 độc lập</text>
+      <rect x="128" y="52" width="230" height="14" rx="3" fill="rgba(15,23,42,0.24)" />
+      <text x="366" y="63" font-size="11" font-weight="500" fill="#0f172a">794.694đ/Box</text>
+
+      <text x="28" y="92" font-size="11" font-weight="600" fill="#047857">TB 3 Đợt</text>
+      <rect x="128" y="81" width="190" height="14" rx="3" fill="#047857" />
+      <text x="326" y="92" font-size="11" font-weight="600" fill="#047857">655.870đ (−17,5%)</text>
+
+      <text x="16" y="138" font-size="11" font-weight="600" fill="#0f172a">Top 3 hạng mục hưởng lợi quy mô lớn nhất</text>
+
+      <!-- A6 -->
+      <text x="16" y="164" font-size="10.5" font-weight="500" fill="#0f172a">A6. Phôi Jersey Relic</text>
+      <rect x="150" y="152" width="150" height="6.5" rx="2" fill="rgba(15,23,42,0.22)" />
+      <rect x="150" y="161" width="51" height="6.5" rx="2" fill="#047857" />
+      <text x="308" y="164" font-size="10.5" font-weight="600" fill="#047857">114,6k → 38,6k (−66,3%)</text>
+
+      <!-- A1 -->
+      <text x="16" y="200" font-size="10.5" font-weight="500" fill="#0f172a">A1. Làm mẫu R&amp;D</text>
+      <rect x="150" y="188" width="75" height="6.5" rx="2" fill="rgba(15,23,42,0.22)" />
+      <rect x="150" y="197" width="25" height="6.5" rx="2" fill="#047857" />
+      <text x="234" y="200" font-size="10.5" font-weight="600" fill="#047857">57,3k → 19,3k (−66,3%)</text>
+
+      <!-- A8 -->
+      <text x="16" y="236" font-size="10.5" font-weight="500" fill="#0f172a">A8. Màng nhôm Pack</text>
+      <rect x="150" y="224" width="75" height="6.5" rx="2" fill="rgba(15,23,42,0.22)" />
+      <rect x="150" y="233" width="38" height="6.5" rx="2" fill="#047857" />
+      <text x="234" y="236" font-size="10.5" font-weight="600" fill="#047857">57,3k → 29,0k (−49,4%)</text>
+
+      <!-- Bottom summary -->
+      <rect x="16" y="258" width="428" height="30" rx="5" fill="rgba(29,78,216,0.065)" stroke="rgba(29,78,216,0.22)" stroke-width="1" />
+      <text x="28" y="277" font-size="10.5" fill="#1e3a8a" font-weight="500">Cơ cấu TB 3 Đợt: Shenzou 455,9k (69,5%) · Bao bì 120k (18,3%) · Logistics 80k (12,2%)</text>
+    </svg>
+  )}
+
+  {visualKey === 'waterfall-compact' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Thác chuyển hóa lợi nhuận 1 Hobby Box">
+      <text x="16" y="22" font-size="11.5" font-weight="600" fill="#0f172a">Thác 2 Tầng &amp; Quỹ Dự phòng 5% (Trên 1 Hobby Box · TB 3 Đợt)</text>
+
+      <line x1="20" y1="250" x2="444" y2="250" stroke="rgba(15,23,42,0.16)" stroke-width="1" />
+
+      <!-- 1. Net Rev: 1368k -->
+      <rect x="24" y="113" width="40" height="137" rx="3" fill="#1e3a8a" />
+      <text x="44" y="106" text-anchor="middle" font-size="10" font-weight="600" fill="#1e3a8a">1.368k</text>
+      <text x="44" y="266" text-anchor="middle" font-size="9.5" fill="#334155">Net Rev</text>
+
+      <!-- 2. -COGS+Mkt: -693.7k -->
+      <line x1="64" y1="113" x2="80" y2="113" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="80" y="113" width="40" height="69.5" rx="3" fill="#1e293b" />
+      <text x="100" y="106" text-anchor="middle" font-size="10" font-weight="500" fill="#0f172a">−694k</text>
+      <text x="100" y="266" text-anchor="middle" font-size="9.5" fill="#334155">COGS+Mkt</text>
+
+      <!-- 3. -Royalty T1: -136.8k -->
+      <line x1="120" y1="182.5" x2="136" y2="182.5" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="136" y="182.5" width="40" height="14" rx="2" fill="#1d4ed8" />
+      <text x="156" y="175" text-anchor="middle" font-size="10" font-weight="500" fill="#1d4ed8">−136,8k</text>
+      <text x="156" y="266" text-anchor="middle" font-size="9.5" fill="#334155">Roy 10%</text>
+
+      <!-- 4. -DP 5%: -68.4k -->
+      <line x1="176" y1="196.2" x2="192" y2="196.2" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="192" y="196.2" width="40" height="7" rx="2" fill="#64748b" />
+      <text x="212" y="189" text-anchor="middle" font-size="10" font-weight="500" fill="#475569">−68,4k</text>
+      <text x="212" y="266" text-anchor="middle" font-size="9.5" fill="#334155">DP 5%</text>
+
+      <!-- 5. Thặng dư: 469.1k -->
+      <line x1="232" y1="203.1" x2="248" y2="203.1" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="248" y="203" width="40" height="47" rx="3" fill="#0f172a" />
+      <text x="268" y="196" text-anchor="middle" font-size="10" font-weight="600" fill="#0f172a">469,1k</text>
+      <text x="268" y="266" text-anchor="middle" font-size="9.5" fill="#334155">Thặng dư</text>
+
+      <!-- 6. -GAM T2: -93.8k -->
+      <line x1="288" y1="203" x2="304" y2="203" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="304" y="203" width="40" height="9.5" rx="2" fill="#0284c7" />
+      <text x="324" y="196" text-anchor="middle" font-size="10" font-weight="500" fill="#0284c7">−93,8k</text>
+      <text x="324" y="266" text-anchor="middle" font-size="9.5" fill="#334155">GAM T2</text>
+
+      <!-- 7. Lãi FX Safe: 375.2k + DP release 54.7k = 430.0k -->
+      <line x1="344" y1="212.5" x2="360" y2="212.5" stroke="rgba(15,23,42,0.25)" stroke-dasharray="2 2" />
+      <rect x="360" y="207" width="48" height="5.5" rx="2" fill="rgba(4,120,87,0.20)" stroke="#047857" stroke-dasharray="2 2" stroke-width="1" />
+      <rect x="360" y="212.5" width="48" height="37.5" rx="3" fill="#047857" />
+      <text x="384" y="199" text-anchor="middle" font-size="10.5" font-weight="600" fill="#047857">375,2k</text>
+      <text x="384" y="266" text-anchor="middle" font-size="9.5" font-weight="600" fill="#047857">Lãi FX</text>
+      <text x="414" y="211" font-size="9.5" fill="#047857">+54,7k DP</text>
+
+      <text x="16" y="288" font-size="10" fill="#64748b">Royalty 10% tính trên Net (180,58 tr) thay vì SRP giúp tránh thất thoát 45,6 tr.</text>
+    </svg>
+  )}
+
+  {visualKey === 'stress-scenarios' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="6 Kịch bản S1 đến S6">
+      <text x="16" y="22" font-size="11.5" font-weight="600" fill="#0f172a">Lãi ròng An toàn FX qua 6 Kịch bản (Triệu VNĐ · 3 Đợt)</text>
+
+      <!-- 500tr reference line -->
+      <line x1="273" y1="38" x2="273" y2="246" stroke="#0f172a" stroke-dasharray="4 3" stroke-width="1.1" />
+      <text x="273" y="260" text-anchor="middle" font-size="9.5" font-weight="600" fill="#0f172a">500tr = ROI +100%</text>
+
+      <!-- S5 -->
+      <text x="16" y="58" font-size="10.5" fill="#334155">S5 · Cao cấp (+20%)</text>
+      <rect x="126" y="46" width="224" height="16" rx="3" fill="#047857" />
+      <text x="356" y="58" font-size="10.5" font-weight="600" fill="#047857">762,2 tr (+152%)</text>
+
+      <!-- S4 -->
+      <text x="16" y="92" font-size="10.5" fill="#334155">S4 · Tối ưu (+5%)</text>
+      <rect x="126" y="80" width="178" height="16" rx="3" fill="#047857" opacity="0.85" />
+      <text x="310" y="92" font-size="10.5" font-weight="600" fill="#047857">606,2 tr (+121%)</text>
+
+      <!-- S3 -->
+      <rect x="10" y="109" width="440" height="28" rx="5" fill="rgba(29,78,216,0.075)" stroke="rgba(29,78,216,0.28)" stroke-width="1" />
+      <text x="16" y="127" font-size="10.5" font-weight="600" fill="#1d4ed8">S3 · Chuẩn (Mốc)</text>
+      <rect x="126" y="115" width="146" height="16" rx="3" fill="#1d4ed8" />
+      <text x="278" y="127" font-size="10.5" font-weight="600" fill="#1d4ed8">495,3 tr (+99,1%)</text>
+
+      <!-- S2 -->
+      <text x="16" y="162" font-size="10.5" fill="#334155">S2 · Áp lực Kép</text>
+      <rect x="126" y="150" width="82" height="16" rx="3" fill="#334155" />
+      <text x="214" y="162" font-size="10.5" font-weight="500" fill="#0f172a">277,4 tr (+55,5%)</text>
+
+      <!-- S1 -->
+      <text x="16" y="196" font-size="10.5" fill="#334155">S1 · Giá thấp (−20%)</text>
+      <rect x="126" y="184" width="73" height="16" rx="3" fill="#475569" opacity="0.85" />
+      <text x="205" y="196" font-size="10.5" font-weight="500" fill="#0f172a">249,7 tr (+49,9%)</text>
+
+      <!-- S6 -->
+      <text x="16" y="230" font-size="10.5" font-weight="500" fill="#b45309">S6 · Stress Tồn 25%</text>
+      <rect x="126" y="218" width="55" height="16" rx="3" fill="#b45309" />
+      <text x="187" y="230" font-size="10.5" font-weight="600" fill="#b45309">188,3 tr (Đ1: +3,56 tr)</text>
+
+      <text x="16" y="286" font-size="10" fill="#64748b">Hòa vốn toàn dự án: 787,5 / 1.320 Box (59,7%) · Đợt 1: 329,9 / 445 Box (74,1%).</text>
+    </svg>
+  )}
+
+  {visualKey === 'stage-gate' && (
+    <svg viewBox="0 0 460 300" class="w-full h-auto svg-chart" role="img" aria-label="Van quản trị 80 phần trăm và lộ trình 3 đợt">
+      <text x="16" y="24" font-size="11.5" font-weight="600" fill="#0f172a">Kiến trúc Van An toàn 80% Đợt 1 &amp; Lộ trình Mở lệnh Đợt 2–3</text>
+
+      <!-- Batch 1 Progress Track -->
+      <text x="16" y="54" font-size="11" font-weight="600" fill="#0f172a">Đợt 1 (445 Box · Định phí 383,64 tr)</text>
+      <rect x="16" y="64" width="428" height="28" rx="5" fill="#edf2f7" stroke="rgba(15,23,42,0.12)" stroke-width="1" />
+      <rect x="16" y="64" width="317" height="28" rx="5" fill="rgba(190,18,60,0.10)" />
+      <rect x="333" y="64" width="111" height="28" rx="4" fill="rgba(4,120,87,0.20)" />
+      <line x1="333" y1="58" x2="333" y2="98" stroke="#0f172a" stroke-width="2" />
+      <line x1="358" y1="58" x2="358" y2="98" stroke="#1d4ed8" stroke-width="2.5" />
+      <text x="315" y="112" text-anchor="end" font-size="10" font-weight="600" fill="#0f172a">Hòa vốn: 329,9b (74,1%)</text>
+      <text x="362" y="112" font-size="10" font-weight="600" fill="#1d4ed8">Van Đ2: 356b (80%)</text>
+
+      <!-- 3 Governance Gate Boxes -->
+      <rect x="16" y="132" width="134" height="114" rx="6" fill="#ffffff" stroke="rgba(29,78,216,0.32)" stroke-width="1" />
+      <rect x="16" y="132" width="134" height="24" rx="6" fill="rgba(29,78,216,0.08)" />
+      <text x="26" y="148" font-size="10.5" font-weight="600" fill="#1d4ed8">Van 01 · Gate 80%</text>
+      <text x="26" y="172" font-size="10.5" font-weight="600" fill="#0f172a">Đạt ≥ 356 Box Đ1</text>
+      <text x="26" y="190" font-size="9.5" fill="#334155">Mới giải ngân lệnh</text>
+      <text x="26" y="204" font-size="9.5" fill="#334155">in Đợt 2 (174,93 tr)</text>
+      <text x="26" y="232" font-size="10" font-weight="600" fill="#047857">→ Rủi ro lỗ = 0%</text>
+
+      <rect x="163" y="132" width="134" height="114" rx="6" fill="#ffffff" stroke="rgba(15,23,42,0.14)" stroke-width="1" />
+      <rect x="163" y="132" width="134" height="24" rx="6" fill="rgba(15,23,42,0.06)" />
+      <text x="173" y="148" font-size="10.5" font-weight="600" fill="#0f172a">Van 02 · MAP 60d</text>
+      <text x="173" y="172" font-size="10.5" font-weight="600" fill="#0f172a">Khóa sàn 1.782k</text>
+      <text x="173" y="190" font-size="9.5" fill="#334155">Cấm đại lý quảng cáo</text>
+      <text x="173" y="204" font-size="9.5" fill="#334155">dưới 1.980k trong 60d</text>
+      <text x="173" y="232" font-size="10" font-weight="600" fill="#1d4ed8">→ Giữ neo 24.750đ</text>
+
+      <rect x="310" y="132" width="134" height="114" rx="6" fill="#ffffff" stroke="rgba(4,120,87,0.32)" stroke-width="1" />
+      <rect x="310" y="132" width="134" height="24" rx="6" fill="rgba(4,120,87,0.08)" />
+      <text x="320" y="148" font-size="10.5" font-weight="600" fill="#047857">Van 03 · Phụ lục</text>
+      <text x="320" y="172" font-size="10.5" font-weight="600" fill="#0f172a">Bảng 3.1 (22 dòng)</text>
+      <text x="320" y="190" font-size="9.5" fill="#334155">Đối soát Quý với GAM</text>
+      <text x="320" y="204" font-size="9.5" fill="#334155">Bảo vệ Quỹ DP 5%</text>
+      <text x="320" y="232" font-size="10" font-weight="600" fill="#047857">→ Tránh hụt 45,6 tr</text>
+
+      <text x="16" y="276" font-size="10" fill="#64748b">Chuỗi 3 đợt hoàn chỉnh: 445 Box (Đ1) → +437 Box (Đ2) → +438 Box (Đ3) = 1.320 Box.</text>
+    </svg>
+  )}
+</div>

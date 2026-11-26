@@ -1,0 +1,18 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+}
+
+const { eyebrow, title } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <div>
+    <div class="text-[11.5px] font-mono-num text-[var(--color-muted)]">{eyebrow}</div>
+    <h2 class="text-[18px] font-medium text-[var(--color-ink)] leading-snug">{title}</h2>
+  </div>
+  <div class="flex flex-wrap items-center gap-2">
+    <slot />
+  </div>
+</div>

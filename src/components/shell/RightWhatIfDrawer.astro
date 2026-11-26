@@ -1,0 +1,152 @@
+---
+---
+
+<div
+  id="drawer-backdrop"
+  data-action="close-drawer"
+  class="fixed inset-0 z-40 hidden bg-black/25 xl:hidden"
+  aria-hidden="true"
+></div>
+
+<aside
+  id="right-whatif-drawer"
+  class="whatif-drawer shrink-0 hidden xl:flex flex-col justify-between p-4 overflow-y-auto select-none"
+>
+  <div class="space-y-4">
+    <div class="flex items-center justify-between pb-2.5 border-b border-[var(--color-line)]">
+      <div>
+        <div class="text-[13.5px] font-medium text-[var(--color-ink)]">Tham số What-If & Bộ lọc</div>
+        <div class="text-[11px] text-[var(--color-muted)]" id="sim-mode-label">Đang khớp: S3. Cơ sở Chuẩn</div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button
+          type="button"
+          data-action="select-scenario"
+          data-scenario="S3"
+          class="h-6 px-2 rounded-[4px] text-[11px] font-medium bg-[var(--color-card)] border border-[var(--color-line-strong)] hover:bg-[var(--color-soft)] transition-colors cursor-pointer"
+        >
+          Chuẩn S3
+        </button>
+        <button
+          type="button"
+          data-action="close-drawer"
+          class="xl:hidden w-6 h-6 rounded-[4px] flex items-center justify-center text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-soft)] cursor-pointer"
+          aria-label="Đóng bảng What-If"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Result Mini-Readout -->
+    <div class="p-3 rounded-[8px] bg-[var(--color-card)] border border-[var(--color-line)] space-y-2">
+      <div class="flex justify-between items-baseline">
+        <span class="text-[11px] text-[var(--color-muted)]">Lãi ròng An toàn FX</span>
+        <span class="text-[17px] font-medium font-mono-num text-[var(--color-money)]" id="sim-out-fxprofit">495.317.600đ</span>
+      </div>
+      <div class="flex justify-between text-[11.5px] font-mono-num">
+        <span class="text-[var(--color-muted)]">Hoàn DP tối đa:</span>
+        <span class="text-[var(--color-ink)]" id="sim-out-fxmax">567,55 tr</span>
+      </div>
+      <div class="flex justify-between text-[11.5px] font-mono-num">
+        <span class="text-[var(--color-muted)]">Doanh thu thực (3Đ):</span>
+        <span class="text-[var(--color-ink)]" id="sim-out-netrev">1.805.760.000đ</span>
+      </div>
+      <div class="flex justify-between text-[11.5px] font-mono-num">
+        <span class="text-[var(--color-muted)]">Tổng trả GAM (3 dòng):</span>
+        <span class="text-[var(--color-ink-2)]" id="sim-out-gam">446.965.400đ</span>
+      </div>
+      <div class="flex justify-between text-[11.5px] font-mono-num pt-1.5 border-t border-[var(--color-line)]">
+        <span class="text-[var(--color-muted)]">Biên / ROI 500tr:</span>
+        <span class="font-medium text-[var(--color-ink)]" id="sim-out-roi">27,4% / +99,1%</span>
+      </div>
+      <div class="flex justify-between text-[11.5px] font-mono-num">
+        <span class="text-[var(--color-muted)]">Lãi Đợt 1 (445 Box):</span>
+        <span class="font-medium text-[var(--color-accent)]" id="sim-out-b1">+107,05 tr</span>
+      </div>
+    </div>
+
+    <!-- 5 Pricing & Stress Sliders -->
+    <div class="space-y-3">
+      <div class="text-[11px] font-medium text-[var(--color-muted)]">1. Thông số Định giá & Rủi ro</div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Giá bán lẻ (VAT)</span>
+          <span class="font-mono-num font-medium" id="sim-lbl-srp">1.980.000đ (1.800.000đ)</span>
+        </div>
+        <input type="range" id="sim-srp" data-sim-input min="1350000" max="2250000" step="45000" value="1800000" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Chiết khấu Đại lý Sỉ</span>
+          <span class="font-mono-num font-medium" id="sim-lbl-ck">30,0%</span>
+        </div>
+        <input type="range" id="sim-ck" data-sim-input min="20" max="40" step="1" value="30" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Royalty IP GAM (T1)</span>
+          <span class="font-mono-num font-medium" id="sim-lbl-roy">10,0%</span>
+        </div>
+        <input type="range" id="sim-roy" data-sim-input min="5" max="18" step="1" value="10" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Quỹ Dự phòng (DP)</span>
+          <span class="font-mono-num font-medium" id="sim-lbl-dp">5,0%</span>
+        </div>
+        <input type="range" id="sim-dp" data-sim-input min="0" max="12" step="1" value="5" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Tỷ lệ bán hết (SL)</span>
+          <span class="font-mono-num font-medium text-[var(--color-accent)]" id="sim-lbl-sell">100% (1.320 Box)</span>
+        </div>
+        <input type="range" id="sim-sell" data-sim-input min="50" max="100" step="5" value="100" />
+      </div>
+    </div>
+
+    <!-- 3 Channel Mix Sliders -->
+    <div class="pt-3 border-t border-[var(--color-line)] space-y-2.5">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-medium text-[var(--color-muted)]">2. Tỷ trọng 3 Kênh Phân phối</span>
+        <button type="button" data-action="reset-channel-mix" class="text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer">
+          55/30/15
+        </button>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">Đại lý Shop TCG</span>
+          <span class="font-mono-num font-medium" id="val-ch1">55%</span>
+        </div>
+        <input type="range" id="slider-ch1" min="10" max="85" step="5" value="55" />
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11.5px] mb-1">
+          <span class="text-[var(--color-ink-2)]">GAM Store & Offline</span>
+          <span class="font-mono-num font-medium text-[var(--color-accent)]" id="val-ch2">30%</span>
+        </div>
+        <input type="range" id="slider-ch2" min="5" max="70" step="5" value="30" />
+      </div>
+
+      <div class="flex justify-between text-[11.5px] pt-1">
+        <span class="text-[var(--color-ink-2)]">FramigosX D2C (Cân bằng)</span>
+        <span class="font-mono-num font-medium text-[var(--color-money)]" id="val-ch3">15%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-3 border-t border-[var(--color-line)] text-[11px] text-[var(--color-muted)]">
+    Thay đổi ở bảng này cập nhật đồng thời KPI, Waterfall, Heatmap và Biểu đồ CVP.
+  </div>
+</aside>

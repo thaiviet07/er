@@ -1,0 +1,150 @@
+---
+import { SKU_TIERS, WHOLESALE_TIERS } from '../../data/economics';
+import PageHeader from '../ui/PageHeader.astro';
+import VisualCard from '../ui/VisualCard.astro';
+---
+
+<section id="page-pricing" class="pbi-page hidden-page space-y-5">
+  <PageHeader
+    eyebrow="Trang 2 · Multi-tier pricing & B2B channel architecture"
+    title="Bậc thang 4 SKU, Chiết khấu sỉ đứt đoạn & Cơ cấu 3 Kênh phân phối"
+  >
+    <span class="serial-stamp serial-stamp-gold">Blended Net Realized: 1.368.000đ / Box (76,0% SRP)</span>
+  </PageHeader>
+
+  <!-- 4 SKU Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+    {SKU_TIERS.map((sku) => (
+      <div
+        class:list={[
+          'pbi-card p-4 flex flex-col justify-between',
+          sku.isAnchor ? 'ring-1 ring-inset ring-[var(--color-accent-ring)] bg-[var(--color-accent-bg)]' : '',
+        ]}
+      >
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class:list={['serial-stamp', sku.isAnchor ? 'serial-stamp-gold' : '']}>{sku.badge}</span>
+            <span
+              class:list={[
+                'text-[11.5px] font-mono-num font-medium',
+                sku.deltaTone === 'accent' ? 'text-[var(--color-accent)]' : 'text-[var(--color-money)]',
+              ]}
+            >
+              {sku.deltaLabel}
+            </span>
+          </div>
+          <div class="text-[15px] font-medium text-[var(--color-ink)]">{sku.title}</div>
+          <div class:list={['text-[11.5px]', sku.isAnchor ? 'text-[var(--color-ink-2)]' : 'text-[var(--color-muted)]']}>{sku.spec}</div>
+          <div class="mt-3 pt-2.5 border-t border-[var(--color-line)] flex justify-between items-baseline gap-3">
+            <div>
+              <div class:list={['text-[22px] font-medium font-mono-num', sku.isAnchor ? 'text-[var(--color-accent)]' : 'text-[var(--color-ink)]']}>
+                {sku.priceVat}
+              </div>
+              <div class:list={['text-[11px] font-mono-num', sku.isAnchor ? 'text-[var(--color-ink-2)]' : 'text-[var(--color-muted)]']}>
+                {sku.pricePreVat}
+              </div>
+            </div>
+            <div class:list={['text-right font-mono-num text-[12px]', sku.isAnchor ? 'font-medium' : '']}>{sku.pricePerCard}</div>
+          </div>
+        </div>
+        <div
+          class:list={[
+            'mt-3 pt-2 border-t border-[var(--color-line)] text-[11.5px]',
+            sku.isAnchor ? 'text-[var(--color-ink)] font-medium' : 'text-[var(--color-ink-2)]',
+          ]}
+        >
+          {sku.note}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- 4-SKU Ladder SVG -->
+  <VisualCard
+    title="Thang Đơn giá / Thẻ qua 4 bậc SKU (So với Mốc chuẩn 24.750đ/thẻ)"
+    focusTarget="sku-ladder-wrap"
+    focusTitle="Thang Đơn giá 4 bậc SKU"
+  >
+    <div id="sku-ladder-wrap" class="w-full"></div>
+  </VisualCard>
+
+  <!-- B2B Wholesale + 100% Stacked Channel Chart -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <VisualCard
+      className="xl:col-span-6"
+      title="Khung Chiết khấu Bán sỉ Đứt đoạn (Bảng 2.2)"
+      subtitle="Không ký gửi trả hàng · Bảo hành lỗi QC sản xuất"
+      badgeText="CK BQ: 30,0%"
+    >
+      <div class="overflow-x-auto">
+        <table class="w-full data-table">
+          <thead>
+            <tr>
+              <th>Cấp đại lý (MOQ)</th>
+              <th class="text-right">Tỷ trọng</th>
+              <th class="text-right">Chiết khấu</th>
+              <th class="text-right">Giá sỉ (Chưa VAT)</th>
+              <th class="text-right">Lãi Đại lý/Box</th>
+            </tr>
+          </thead>
+          <tbody>
+            {WHOLESALE_TIERS.map((tier) => (
+              <tr class={tier.isSummary ? 'row-highlight' : ''}>
+                <td>
+                  {tier.isSummary ? (
+                    tier.tierName
+                  ) : (
+                    <>
+                      <strong>{tier.tierName}</strong>{' '}
+                      <span class="text-[11px] text-[var(--color-muted)]">{tier.moqNote}</span>
+                    </>
+                  )}
+                </td>
+                <td class="text-right font-mono-num">{tier.weightPct}</td>
+                <td class="text-right font-mono-num">{tier.discountPct}</td>
+                <td class="text-right font-mono-num">{tier.wholesalePrice}</td>
+                <td class="text-right font-mono-num text-[var(--color-money)]">{tier.dealerProfit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </VisualCard>
+
+    <VisualCard
+      className="xl:col-span-6"
+      title="Cơ cấu 100% Doanh thu Thực qua 3 Kênh (Bảng 3.2)"
+      subtitle="Click vào tên kênh để bật/tắt Cross-Filter · Rê chuột xem số tiền"
+      focusTarget="channel-stacked-chart-wrap"
+      focusTitle="Cơ cấu 100% Doanh thu Thực qua 3 Kênh"
+    >
+      <div id="channel-stacked-chart-wrap" class="w-full"></div>
+    </VisualCard>
+  </div>
+
+  <!-- Table 3.2 Full Channel Matrix -->
+  <div class="pbi-card overflow-hidden">
+    <div class="px-4 py-3 border-b border-[var(--color-line)] bg-[var(--color-side)] flex flex-wrap justify-between items-center gap-2">
+      <span class="text-[13.5px] font-medium text-[var(--color-ink)]">Bảng 3.2 · Đối chiếu Unit Economics Ròng trên mỗi Hobby Box giữa 3 Kênh</span>
+      <span class="serial-stamp">COGS TB 3 Đợt + Mkt = 693.749đ / Box</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full data-table">
+        <thead>
+          <tr>
+            <th>Kênh phân phối</th>
+            <th class="text-right">Doanh thu thực</th>
+            <th class="text-right">COGS + Mkt</th>
+            <th class="text-right">Royalty GAM (10%)</th>
+            <th class="text-right">Quỹ DP (5%)</th>
+            <th class="text-right">Chia lãi T2 (20%)</th>
+            <th class="text-right">Lãi FX (Đợt 1)</th>
+            <th class="text-right">Lãi FX (TB 3 Đợt)</th>
+            <th class="text-right">Biên ròng</th>
+          </tr>
+        </thead>
+        <tbody id="table-32-channels-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
